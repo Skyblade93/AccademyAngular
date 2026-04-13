@@ -1,0 +1,14 @@
+<p>{{nome}} puzza</p>
+
+<button (click)="aggiungi1()">aggiungi 1 numero</button>
+<h2>hai cliccato il bottone {{numero}} volte</h2>
+
+<input type="text" [(ngModel)]="nome" name="nome">
+
+<div class="lista">
+@for (item of lista; track item) {
+  <span class="item">{{ item }}</span>
+}
+</div>
+
+<button (click)="rimuovi1()">Elimina l' ultimo valore</button>

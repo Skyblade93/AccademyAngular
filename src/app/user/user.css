@@ -1,0 +1,17 @@
+h2{
+  text-transform: uppercase;
+}
+
+p{
+  font-size: larger;
+}
+
+.lista {
+  display: flex;
+  gap: 10px; /* spazio tra numeri */
+  flex-wrap: wrap; /* va a capo se non ci sta */
+}
+
+.item {
+  margin: 0;
+}
