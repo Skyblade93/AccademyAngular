@@ -12,3 +12,13 @@
 </div>
 
 <button (click)="rimuovi1()">Elimina l' ultimo valore</button>
+
+
+<div class="lista">
+<button (click)="bool= false">Vedi Persona</button>
+
+@if (bool == false) {
+
+  <h3>{{persona.nome}}   {{persona.cognome}}</h3>
+}
+</div>
