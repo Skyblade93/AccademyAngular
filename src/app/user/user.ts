@@ -1,34 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserDto } from '../home/Dto/UserDto';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,ReactiveFormsModule],
   templateUrl: './user.html',
   styleUrls: ['./user.css'],
 })
-export class UserCompont implements OnInit {
+export class UserComponent {
 
-  nome : string = "mario";
+ nome : string = "mario";
 
-  numero : number = 0;
+   @Input() numero : number = 0;
 
   bool : boolean = true ;
 
   lista: number[] = [];
 
-  personList : Person[] = [];
+  ListaPersona : UserDto[] = [];
 
-  persona : Person = new Person("Mario","Rossi")
+ user : UserDto = new UserDto("mario", "rossi");
+ user2 : UserDto = new UserDto("luigi", "verdi");
 
-  constructor() {
+userForm = new FormGroup({
+  nome: new FormControl(''),
+  cognome: new FormControl('')
+});
+
+
+
+  constructor( ) {
+
   }
 
-   ngOnInit() {
 
-  }
 
   aggiungi1(){
    this.numero = this.numero+1;
@@ -39,16 +47,17 @@ export class UserCompont implements OnInit {
    this.lista.pop()
   }
 
+elimina(){
+  this.user2 = new UserDto("","");
 }
 
-export class Person {
 
-  nome!: string;
+onSubmit() {
+  const value = this.userForm.value;
 
-  cognome !: string;
+  this.ListaPersona.push(
+    new UserDto(value.nome!, value.cognome!)
+  );
+}
 
-  constructor(nome : string, cognome: string){
-    this.nome = nome;
-    this.cognome = cognome;
-  }
 }

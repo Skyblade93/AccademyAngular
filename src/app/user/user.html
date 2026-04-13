@@ -11,14 +11,31 @@
 }
 </div>
 
+<div class="flex">
 <button (click)="rimuovi1()">Elimina l' ultimo valore</button>
 
 
-<div class="lista">
+
 <button (click)="bool= false">Vedi Persona</button>
+
+
+
+<button (click)="elimina()">Elimina Persona</button>
+
+</div>
 
 @if (bool == false) {
 
-  <h3>{{persona.nome}}   {{persona.cognome}}</h3>
+  <h3>{{user2.nome}}   {{user2.cognome}}</h3>
 }
-</div>
+
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="nome">
+  <input type="text" formControlName="cognome">
+  <button type="submit">Salva Persona</button>
+</form>
+
+@for (persona of ListaPersona; track $index) {
+  <p>{{ persona.nome }} {{ persona.cognome }} index: {{ $index }}</p>
+}
