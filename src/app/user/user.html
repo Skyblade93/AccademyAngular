@@ -1,50 +1,16 @@
-<p>{{nome}} puzza</p>
 
-<button (click)="aggiungi1()">aggiungi 1 numero</button>
-<h2>hai cliccato il bottone {{numero}} volte</h2>
 
-<input type="text" [(ngModel)]="nome" name="nome">
+<div class="item"> {{user.name}} {{user.description}}  {{user.id}}</div>
 
-<div class="lista">
-@for (item of lista; track item) {
-  <span class="item">{{ item }}</span>
-}
+
+<div>
+  <input type="text" placeholder="id" #id>
+  <button (click)="ottieniElemento(+id.value)">Ottieni elemento</button>
 </div>
 
-<div class="flex">
-<button (click)="rimuovi1()">Elimina l' ultimo valore</button>
 
 
+@for (item of ListUser; track $index) {
 
-<button (click)="bool= false">Vedi Persona</button>
-
-
-<button (click)="elimina()">Elimina Persona</button>
-
-<button (click)="ordinaLista()">Ordina Lista di persone</button>
-
-</div>
-
-@if (bool == false) {
-
-  <h3>{{user2.nome}}   {{user2.cognome}}</h3>
-}
-
-
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
-  <input type="text" formControlName="nome">
-  <input type="text" formControlName="cognome">
-  <button type="submit"  [disabled]="userForm.invalid" >Salva Persona</button>
-
-  @if (userForm.get('nome')?.invalid && userForm.get('nome')?.touched){
-<div >
-  Nome obbligatorio
-</div>
-  }
-</form>
-
-@for (persona of ListaPersona; track $index) {
-  <p>{{ persona.nome }} {{ persona.cognome }} index: {{ $index }}
-     <button type="button" (click)="modificaPersona($index)">Modifica Persona</button>
-    <button (click)="deletePersona($index)"  class = "btn btn-danger">Elimina</button></p>
+  <div> {{item.name}} {{item.description}}  {{item.id}}</div>
 }
