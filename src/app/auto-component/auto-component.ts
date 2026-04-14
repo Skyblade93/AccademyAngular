@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AutoDto } from '../Dto/AutoDto';
 import { autoService } from '../Service/autoService';
@@ -15,14 +15,15 @@ import { throwError } from 'rxjs';
   templateUrl: './auto-component.html',
   styleUrls: ['./auto-component.css'],
 })
-export class AutoComponent implements OnInit {
+export class AutoComponent implements OnInit, OnDestroy {
   service: autoService;
   userSrv: userService;
+  
 
   listAuto: AutoDto[] = [];
   userList: UserDto[] = [];
   searchResults: AutoDto[] = [];
-  carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'ELETTRICA', 'IBRIDA'];
+  carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'METANO', 'ELETTRICA', 'IBRIDA'];
 
   auto: AutoDto = new AutoDto('', '', '', '', null);
 
@@ -54,6 +55,10 @@ export class AutoComponent implements OnInit {
   });
 
 filterForm!: FormGroup;
+popupVisible: boolean = false;
+popupType: 'create' | 'update' | 'delete' = 'create';
+popupMessage = '';
+private popupTimer: ReturnType<typeof setTimeout> | null = null;
 
 
   constructor(service: autoService, userSrv: userService) {
@@ -103,39 +108,42 @@ filterForm!: FormGroup;
     });
   }
 
-  save() {
-    if (this.autoForm.invalid) {
-      return;
-    }
+ save() {
+if (this.autoForm.invalid) {
+return;
+}
 
-    const formValue = this.autoForm.value as {
-      modello: string;
-      marca: string;
-      targa: string;
-      carburante: string;
-      userId: number | null;
-    };
+const formValue = this.autoForm.value as {
+modello: string;
+marca: string;
+targa: string;
+carburante: string;
+userId: number | null;
+};
 
-    const selectedUser = formValue.userId === 0
-      ? null
-      : this.userList.find((u) => u.id === formValue.userId) ?? null;
+const selectedUser = formValue.userId === 0
+? null
+: this.userList.find((u) => u.id === formValue.userId) ?? null;
+const isEditMode = !!this.auto.id;
 
-    // Aggiorna l'oggetto auto esistente con i valori del form
-    this.auto.modello = formValue.modello;
-    this.auto.marca = formValue.marca;
-    this.auto.targa = formValue.targa;
-    this.auto.carburante = formValue.carburante;
-    this.auto.user = selectedUser;
+this.auto.modello = formValue.modello;
+this.auto.marca = formValue.marca;
+this.auto.targa = formValue.targa;
+this.auto.carburante = formValue.carburante;
+this.auto.user = selectedUser;
 
-    const request = this.auto.id
-      ? this.service.update(this.auto)
-      : this.service.insert(this.auto);
-
-    request.subscribe(() => {
-      this.loadAll();
-      this.resetForm();
-    });
-  }
+const request = isEditMode
+? this.service.update(this.auto)
+: this.service.insert(this.auto);
+request.subscribe(() => {
+this.loadAll();
+this.showPopup(
+isEditMode ? 'update' : 'create',
+isEditMode ? 'Modifica auto completata con successo.' : 'Creazione auto completata con successo.'
+);
+this.resetForm();
+});
+}
 
   resetForm() {
     this.auto = new AutoDto('', '', '', '', null);
@@ -319,13 +327,14 @@ const searchType = filters.searchType || 'exact';
     }
   }
 
-  deleteAuto(id: number) {
-    if (confirm('Sei sicuro di voler eliminare questa auto?')) {
-      this.service.delete(id).subscribe(() => {
-        this.listAuto = this.listAuto.filter(a => a.id !== id);
-      });
-    }
-  }
+deleteAuto(id: number) {
+if (confirm('Sei sicuro di voler eliminare questa auto?')) {
+this.service.delete(id).subscribe(() => {
+this.listAuto = this.listAuto.filter(a => a.id !== id);
+this.showPopup('delete', 'Eliminazione auto completata con successo.');
+});
+}
+}
 
   clearFilters() {
     this.filterForm.reset({
@@ -337,6 +346,33 @@ const searchType = filters.searchType || 'exact';
       searchType: 'exact',
     });
     this.loadAll();
+  }
+
+  ngOnDestroy() {
+    this.clearPopupTimer();
+  }
+
+  closePopup() {
+    this.popupVisible = false;
+    this.clearPopupTimer();
+  }
+
+  private showPopup(type: 'create' | 'update' | 'delete', message: string) {
+    this.popupType = type;
+    this.popupMessage = message;
+    this.popupVisible = true;
+    this.clearPopupTimer();
+
+    this.popupTimer = setTimeout(() => {
+      this.popupVisible = false;
+    }, 2800);
+  }
+
+  private clearPopupTimer() {
+    if (this.popupTimer) {
+      clearTimeout(this.popupTimer);
+      this.popupTimer = null;
+    }
   }
 }
 
