@@ -14,9 +14,16 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {path : 'drone', component : DroneComponent},
+<<<<<<< HEAD
   {path : 'user', component : UserComponent},
   { path: 'auto', component: AutoComponent },
   { path: 'notifica', component: NotificaComponent },
+=======
+  { path: 'auto', component: AutoComponent },
+  { path: 'notifica', component: NotificaComponent },
+  { path: 'user', component: UserComponent },
+  { path: 'home', component: HomeComponent },
+>>>>>>> 1361c50 (fix: update navigation and routing for Notifiche component)
   {path : 'dipendente' , component: DipendenteComponent},
   {path : 'azienda', component: AziendaComponent},
   { path: 'carrello', component: Carrello },
