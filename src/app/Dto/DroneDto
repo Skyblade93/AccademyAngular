@@ -1,9 +1,0 @@
-export interface DroneDto {
-  id?: number;                  // Integer in Java -> number in TS
-  codiceSeriale: string;        // String in Java -> string in TS
-  modello: string;
-  livelloBatteria: number;      // Integer in Java -> number in TS
-  caricoMassimoKg: number;      // Double in Java -> number in TS (sempre number!)
-  stato: string;
-  sensoreOstacoli: boolean;     // Boolean in Java -> boolean in TS (miniscolo!)
-}

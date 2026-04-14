@@ -1,23 +1,39 @@
 <div class="main-dark">
-  <h2>Gestione Flotta Droni</h2>
+  <div class="header">
+    <h2>Gestione Flotta Droni</h2>
+  </div>
 
   <div class="card-form">
+    <h3>{{ isModifica ? 'Modifica Drone' : 'Registra Nuovo Drone' }}</h3>
     <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)">
-      <input type="text" name="modello" ngModel required placeholder="Modello Drone" class="dark-input">
-      <input type="text" name="marca" ngModel required placeholder="Marca" class="dark-input">
-      <input type="number" name="livelloBatteria" ngModel required placeholder="Batteria %" class="dark-input">
+      <div class="form-group">
+        <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" required placeholder="Modello" class="dark-input">
+        <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" required placeholder="Marca" class="dark-input">
+        <input type="number" name="livelloBatteria" [(ngModel)]="droneInModifica.livelloBatteria" required placeholder="Batteria %" class="dark-input">
+      </div>
       
-      <button type="submit" [disabled]="!droneForm.valid" class="btn-add">REGISTRA DRONE</button>
+      <div class="actions">
+        <button type="submit" [disabled]="!droneForm.valid" class="btn-add">
+          {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
+        </button>
+        <button type="button" *ngIf="isModifica" (click)="annulla()" class="btn-cancel">ANNULLA</button>
+      </div>
     </form>
   </div>
 
   <div class="list-container">
     <div *ngFor="let d of listaDroni" class="drone-card">
       <div class="info">
-        <strong>{{ d.modello }}</strong> ({{ d.marca }})
-        <span>🔋 {{ d.livelloBatteria }}%</span>
+        <strong>{{ d.modello }}</strong>
+        <span class="sub">{{ d.marca }}</span>
       </div>
-      <button class="btn-del" (click)="eliminaDrone(d.id)">🗑️</button>
+      <div class="battery">
+        🔋 {{ d.livelloBatteria }}%
+      </div>
+      <div class="card-actions">
+        <button class="btn-edit" (click)="selezionaPerModifica(d)">✏️</button>
+        <button class="btn-del" (click)="eliminaDrone(d.id)">🗑️</button>
+      </div>
     </div>
   </div>
 </div>
