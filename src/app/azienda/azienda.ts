@@ -80,10 +80,6 @@ export class AziendaComponent implements OnInit {
     });
   }
 
-  cercaPerTitolare(id: number) {
-    this.service.findByTitolareId(id).subscribe(res => {
-      this.azienda = res;
-    });
-  }
+
 
 }
