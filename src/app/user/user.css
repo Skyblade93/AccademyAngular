@@ -12,23 +12,6 @@ body {
   padding: 20px;
 }
 
-/* NAVBAR */
-nav {
-  background: #2c3e50;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-right: 15px;
-  font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
 
 /* TITOLI */
 h2 {
@@ -56,14 +39,14 @@ button {
   margin: 5px;
   border: none;
   border-radius: 6px;
-  background: #3498db;
+  background: tomato;
   color: white;
   cursor: pointer;
   transition: 0.2s;
 }
 
 button:hover {
-  background: #2980b9;
+  background: #49be25;
 }
 
 /* SEZIONE LISTA NUMERI */

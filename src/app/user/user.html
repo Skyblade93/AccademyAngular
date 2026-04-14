@@ -19,8 +19,9 @@
 <button (click)="bool= false">Vedi Persona</button>
 
 
-
 <button (click)="elimina()">Elimina Persona</button>
+
+<button (click)="ordinaLista()">Ordina Lista di persone</button>
 
 </div>
 
@@ -30,12 +31,20 @@
 }
 
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
   <input type="text" formControlName="nome">
   <input type="text" formControlName="cognome">
-  <button type="submit">Salva Persona</button>
+  <button type="submit"  [disabled]="userForm.invalid" >Salva Persona</button>
+
+  @if (userForm.get('nome')?.invalid && userForm.get('nome')?.touched){
+<div >
+  Nome obbligatorio
+</div>
+  }
 </form>
 
 @for (persona of ListaPersona; track $index) {
-  <p>{{ persona.nome }} {{ persona.cognome }} index: {{ $index }}</p>
+  <p>{{ persona.nome }} {{ persona.cognome }} index: {{ $index }}
+     <button type="button" (click)="modificaPersona($index)">Modifica Persona</button>
+    <button (click)="deletePersona($index)"  class = "btn btn-danger">Elimina</button></p>
 }
