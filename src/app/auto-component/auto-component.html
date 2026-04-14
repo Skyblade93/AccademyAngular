@@ -10,6 +10,24 @@
     </div>
   </header>
 
+  @if (popupVisible) {
+    <section class="action-popup" [attr.data-popup-type]="popupType" role="status" aria-live="polite">
+      <div class="action-popup-head">
+        <h3>
+          @if (popupType === 'create') {
+            Auto creata
+          } @else if (popupType === 'update') {
+            Auto modificata
+          } @else {
+            Auto eliminata
+          }
+        </h3>
+        <button type="button" class="popup-close" (click)="closePopup()" aria-label="Chiudi notifica">×</button>
+      </div>
+      <p>{{ popupMessage }}</p>
+    </section>
+  }
+
   <!-- FORM INSERIMENTO -->
   <section class="card form-card">
     <div class="card-header">
@@ -195,5 +213,13 @@
       </div>
     }
   </section>
+
+<footer class="auto-footer" aria-label="Footer sezione auto">
+  <div>
+    <strong>Auto Manager</strong>
+    <p class="footer-copy">© 2026 Auto Manager. Tutti i diritti riservati.</p>
+    <p class="footer-dev">Developed by Lorenzo Lombardi</p>
+  </div>
+</footer>
 
 </div>
