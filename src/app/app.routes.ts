@@ -7,7 +7,12 @@ import { AutoComponent } from './auto-component/auto-component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+<<<<<<< HEAD
+=======
+  {path : 'drone', component : DroneComponent},
+>>>>>>> 1361c50 (fix: update navigation and routing for Notifiche component)
   { path: 'auto', component: AutoComponent },
+  { path: 'notifica', component: NotificaComponent },
   { path: 'user', component: UserComponent },
   { path: 'home', component: HomeComponent },
   {path : 'azienda', component: AziendaComponent},
