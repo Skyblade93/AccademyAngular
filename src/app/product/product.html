@@ -1,0 +1,79 @@
+<div class="container">
+  <h2>Gestione Prodotti</h2>
+
+  <form (ngSubmit)="saveProduct()" class="product-form">
+    <input
+      type="text"
+      [(ngModel)]="productForm.name"
+      name="name"
+      placeholder="Nome prodotto"
+      required
+    />
+
+    <input
+      type="number"
+      [(ngModel)]="productForm.price"
+      name="price"
+      placeholder="Prezzo"
+      required
+      min="0"
+      step="0.01"
+    />
+
+    <input
+      type="number"
+      [(ngModel)]="productForm.quantity"
+      name="quantity"
+      placeholder="Quantità"
+      required
+      min="0"
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="productForm.category"
+      name="category"
+      placeholder="Categoria"
+      required
+    />
+
+    <div class="buttons">
+      <button type="submit">
+        {{ isEditMode ? 'Modifica Prodotto' : 'Aggiungi Prodotto' }}
+      </button>
+
+      <button type="button" (click)="resetForm()" *ngIf="isEditMode">
+        Annulla
+      </button>
+    </div>
+  </form>
+
+  <hr />
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Prezzo</th>
+        <th>Quantità</th>
+        <th>Categoria</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }} €</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.category }}</td>
+        <td>
+          <button type="button" (click)="editProduct(product)">Modifica</button>
+          <button type="button" (click)="deleteProduct(product.id!)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
