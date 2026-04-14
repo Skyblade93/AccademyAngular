@@ -1,14 +1,10 @@
-<p>{{nome}} puzza</p>
+<div class="item">{{ user.name }} {{ user.description }} {{ user.id }}</div>
 
-<button (click)="aggiungi1()">aggiungi 1 numero</button>
-<h2>hai cliccato il bottone {{numero}} volte</h2>
-
-<input type="text" [(ngModel)]="nome" name="nome">
-
-<div class="lista">
-@for (item of lista; track item) {
-  <span class="item">{{ item }}</span>
-}
+<div>
+  <input type="text" placeholder="id" #id />
+  <button (click)="ottieniElemento(+id.value)">Ottieni elemento</button>
 </div>
 
-<button (click)="rimuovi1()">Elimina l' ultimo valore</button>
+@for (item of ListUser; track $index) {
+  <div>{{ item.name }} {{ item.description }} {{ item.id }}</div>
+}

@@ -1,39 +1,48 @@
+import { userService } from './../Service/userService';
 import { CommonModule } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UserDto } from '../Dto/UserDto';
 
 @Component({
   selector: 'app-user',
-  standalone : true,
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
-export class UserCompont implements OnInit {
+export class UserComponent implements OnInit {
+  service: userService;
+  ListUser: UserDto[] = [];
 
-  nome : string = "mario";
+  user: UserDto = new UserDto('', '', 0);
 
-  numero : number = 0;
+  userForm = new FormGroup({
+    nome: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    cognome: new FormControl(''),
+  });
 
-  lista: number[] = [];
+  ngOnInit() {}
 
-  constructor() {
+  constructor(service: userService) {
+    this.service = service;
+    service.getAll().subscribe((users) => {
+      this.ListUser = users;
+    });
   }
 
-
-   ngOnInit() {
-
+  ottieniElemento(id: number) {
+    this.service.read(id).subscribe((user) => {
+      this.user = user;
+    });
   }
-
-
-  aggiungi1(){
-   this.numero = this.numero+1;
-   this.lista.push(this.numero)
-  }
-
-
-  rimuovi1(){
-   this.lista.pop()
-  }
-
 }
