@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class userService extends AbstractService<UserDto>{
 
+export class userService extends AbstractService<UserDto>{
   constructor(http: HttpClient) {
     super(http);
     this.type = 'User';
