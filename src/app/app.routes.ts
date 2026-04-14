@@ -3,7 +3,10 @@ import { DipendenteComponent } from './dipendente-component/dipendente-component
 import { AziendaComponent } from './azienda/azienda';
 import { Carrello } from './carrello/carrello';
 import { HomeComponent } from './home/home';
+<<<<<<< HEAD
 import { DroneComponent } from './drone/drone';
+=======
+>>>>>>> 73d4986 (Modified: notifica)
 import { NotificaComponent } from './notifica/notifica';
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
