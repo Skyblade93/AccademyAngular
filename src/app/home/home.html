@@ -1,3 +1,23 @@
-<button (click)="cambiaNumero()">clicca qui per cambiare numero</button>
+<div class="main-dark">
+  <h2>Gestione Flotta Droni</h2>
 
-<a>{{numero}}</a>
+  <div class="card-form">
+    <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)">
+      <input type="text" name="modello" ngModel required placeholder="Modello Drone" class="dark-input">
+      <input type="text" name="marca" ngModel required placeholder="Marca" class="dark-input">
+      <input type="number" name="livelloBatteria" ngModel required placeholder="Batteria %" class="dark-input">
+      
+      <button type="submit" [disabled]="!droneForm.valid" class="btn-add">REGISTRA DRONE</button>
+    </form>
+  </div>
+
+  <div class="list-container">
+    <div *ngFor="let d of listaDroni" class="drone-card">
+      <div class="info">
+        <strong>{{ d.modello }}</strong> ({{ d.marca }})
+        <span>🔋 {{ d.livelloBatteria }}%</span>
+      </div>
+      <button class="btn-del" (click)="eliminaDrone(d.id)">🗑️</button>
+    </div>
+  </div>
+</div>
