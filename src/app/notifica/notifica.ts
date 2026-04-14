@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
-import { NotificaService } from '../Service/NotificaService';
 import { NotificaDto } from '../Dto/NotificaDto';
 import { DatePipe } from '@angular/common';
+import { NotificaService } from '../Service/NotificaService';
 
 @Component({
   selector: 'app-notifica',
@@ -14,7 +14,8 @@ import { DatePipe } from '@angular/common';
 export class NotificaComponent implements OnInit {
   listNotifica: NotificaDto[] = [];
 
-  constructor(private notificaService: NotificaService) {}
+  constructor(private notificaService: NotificaService) {
+  }
 
   ngOnInit(): void {
     this.caricaTutte();
