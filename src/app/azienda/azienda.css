@@ -1,0 +1,206 @@
+/* CONTENITORE PRINCIPALE */
+
+.container {
+  display: flex;
+  height: 80vh;
+  width: auto;
+  gap: 20px;
+  padding: 20px;
+  background: #f4f6f9;
+}
+
+/* COLONNA SINISTRA */
+
+.left-panel {
+  width: 30%;
+  min-width: 280px;
+}
+
+/* COLONNA DESTRA */
+
+.right-panel {
+  width: 70%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* CARD RICERCA */
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* INPUT */
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* BOTTONE */
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+/* CARD RISULTATO */
+
+.result-card {
+  margin-top: 15px;
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+}
+
+/* HEADER */
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.result-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+/* BADGE ID */
+
+.badge {
+  background: #3498db;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* DESCRIZIONE */
+
+.descrizione {
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ACTIONS */
+
+.result-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTTONI */
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+/* LISTA */
+
+.lista {
+  margin-top: 15px;
+}
+
+/* ITEM LISTA */
+
+.item {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.item:hover {
+  transform: translateX(4px);
+  background: #ecf0f1;
+}
+
+/* RISULTATO RICERCA */
+
+.result {
+  margin-top: 15px;
+  padding: 10px;
+  background: #eaf6ff;
+  border-radius: 6px;
+}
+
+/* TITOLI */
+
+h2 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+}
