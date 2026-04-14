@@ -1,5 +1,6 @@
 import { AziendaComponent } from './azienda/azienda';
 import { HomeComponent } from './home/home';
+import { NotificaComponent } from './notifica/notifica';
 import { UserComponent } from './user/user';
 import { Routes } from '@angular/router';
 
