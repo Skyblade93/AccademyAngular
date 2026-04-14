@@ -1,0 +1,115 @@
+<div class="auto-form">
+  <h2>Gestione Auto</h2>
+
+  <form [formGroup]="autoForm" (ngSubmit)="save()">
+    <label>
+      Modello
+      <input formControlName="modello" placeholder="Modello" />
+    </label>
+
+    <label>
+      Marca
+      <input formControlName="marca" placeholder="Marca" />
+    </label>
+
+    <label>
+      Targa
+      <input formControlName="targa" placeholder="Targa" />
+    </label>
+
+    <label>
+      Carburante
+      <select formControlName="carburante">
+        @for (option of carburanteOptions; track $index) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Utente associato
+      <select formControlName="userId">
+        <option [ngValue]="null">Nessun utente</option>
+        @for (user of userList; track $index) {
+          <option [ngValue]="user.id">{{ user.name }} ({{ user.id }})</option>
+        }
+      </select>
+    </label>
+
+    <div class="buttons">
+      <button type="submit" [disabled]="autoForm.invalid">
+        {{ auto.id ? 'Aggiorna auto' : 'Crea auto' }}
+      </button>
+      <button type="button" (click)="resetForm()">Azzera</button>
+    </div>
+  </form>
+</div>
+
+<div class="filter-section">
+  <h3>Filtri Ricerca Auto</h3>
+  <form [formGroup]="filterForm">
+    <label>
+      ID
+      <input formControlName="id" type="number" placeholder="ID auto" />
+    </label>
+    <label>
+      Targa
+      <input formControlName="targa" placeholder="Targa" />
+    </label>
+    <label>
+      Marca
+      <input formControlName="marca" placeholder="Marca" />
+    </label>
+    <label>
+      Modello
+      <input formControlName="modello" placeholder="Modello" />
+    </label>
+    <label>
+      Carburante
+      <select formControlName="carburante">
+        <option value="">Tutti</option>
+        @for (option of carburanteOptions; track $index) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Tipo Ricerca
+      <select formControlName="searchType">
+        <option value="exact">Esatto</option>
+        <option value="containing">Contiene</option>
+        <option value="starting">Inizia con</option>
+        <option value="ending">Finisce con</option>
+      </select>
+    </label>
+    <div class="buttons">
+      <button type="button" (click)="applyFilters()">Applica Filtri</button>
+      <button type="button" (click)="clearFilters()">Carica Tutte</button>
+    </div>
+  </form>
+</div>
+
+<div class="auto-list">
+  <h3>Elenco Auto</h3>
+  <div class="empty-message" *ngIf="listAuto.length === 0">Nessuna auto trovata.</div>
+
+  @for (item of listAuto; track $index) {
+    <div class="auto-card">
+      <div><strong>Id:</strong> {{ item.id }}</div>
+      <div><strong>Modello:</strong> {{ item.modello }}</div>
+      <div><strong>Marca:</strong> {{ item.marca }}</div>
+      <div><strong>Targa:</strong> {{ item.targa }}</div>
+      <div><strong>Carburante:</strong> {{ item.carburante }}</div>
+      <div>
+        <strong>Utente:</strong>
+        {{ item.user?.name || 'Non assegnato' }}
+        <span *ngIf="item.user">(id: {{ item.user.id }})</span>
+      </div>
+      <div class="card-actions">
+        <button type="button" class="edit-btn" (click)="editAuto(item)">Modifica</button>
+      </div>
+      <button type="button" (click)="deleteAuto(item.id)">Elimina</button>
+    </div>
+  }
+</div>
+
