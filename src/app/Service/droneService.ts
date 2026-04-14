@@ -13,16 +13,13 @@ export class DroneService extends AbstractService<DroneDto> {
     super(http);
     
     /**
-     * IMPORTANTE: 
-     * Impostiamo 'Drone' con la D MAIUSCOLA perché il tuo 
      * controller Java ha @RequestMapping("Drone")
      */
     this.type = 'Drone'; 
   }
 
   /**
-   * Se vuoi usare i metodi specifici che hai nel controller Java 
-   * (quelli che non sono nell'Abstract), puoi aggiungerli qui sotto.
+   * Se vuoi usare i metodi specifici che hai nel controller Java .
    * Ad esempio findByModello:
    */
   findByModello(modello: string) {
