@@ -40,6 +40,22 @@ export class DipendenteComponent {
     this.loadAll();
   }
 
+  chiudiPopup() {
+    this.dipendente = null;
+  }
+
+  setSingle(res: DipendenteDto) {
+    this.dipendente = res;
+
+    // 🔥 ricarica SEMPRE tutta la lista
+    this.loadAll();
+  }
+
+  setList(res: DipendenteDto[]) {
+    this.ListDipendente = res;
+    this.dipendente = null;
+  }
+
   // =========================
   // SEARCH (STILE AUTO)
   // =========================
