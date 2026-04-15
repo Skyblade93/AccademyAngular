@@ -8,8 +8,8 @@ import { CarrelloDto } from '../Dto/CarrelloDto';
   selector: 'app-carrello',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './carrello.html',
-  styleUrl: './carrello.css',
+templateUrl: './carrello-component.html',
+  styleUrl: './carrello-component.css',
 })
 export class CarrelloComponent implements OnInit {
   listCarrello: CarrelloDto[] = [];

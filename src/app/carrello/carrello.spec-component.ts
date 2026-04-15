@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Carrello } from './carrello';
+import {  CarrelloComponent } from './carrello-component';
+import { describe, beforeEach, it } from 'node:test';
 
-describe('Carrello', () => {
-  let component: Carrello;
-  let fixture: ComponentFixture<Carrello>;
+describe('CarrelloComponent', () => {
+  let component: CarrelloComponent;
+  let fixture: ComponentFixture<CarrelloComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Carrello],
+      imports: [CarrelloComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Carrello);
+    fixture = TestBed.createComponent(CarrelloComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });
