@@ -18,7 +18,7 @@ export class OrdineComponent implements OnInit{
 
   ngOnInit(){
 
- }
+}
 
   constructor(service: ordineService) {
     this.service = service;
