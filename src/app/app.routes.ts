@@ -12,10 +12,12 @@ export const routes: Routes = [
   {path : 'user', component : UserComponent},
   {path : 'home' , component: HomeComponent},
   {path : 'drone', component : DroneComponent},
+  {path : 'user', component : UserComponent},
   { path: 'auto', component: AutoComponent },
   { path: 'notifica', component: NotificaComponent },
   {path : 'dipendente' , component: DipendenteComponent},
   {path : 'azienda', component: AziendaComponent},
   { path: 'carrello', component: Carrello },
+  {path : 'home' , component: HomeComponent},
   { path: '**', redirectTo: 'home' },
 ];
