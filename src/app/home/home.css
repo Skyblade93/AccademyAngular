@@ -1,0 +1,183 @@
+/* --- Host e Font Generale --- */
+:host {
+    display: block;
+    font-family: 'Helvetica', Arial, sans-serif;
+    color: var(--color-text);
+  }
+  
+  /* --- Container con Sfondo Tecnologico --- */
+  .home-container {
+    min-height: 100vh;
+    /* Assicurati di avere l'immagine in src/assets/sfondoHome.png */
+    background-image: url('../../assets/sfondoHome.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* --- Hero Section con Overlay Blu --- */
+  .hero-section {
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* Overlay basato sul colore di background sito var(--color-bg-site) */
+    background-color: rgba(113, 146, 190, 0.85); 
+    color: var(--color-text);
+  }
+  
+  .hero-content {
+    max-width: 850px;
+    width: 100%;
+  }
+  
+  .welcome-title {
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  
+  .welcome-subtitle {
+    font-size: clamp(16px, 2vw, 19px);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  
+  /* --- Bottoni (Colore lilla EFABFF dalla root) --- */
+  .button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .btn-primary {
+    background-color: var(--color-buttons); /* EFABFF */
+    color: var(--color-text);
+    border: none;
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* --- TENDINA POPUP --- */
+  .details-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--color-popup); /* DC6BAD */
+    border-radius: 20px;
+    margin: 0 auto;
+  }
+  
+  .details-dropdown.open {
+    max-height: 600px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 40px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .remit-container h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .remit-text {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  
+  .mini-features {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .mini-features span {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 6px 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  
+  /* --- Sezione Contenuto (Card) --- */
+  .content-section {
+    flex: 1;
+    padding: 80px 20px;
+    /* Colore 8C7AA9 leggermente trasparente */
+    background-color: rgba(140, 122, 169, 0.5); 
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  .stat-card {
+    background: var(--color-popup);
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .card-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: var(--color-misc); /* 8C7AA9 */
+  }
+  
+  .btn-card {
+    background-color: var(--color-buttons); /* EFABFF */
+    color: var(--color-text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  /* --- Footer (Colore EDA2F2 dalla root) --- */
+  .home-footer {
+    text-align: center;
+    padding: 25px;
+    background-color: var(--color-footer); /* EDA2F2 */
+    color: var(--color-text);
+    font-weight: bold;
+  }
+  
+  /* --- Responsive Layout --- */
+  @media (max-width: 768px) {
+    .welcome-title { font-size: 32px; }
+    .card-container { grid-template-columns: 1fr; }
+  }

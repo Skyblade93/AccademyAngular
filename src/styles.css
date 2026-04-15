@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+/* Stili Globali del Progetto Academy */
+:root {
+  --color-buttons: #efabff; /* Bottoni*/
+  --color-navbar: #eda2f2; /*Nav */
+  --color-popup: #dc6bad; /* Popup*/
+  --color-misc: #8c7aa9; /* */
+  --color-bg-site: #7192be; /* */
+  --color-footer: #eda2f2; /*Footer */
+  --color-text: #000000; /* Testi*/
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica', Arial, sans-serif; /* */
+  background-color: var(--color-bg-site); /* */
+  color: var(--color-text); /* */
+}

@@ -1,18 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class HomeComponent {
+  welcomeTitle = 'Academy Engineering Hub';
+  welcomeMessage =
+    'Il centro di controllo unificato per la gestione di logistica, utenza e infrastrutture intelligenti.';
 
+  isDetailsOpen = signal(false); // Stato per la tendina
 
-  numero : number = 0;
+  constructor(private router: Router) {}
 
-  cambiaNumero(){
-    this.numero = this.numero +1 ;
+  toggleDetails(): void {
+    this.isDetailsOpen.update((value) => !value);
+  }
 
+  goToContacts(): void {
+    this.router.navigate(['/contact']);
   }
 }
