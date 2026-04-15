@@ -20,6 +20,13 @@ export class Carrello implements OnInit {
     this.caricaTutti();
   }
 
+  resetFiltri(idInput: HTMLInputElement, prezzoInput: HTMLInputElement): void {
+    idInput.value = '';
+    prezzoInput.value = '';
+
+    this.caricaTutti();
+  }
+
   caricaTutti(): void {
     this.carrelloService.getAll().subscribe({
       next: (data) => (this.listCarrello = data),

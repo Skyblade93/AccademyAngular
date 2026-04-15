@@ -28,14 +28,14 @@ export class CarrelloService extends AbstractService<CarrelloDto> {
   }
 
   cercaPerPrezzoTotale(prezzo: number): Observable<CarrelloDto[]> {
-    return this.http.get<CarrelloDto[]>(`${this.carrelloUrl}/cercaPerPrezzoTotale`, {
-      params: new HttpParams().set('prezzoTotale', prezzo),
+    return this.http.get<CarrelloDto[]>(`${this.getFullUrl()}/cercaPerPrezzoTotale`, {
+      params: new HttpParams().set('prezzoTotale', prezzo), // Deve corrispondere a @RequestParam("prezzoTotale")
     });
   }
 
   cercaPerQuantitaAndPrezzoTotale(qta: number, prezzo: number): Observable<CarrelloDto[]> {
     let params = new HttpParams().set('quantita', qta).set('prezzoTotale', prezzo);
-    return this.http.get<CarrelloDto[]>(`${this.carrelloUrl}/cercaPerQuantitaAndPrezzoTotale`, {
+    return this.http.get<CarrelloDto[]>(`${this.getFullUrl()}/cercaPerQuantitaAndPrezzoTotale`, {
       params,
     });
   }
