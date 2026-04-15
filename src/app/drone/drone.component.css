@@ -1,0 +1,77 @@
+/* SFONDO E FONT */
+.page-container {
+    background-color: #7192BE !important; /* Blue Grey */
+    font-family: 'Helvetica', Arial, sans-serif !important;
+    color: #000000 !important;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* CONTENITORE: 8C7AA9 */
+.form-container {
+    background-color: #8C7AA9 !important; /* Amethyst Smoke */
+    border: 2px solid #000000;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+/* IL FORM ORIZZONTALE */
+.modern-form {
+    display: flex;
+    flex-wrap: wrap; /* Fa andare a capo se non c'è spazio */
+    gap: 15px;
+    align-items: center;
+}
+
+/* GLI INPUT: EDA2F2 */
+.input-group {
+    position: relative;
+    flex: 1 1 200px; /* Larghezza minima 200px */
+    max-width: 250px; /* Impedisce che diventino troppo lunghi */
+}
+
+.input-group.battery {
+    flex: 0 0 120px; /* Più stretto per la batteria */
+}
+
+input {
+    width: 100%;
+    background-color: #EDA2F2 !important; /* Plum */
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+    padding: 12px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* BOTTONE: EFABFF */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-main {
+    background-color: #EFABFF !important; /* Mauve */
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    white-space: nowrap; /* Impedisce al testo del bottone di andare a capo */
+}
+
+/* CARD LISTA */
+.drone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.drone-card {
+    background-color: #8C7AA9 !important;
+    border: 2px solid #000000;
+    padding: 15px;
+    border-radius: 12px;
+}

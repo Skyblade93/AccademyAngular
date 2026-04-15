@@ -1,0 +1,47 @@
+<div class="page-container">
+  <div class="form-container">
+    <h3>Gestione Flotta Droni</h3>
+    <p class="subtitle">Inserisci i dati tecnici per la registrazione nel database.</p>
+    
+    <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)" class="modern-form">
+      
+      <div class="input-group">
+        <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca" required>
+        <i class="fa-solid fa-tag"></i>
+      </div>
+      
+      <div class="input-group">
+        <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello" required>
+        <i class="fa-solid fa-plane-up"></i>
+      </div>
+      
+      <div class="input-group">
+        <input type="text" name="codiceSeriale" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Codice Seriale" required>
+        <i class="fa-solid fa-barcode"></i>
+      </div>
+      
+      <div class="input-group battery">
+        <input type="number" name="batteria" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batteria %" required>
+        <i class="fa-solid fa-battery-half"></i>
+      </div>
+      
+      <div class="actions">
+        <button type="submit" class="btn-main" [disabled]="!droneForm.valid">REGISTRA DRONE</button>
+        <button type="button" (click)="annulla()" class="btn-clear">Svuota</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="drone-grid">
+    <div *ngFor="let d of listaDroni" class="drone-card">
+      <h4>{{d.marca}} {{d.modello}}</h4>
+      <p>SN: {{d.codiceSeriale}}</p>
+      <p>Batteria: {{d.livelloBatteria}}%</p>
+      <div class="card-btns">
+        <button (click)="selezionaPerModifica(d)">Modifica</button>
+        <button (click)="eliminaDrone(d.id)">Elimina</button>
+      </div>
+    </div>
+  </div>
+</div>

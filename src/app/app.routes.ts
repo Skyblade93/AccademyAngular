@@ -3,8 +3,8 @@ import { DipendenteComponent } from './dipendente/dipendente';
 import { AziendaComponent } from './azienda/azienda';
 import { Carrello } from './carrello/carrello';
 import { HomeComponent } from './home/home';
-import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica/notifica';
+import { DroneComponent } from './drone/drone.component';
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
 

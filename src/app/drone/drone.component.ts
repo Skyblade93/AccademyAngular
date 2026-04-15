@@ -8,17 +8,19 @@ import { DroneDto } from '../Dto/DroneDto';
   selector: 'app-drone',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './drone.html',
-  styleUrl: './drone.css'
+  templateUrl: './drone.component.html',
+  styleUrl: './drone.component.css'
 })
 export class DroneComponent implements OnInit {
+  // Questa è la lista che l'HTML deve scorrere con *ngFor="let d of listaDroni"
   listaDroni: DroneDto[] = [];
   
+  // Modello per il Two-Way Data Binding [(ngModel)]
   droneInModifica: DroneDto = {
     modello: '',
     marca: '',
     livelloBatteria: 0,
-    codiceSeriale: '' // <--- Inizializzato vuoto
+    codiceSeriale: ''
   };
 
   isModifica: boolean = false;
@@ -31,12 +33,15 @@ export class DroneComponent implements OnInit {
 
   caricaDroni(): void {
     this.droneService.getAll().subscribe({
-      next: (data: DroneDto[]) => { this.listaDroni = data; },
+      next: (data: DroneDto[]) => { 
+        this.listaDroni = data; 
+      },
       error: (err: any) => console.error("Errore caricamento:", err)
     });
   }
 
   selezionaPerModifica(drone: DroneDto): void {
+    // Creiamo una copia per non modificare l'originale nella lista finché non salviamo
     this.droneInModifica = { ...drone };
     this.isModifica = true;
   }
@@ -54,8 +59,8 @@ export class DroneComponent implements OnInit {
 
       call.subscribe({
         next: () => {
-          this.caricaDroni();
-          this.annulla();
+          this.caricaDroni(); // Ricarica la lista aggiornata dal DB
+          this.annulla();     // Pulisce i campi
           alert("Operazione riuscita!");
         },
         error: (err) => {
@@ -67,9 +72,12 @@ export class DroneComponent implements OnInit {
   }
 
   eliminaDrone(id: number | undefined): void {
-    if (id !== undefined && confirm("Eliminare questo drone?")) {
+    if (id !== undefined && confirm("Sei sicuro di voler eliminare questo drone?")) {
       this.droneService.delete(id).subscribe({
-        next: () => this.caricaDroni()
+        next: () => {
+          this.caricaDroni(); // Aggiorna la vista dopo l'eliminazione
+        },
+        error: (err) => console.error("Errore eliminazione:", err)
       });
     }
   }
