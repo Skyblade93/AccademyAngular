@@ -57,64 +57,73 @@ export class DipendenteComponent {
   }
 
   // =========================
-  // SEARCH (STILE AUTO)
+  // SEARCH
   // =========================
 
-  searchNome() {
-    const nome = this.dipendenteForm.value.nome ?? '';
+  filtra() {
+
+  const nome = this.dipendenteForm.value.nome?.trim() || '';
+  const cognome = this.dipendenteForm.value.cognome?.trim() || '';
+  const eta = this.dipendenteForm.value.eta;
+  const email = this.dipendenteForm.value.email?.trim() || '';
+  const telefono = this.dipendenteForm.value.telefono;
+
+  console.log('Filtri:', { nome, cognome, eta, email, telefono });
+
+  // PRIORITÀ LOGICA (come Auto)
+
+  if (email && telefono) {
+    this.service.findByEmailAndNumeroTelefono(email, telefono!)
+      .subscribe(res => {
+        this.setSingle(res);
+      });
+
+  } else if (email && eta) {
+    this.service.findByEmailAndEta(email, eta)
+      .subscribe(res => {
+        this.setSingle(res);
+      });
+
+  } else if (nome && cognome) {
+    this.service.findByNomeDipendenteAndCognomeDipendente(nome, cognome)
+      .subscribe(res => {
+        this.setSingle(res);
+      });
+
+  } else if (nome && eta) {
+    this.service.findByNomeDipendenteAndEta(nome, eta)
+      .subscribe(res => {
+        this.setSingle(res);
+      });
+
+  } else if (nome) {
     this.service.findByNomeDipendente(nome)
       .subscribe(res => {
-        this.dipendente = res;
-        this.ListDipendente = [];
+        this.setSingle(res);
       });
-  }
 
-  searchNomeCognome() {
-    const { nome, cognome } = this.dipendenteForm.value;
-    this.service.findByNomeDipendenteAndCognomeDipendente(nome ?? '', cognome ?? '')
-      .subscribe(res => {
-        this.dipendente = res;
-        this.ListDipendente = [];
-      });
-  }
-
-  searchEta() {
-    const eta = this.dipendenteForm.value.eta;
-    if (!eta) return;
-
-    this.service.findByEta(eta)
-      .subscribe(res => {
-        this.ListDipendente = res;
-        this.dipendente = null;
-      });
-  }
-
-  searchEtaMaggiore() {
-    const eta = this.dipendenteForm.value.eta;
-    if (!eta) return;
-
-    this.service.findByEtaGreaterThan(eta)
-      .subscribe(res => {
-        this.ListDipendente = res;
-        this.dipendente = null;
-      });
-  }
-
-  searchEmail() {
-    const email = this.dipendenteForm.value.email ?? '';
-    this.service.findByEmail(email)
-      .subscribe(res => {
-        this.dipendente = res;
-        this.ListDipendente = [];
-      });
-  }
-
-  searchCognome() {
-    const cognome = this.dipendenteForm.value.cognome ?? '';
+  } else if (cognome) {
     this.service.findByCognomeDipendente(cognome)
       .subscribe(res => {
-        this.dipendente = res;
-        this.ListDipendente = [];
+        this.setSingle(res);
       });
+
+  } else if (email) {
+    this.service.findByEmail(email)
+      .subscribe(res => {
+        this.setSingle(res);
+      });
+
+  } else if (eta) {
+    this.service.findByEta(eta)
+      .subscribe(res => {
+        this.setList(res);
+      });
+
+  } else {
+    // nessun filtro → carica tutto
+    this.loadAll();
   }
+}
+
 }
