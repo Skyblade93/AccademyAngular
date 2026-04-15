@@ -1,24 +1,50 @@
-.page-container { padding: 20px; font-family: 'Segoe UI', sans-serif; }
-.section-title { color: #2c3e50; margin-bottom: 20px; }
-
-.form-container { 
-  background: #f8f9fa; 
-  padding: 20px; 
-  border-radius: 8px; 
-  margin-bottom: 30px; 
-  border: 1px solid #dee2e6;
+/* SFONDO GENERALE */
+.page-container {
+    background-color: #FEFEFA !important; /* Porcelain */
+    padding: 20px;
+    min-height: 100vh;
 }
 
-.form-group { display: flex; gap: 10px; flex-wrap: wrap; }
-.form-group input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 150px; }
+/* TITOLO GESTIONE DRONI */
+h2 {
+    color: #8C7AA9 !important; /* Amethyst Smoke */
+    font-family: 'Segoe UI', sans-serif;
+    border-bottom: 2px solid #7192BE;
+    padding-bottom: 10px;
+}
 
-.btn-save { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-.btn-save:disabled { background: #6c757d; cursor: not-allowed; }
-.btn-cancel { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+/* INPUT DEL FORM */
+input {
+    border: 2px solid #7192BE !important; /* Blue Grey */
+    border-radius: 8px;
+    padding: 8px;
+    margin-right: 10px;
+    color: #666666; /* Dim Grey */
+}
 
-.drone-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-.drone-card { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.drone-info h3 { margin: 0 0 10px 0; color: #007bff; }
-.card-actions { margin-top: 15px; display: flex; gap: 10px; }
-.btn-edit { background: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-.btn-delete { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+/* BOTTONE REGISTRA (Petal Pink) */
+.btn-save, .btn-register {
+    background-color: #DC6BAD !important; /* Petal Pink */
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* CARD (Sfondo Mauve chiaro o Plum) */
+.drone-card {
+    background-color: #EFABFF !important; /* Mauve */
+    border: 1px solid #EDA2F2;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 20px;
+    color: #333333;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+}
+
+/* TESTO NELLE CARD (Grigio Scuro) */
+.drone-card p, .drone-card h3 {
+    color: #666666 !important; /* Dim Grey */
+}

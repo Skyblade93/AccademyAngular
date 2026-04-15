@@ -1,45 +1,26 @@
 <div class="page-container">
-  <h2 class="section-title">Drone Control Center</h2>
+  <h2>Gestione Droni</h2>
 
   <div class="form-container">
-    <h3>{{ isModifica ? 'Modifica Missione' : 'Nuova Missione' }}</h3>
     <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)">
-      <div class="form-group">
-        <label>Marca</label>
-        <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" required placeholder="Es: Sony">
-        
-        <label>Modello</label>
-        <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" required placeholder="Es: Pyro">
-        
-        <label>Codice Seriale (Obbligatorio)</label>
-        <input type="text" name="codiceSeriale" [(ngModel)]="droneInModifica.codiceSeriale" required placeholder="Es: SN-999-X">
-        
-        <label>Batteria (%)</label>
-        <input type="number" name="batteria" [(ngModel)]="droneInModifica.livelloBatteria" required min="0" max="100">
-        
-        <div class="button-row">
-          <button type="submit" class="btn-register" [disabled]="!droneForm.valid">
-            {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
-          </button>
-          <button type="button" *ngIf="isModifica" (click)="annulla()" class="btn-cancel">ANNULLA</button>
-        </div>
-      </div>
+      <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca" required>
+      <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello" required>
+      <input type="text" name="seriale" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Codice Seriale" required>
+      <input type="number" name="batteria" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batteria %" required>
+      
+      <button type="submit" class="btn-save" [disabled]="!droneForm.valid">
+        {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
+      </button>
     </form>
   </div>
 
-  <hr>
-
   <div class="drone-grid">
     <div class="drone-card" *ngFor="let drone of listaDroni">
-      <div class="card-content">
-        <h4>{{ drone.marca }} - {{ drone.modello }}</h4>
-        <p><strong>SN:</strong> {{ drone.codiceSeriale }}</p>
-        <p><strong>Status:</strong> {{ drone.livelloBatteria }}% Battery</p>
-      </div>
-      <div class="card-btns">
-        <button (click)="selezionaPerModifica(drone)" class="btn-edit">Edit</button>
-        <button (click)="eliminaDrone(drone.id)" class="btn-delete">Delete</button>
-      </div>
+      <h3>{{ drone.marca }} {{ drone.modello }}</h3>
+      <p>SN: {{ drone.codiceSeriale }}</p>
+      <p>Batteria: {{ drone.livelloBatteria }}%</p>
+      <button (click)="selezionaPerModifica(drone)">Modifica</button>
+      <button (click)="eliminaDrone(drone.id)" class="btn-delete">Elimina</button>
     </div>
   </div>
 </div>
