@@ -11,7 +11,7 @@ import { CarrelloDto } from '../Dto/CarrelloDto';
   templateUrl: './carrello.html',
   styleUrl: './carrello.css',
 })
-export class Carrello implements OnInit {
+export class CarrelloComponent implements OnInit {
   listCarrello: CarrelloDto[] = [];
 
   constructor(private carrelloService: CarrelloService) {}

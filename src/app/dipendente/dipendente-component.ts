@@ -8,8 +8,8 @@ import { DipendenteDto } from '../Dto/DipendenteDto';
   selector: 'app-dipendente',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './dipendente.html',
-  styleUrl: './dipendente.css',
+  templateUrl: './dipendente-component.html',
+  styleUrl: './dipendente-component.css',
 })
 export class DipendenteComponent {
 

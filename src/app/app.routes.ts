@@ -1,12 +1,12 @@
 import { ContactComponent } from './contact/contact';
-import { DipendenteComponent } from './dipendente/dipendente';
+import { DipendenteComponent } from './dipendente/dipendente-component';
 import { AziendaComponent } from './azienda/azienda';
-import { Carrello } from './carrello/carrello';
 import { HomeComponent } from './home-component/home-component';
 import { DroneComponent } from './drone/drone';
-import { NotificaComponent } from './notifica/notifica';
+import { NotificaComponent } from './notifica-component/notifica-component';
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
+import { CarrelloComponent } from './carrello/carrello-component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: 'notifica', component: NotificaComponent },
   {path : 'dipendente' , component: DipendenteComponent},
   {path : 'azienda', component: AziendaComponent},
-  { path: 'carrello', component: Carrello },
+  { path: 'carrello', component: CarrelloComponent },
   {path : 'home' , component: HomeComponent},
   {path : 'contact' , component: ContactComponent},
   { path: '**', redirectTo: 'home' },
