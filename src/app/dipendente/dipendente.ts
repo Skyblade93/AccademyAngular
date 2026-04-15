@@ -40,9 +40,15 @@ export class DipendenteComponent {
     this.loadAll();
   }
 
+  chiudiPopup() {
+    this.dipendente = null;
+  }
+
   setSingle(res: DipendenteDto) {
     this.dipendente = res;
-    this.ListDipendente = [];
+
+    // 🔥 ricarica SEMPRE tutta la lista
+    this.loadAll();
   }
 
   setList(res: DipendenteDto[]) {

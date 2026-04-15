@@ -22,14 +22,21 @@
 
   </div>
 
-  <!-- RISULTATO SINGOLO -->
-  <div class="single-card" *ngIf="dipendente">
-    <h3>Risultato</h3>
-    <p>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</p>
+<!-- POPUP RISULTATO -->
+<div class="popup-overlay" *ngIf="dipendente">
+  <div class="popup">
+
+    <h3>Risultato ricerca</h3>
+
+    <p><b>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</b></p>
     <p>{{ dipendente.email }}</p>
     <p>{{ dipendente.eta }} anni</p>
     <p>{{ dipendente.numeroTelefono }}</p>
+
+    <button (click)="chiudiPopup()">Chiudi</button>
+
   </div>
+</div>
 
   <!-- LISTA -->
   <div class="list-section">
@@ -64,4 +71,8 @@
 
 </div>
 
+</div>
+
+<div class="footer">
+  © 2026 - Gestionale Dipendenti
 </div>
