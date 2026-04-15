@@ -24,7 +24,7 @@ export class AutoComponent implements OnInit {
   searchResults: AutoDto[] = [];
   carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'ELETTRICA', 'IBRIDA'];
 
-  auto: AutoDto = new AutoDto('', '', '', 'BENZINA', null);
+  auto: AutoDto = new AutoDto('', '', '', '', null);
 
   autoForm = new FormGroup({
     modello: new FormControl('', {
@@ -39,7 +39,7 @@ export class AutoComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    carburante: new FormControl('BENZINA', {
+    carburante: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -68,7 +68,7 @@ filterForm!: FormGroup;
     marca: new FormControl(''),
     modello: new FormControl(''),
     carburante: new FormControl(''),
-    searchType: new FormControl('exact'),
+    searchType: new FormControl(''),
   });
     this.loadAll();
     this.loadUsers();
@@ -116,7 +116,9 @@ filterForm!: FormGroup;
       userId: number | null;
     };
 
-    const selectedUser = this.userList.find((u) => u.id === formValue.userId) ?? null;
+    const selectedUser = formValue.userId === 0
+      ? null
+      : this.userList.find((u) => u.id === formValue.userId) ?? null;
 
     // Aggiorna l'oggetto auto esistente con i valori del form
     this.auto.modello = formValue.modello;
@@ -136,12 +138,12 @@ filterForm!: FormGroup;
   }
 
   resetForm() {
-    this.auto = new AutoDto('', '', '', 'BENZINA', null);
+    this.auto = new AutoDto('', '', '', '', null);
     this.autoForm.reset({
       modello: '',
       marca: '',
       targa: '',
-      carburante: 'BENZINA',
+      carburante: '',
       userId: null,
     });
   }
