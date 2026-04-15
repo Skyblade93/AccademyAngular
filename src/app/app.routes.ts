@@ -1,3 +1,4 @@
+import { ContactComponent } from './contact/contact';
 import { DipendenteComponent } from './dipendente/dipendente';
 import { AziendaComponent } from './azienda/azienda';
 import { Carrello } from './carrello/carrello';
@@ -19,5 +20,6 @@ export const routes: Routes = [
   {path : 'azienda', component: AziendaComponent},
   { path: 'carrello', component: Carrello },
   {path : 'home' , component: HomeComponent},
+  {path : 'contact' , component: ContactComponent},
   { path: '**', redirectTo: 'home' },
 ];
