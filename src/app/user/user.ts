@@ -1,7 +1,13 @@
 import { userService } from './../Service/userService';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { UserDto } from '../Dto/UserDto';
 
 @Component({
@@ -82,7 +88,6 @@ ottieniElemento(id: number) {
   ordinaListUser(){
     this.UserSignal.update((users) => users.sort((a, b) => a.id - b.id));
   }
-
 
 /*/* Metodo per gestire la chiusura del popup */
 togglePopup() {
