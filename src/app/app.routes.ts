@@ -1,5 +1,5 @@
 import { ContactComponent } from './contact/contact';
-import { DipendenteComponent } from './dipendente/dipendente-component';
+import { DipendenteComponent } from './dipendente-component/dipendente-component';
 import { AziendaComponent } from './azienda/azienda';
 import { Carrello } from './carrello/carrello';
 import { HomeComponent } from './home/home';
