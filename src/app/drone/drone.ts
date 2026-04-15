@@ -14,11 +14,11 @@ import { DroneDto } from '../Dto/DroneDto';
 export class DroneComponent implements OnInit {
   listaDroni: DroneDto[] = [];
   
-  // Inizializziamo l'oggetto per il form
   droneInModifica: DroneDto = {
     modello: '',
     marca: '',
-    livelloBatteria: 0
+    livelloBatteria: 0,
+    codiceSeriale: '' // <--- Inizializzato vuoto
   };
 
   isModifica: boolean = false;
@@ -31,10 +31,7 @@ export class DroneComponent implements OnInit {
 
   caricaDroni(): void {
     this.droneService.getAll().subscribe({
-      next: (data: DroneDto[]) => {
-        this.listaDroni = data;
-        console.log("Droni caricati nel tuo componente:", data);
-      },
+      next: (data: DroneDto[]) => { this.listaDroni = data; },
       error: (err: any) => console.error("Errore caricamento:", err)
     });
   }
@@ -45,32 +42,32 @@ export class DroneComponent implements OnInit {
   }
 
   annulla(): void {
-    this.droneInModifica = { modello: '', marca: '', livelloBatteria: 0 };
+    this.droneInModifica = { modello: '', marca: '', livelloBatteria: 0, codiceSeriale: '' };
     this.isModifica = false;
   }
 
   salvaDrone(droneForm: any): void {
     if (droneForm.valid) {
-      if (this.isModifica) {
-        this.droneService.update(this.droneInModifica).subscribe({
-          next: () => {
-            this.caricaDroni();
-            this.annulla();
-          }
-        });
-      } else {
-        this.droneService.insert(this.droneInModifica).subscribe({
-          next: () => {
-            this.caricaDroni();
-            this.annulla();
-          }
-        });
-      }
+      const call = this.isModifica 
+        ? this.droneService.update(this.droneInModifica)
+        : this.droneService.insert(this.droneInModifica);
+
+      call.subscribe({
+        next: () => {
+          this.caricaDroni();
+          this.annulla();
+          alert("Operazione riuscita!");
+        },
+        error: (err) => {
+          console.error(err);
+          alert("Errore nel salvataggio! Controlla il codice seriale.");
+        }
+      });
     }
   }
 
   eliminaDrone(id: number | undefined): void {
-    if (id !== undefined && confirm("Eliminare definitivamente questo drone?")) {
+    if (id !== undefined && confirm("Eliminare questo drone?")) {
       this.droneService.delete(id).subscribe({
         next: () => this.caricaDroni()
       });
