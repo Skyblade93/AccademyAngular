@@ -1,0 +1,229 @@
+/* RESET E OTTIMIZZAZIONE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --primary: #3498db;
+  --success: #2ecc71;
+  --danger: #e74c3c;
+  --warning: #f1c40f;
+  --dark: #2c3e50;
+  --light: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f1f5f9;
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 10px;
+}
+
+/* CONTAINER PRINCIPALE */
+.contact-container {
+  padding: clamp(15px, 5vw, 30px); /* Padding dinamico */
+  max-width: 1500px;
+  margin: 10px auto;
+  background: rgb(173, 173, 225);
+  border-radius: 0px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
+  width: 100%;
+}
+
+/* HEADER & SEARCH BAR */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Fondamentale per il responsive */
+  gap: 15px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  width: 100%; /* Default mobile-first */
+  max-width: 400px; /* Non troppo largo su desktop */
+}
+
+.search-bar input {
+  flex: 1; /* Prende lo spazio disponibile */
+  padding: 10px 15px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  min-width: 0; /* Previene overflow */
+}
+
+.search-bar input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* FORM STYLE */
+.form-card {
+  background: var(--light);
+  padding: clamp(15px, 4vw, 25px);
+  border-radius: 12px;
+  margin-bottom: 35px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-grid {
+  display: grid;
+  /* Griglia automatica: si adatta senza media query statiche */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* BUTTONS */
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* Centra il contenuto */
+  gap: 8px;
+  transition: 0.2s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  white-space: nowrap; /* Evita testi spezzati */
+}
+
+.btn-save {
+  background: var(--success);
+  color: white;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.btn-save:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-search { background: var(--dark); color: white; }
+.btn-reset { background: #95a5a6; color: white; }
+.btn-clear { background: var(--primary); color: white; font-size: 0.8rem; padding: 5px 12px; }
+.btn-cancel { background: #7f8c8d; color: white; margin-top: 10px; width: 100%; }
+
+.actions-cell {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: nowrap; /* Mantiene i tasti sulla stessa riga finché può */
+}
+
+.btn-edit { background: var(--warning); color: #222; padding: 6px 10px; }
+.btn-delete { background: var(--danger); color: white; padding: 6px 10px; }
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* TABLE - IL CUORE DEL RESPONSIVE */
+.table-wrapper {
+  background: rgba(173, 173, 225, 0.2);
+  border-radius: 10px;
+  border: 1px solid #eee;
+  overflow-x: auto; /* Attiva lo scroll orizzontale su mobile */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
+  -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px; /* Impedisce alla tabella di schiacciarsi troppo */
+}
+
+th {
+  background: #f1f5f9;
+  color: var(--dark);
+  padding: 15px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+td {
+  padding: 15px;
+  border-bottom: 1px solid #f1f5f9;
+  background: rgba(255, 255, 255, 0.5); /* Leggera trasparenza per far vedere il fondo */
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* MEDIA QUERIES AGGIUNTIVE */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-bar {
+    max-width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* I bottoni di azione in tabella rimangono leggibili */
+  .btn-edit, .btn-delete {
+    padding: 10px 12px;
+  }
+}
+
+/* OTTIMIZZAZIONE SCROLLBAR */
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--dark);
+  border-radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  body { background-color: #1a1a2e; }
+}
