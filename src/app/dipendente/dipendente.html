@@ -1,81 +1,49 @@
-<div class="container">
+<div class="dipendente-container">
 
-  <h1>Gestione Dipendenti</h1>
+  <!-- FORM INSERIMENTO / RICERCA -->
+  <div class="form-section">
 
-  <!-- 🔹 FORM RICERCA -->
-  <form [formGroup]="dipendenteForm" class="form-box">
+    <h2>Gestione Dipendenti</h2>
 
-    <div class="row">
-      <input type="text" formControlName="nome" placeholder="Nome dipendente">
-      <input type="text" formControlName="cognome" placeholder="Cognome dipendente">
-    </div>
+    <form [formGroup]="dipendenteForm" class="form">
 
-    <div class="row">
-      <input type="number" #eta placeholder="Età">
-      <input type="email" #email placeholder="Email">
-    </div>
+      <input formControlName="nome" placeholder="Nome">
+      <input formControlName="cognome" placeholder="Cognome">
+      <input formControlName="eta" type="number" placeholder="Età">
+      <input formControlName="email" placeholder="Email">
+      <input formControlName="telefono" type="number" placeholder="Telefono">
 
-    <div class="row">
-      <input type="number" #telefono placeholder="Telefono">
-    </div>
+      <div class="buttons">
+        <button type="button" (click)="searchNome()">Nome</button>
+        <button type="button" (click)="searchNomeCognome()">Nome + Cognome</button>
+        <button type="button" (click)="searchEta()">Età</button>
+        <button type="button" (click)="searchEtaMaggiore()">Età ></button>
+        <button type="button" (click)="searchEmail()">Email</button>
+        <button type="button" (click)="searchCognome()">Cognome</button>
+        <button type="button" (click)="reset()">Reset</button>
+      </div>
 
-  </form>
-
-  <!-- 🔹 BOTTONI RICERCA -->
-  <div class="buttons">
-
-    <button (click)="cercaPerNome(dipendenteForm.value.nome || '')">
-      Nome
-    </button>
-
-    <button (click)="cercaNomeECognome(dipendenteForm.value.nome || '', dipendenteForm.value.cognome || '')">
-      Nome + Cognome
-    </button>
-
-    <button (click)="cercaPerEta(+eta.value)">
-      Età
-    </button>
-
-    <button (click)="cercaEtaMaggiore(+eta.value)">
-      Età >
-    </button>
-
-    <button (click)="cercaPerEmail(email.value || '')">
-      Email
-    </button>
-
-    <button (click)="cercaEmailEta(email.value || '', +eta.value)">
-      Email + Età
-    </button>
-
-    <button (click)="cercaEmailTelefono(email.value || '', +telefono.value)">
-      Email + Telefono
-    </button>
-
-    <button (click)="cercaPerCognome(dipendenteForm.value.cognome || '')">
-      Cognome
-    </button>
+    </form>
 
   </div>
 
-  <!-- 🔹 RISULTATO SINGOLO -->
-  <div class="card" *ngIf="dipendente">
-    <h2>Dipendente trovato</h2>
-    <p><b>Nome:</b> {{ dipendente.nomeDipendente }}</p>
-    <p><b>Cognome:</b> {{ dipendente.cognomeDipendente }}</p>
-    <p><b>Età:</b> {{ dipendente.eta }}</p>
-    <p><b>Email:</b> {{ dipendente.email }}</p>
-    <p><b>Telefono:</b> {{ dipendente.numeroTelefono }}</p>
+  <!-- RISULTATO SINGOLO -->
+  <div class="single-card" *ngIf="dipendente">
+    <h3>Risultato</h3>
+    <p>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</p>
+    <p>{{ dipendente.email }}</p>
+    <p>{{ dipendente.eta }} anni</p>
   </div>
 
-  <!-- 🔹 LISTA DIPENDENTI -->
-  <div class="list">
-    <h2>Lista Dipendenti</h2>
+  <!-- LISTA -->
+  <div class="list-section">
+
+    <h3>Lista Dipendenti</h3>
 
     <div class="card" *ngFor="let d of ListDipendente">
-      <p><b>{{ d.nomeDipendente }} {{ d.cognomeDipendente }}</b></p>
+      <b>{{ d.nomeDipendente }} {{ d.cognomeDipendente }}</b>
       <p>{{ d.email }}</p>
-      <p>Età: {{ d.eta }}</p>
+      <span>{{ d.eta }} anni</span>
     </div>
 
   </div>
