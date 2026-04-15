@@ -1,39 +1,53 @@
+import { userService } from './../Service/userService';
 import { CommonModule } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserDto } from '../Dto/UserDto';
 
 @Component({
   selector: 'app-user',
-  standalone : true,
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule,ReactiveFormsModule],
   templateUrl: './user.html',
-  styleUrl: './user.css',
+  styleUrls: ['./user.css'],
 })
-export class UserCompont implements OnInit {
+export class UserComponent implements OnInit {
 
-  nome : string = "mario";
+  service: userService;
+  ListUser: UserDto[] = [];
 
-  numero : number = 0;
+  user: UserDto = new UserDto('','',0);
 
-  lista: number[] = [];
-
-  constructor() {
-  }
-
-
-   ngOnInit() {
-
-  }
-
-
-  aggiungi1(){
-   this.numero = this.numero+1;
-   this.lista.push(this.numero)
-  }
+userForm = new FormGroup({
+  nome: new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required]
+  }),
+  cognome: new FormControl('')
+});
 
 
-  rimuovi1(){
-   this.lista.pop()
-  }
+ngOnInit(){
 
 }
+
+  constructor(service: userService) {
+    this.service = service;
+    service.getAll().subscribe(users => {
+      this.ListUser = users;
+    });
+
+  }
+
+
+
+ottieniElemento(id: number) {
+  this.service.read(id).subscribe(user => {
+  this.user = user;
+
+})
+}
+
+
+}
+

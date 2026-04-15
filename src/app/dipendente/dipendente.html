@@ -1,0 +1,51 @@
+<div class="dipendente-container">
+
+  <!-- FORM INSERIMENTO / RICERCA -->
+  <div class="form-section">
+
+    <h2>Gestione Dipendenti</h2>
+
+    <form [formGroup]="dipendenteForm" class="form">
+
+      <input formControlName="nome" placeholder="Nome">
+      <input formControlName="cognome" placeholder="Cognome">
+      <input formControlName="eta" type="number" placeholder="Età">
+      <input formControlName="email" placeholder="Email">
+      <input formControlName="telefono" type="number" placeholder="Telefono">
+
+      <div class="buttons">
+        <button type="button" (click)="searchNome()">Nome</button>
+        <button type="button" (click)="searchNomeCognome()">Nome + Cognome</button>
+        <button type="button" (click)="searchEta()">Età</button>
+        <button type="button" (click)="searchEtaMaggiore()">Età ></button>
+        <button type="button" (click)="searchEmail()">Email</button>
+        <button type="button" (click)="searchCognome()">Cognome</button>
+        <button type="button" (click)="reset()">Reset</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- RISULTATO SINGOLO -->
+  <div class="single-card" *ngIf="dipendente">
+    <h3>Risultato</h3>
+    <p>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</p>
+    <p>{{ dipendente.email }}</p>
+    <p>{{ dipendente.eta }} anni</p>
+  </div>
+
+  <!-- LISTA -->
+  <div class="list-section">
+
+    <h3>Lista Dipendenti</h3>
+
+    <div class="card" *ngFor="let d of ListDipendente">
+      <b>{{ d.nomeDipendente }} {{ d.cognomeDipendente }}</b>
+      <p>{{ d.email }}</p>
+      <span>{{ d.eta }} anni</span>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,80 @@
+<div class="container">
+
+  <!-- COLONNA SINISTRA -->
+  <div class="left-panel">
+
+    <h2>Ricerca Azienda</h2>
+
+    <div class="card">
+
+      <input
+        type="number"
+        placeholder="Inserisci ID azienda"
+        #id
+      />
+
+      <button class="btn-secondary" (click)="ottieniAzienda(+id.value)">
+        Cerca
+      </button>
+
+    </div>
+
+    @if (azienda) {
+
+  <div class="result-card">
+
+    <div class="result-header">
+      <span class="badge">ID {{ azienda.id }}</span>
+      <h3>{{ azienda.nomeAzienda }}</h3>
+    </div>
+
+    <div class="result-body">
+
+      <p class="descrizione">
+        {{ azienda.descrizioneAzienda }}
+      </p>
+
+    </div>
+
+    <div class="result-actions">
+
+      <button class="btn-secondary">
+        Modifica
+      </button>
+
+      <button class="btn-danger">
+        Elimina
+      </button>
+
+    </div>
+
+  </div>
+
+}
+
+  </div>
+
+  <!-- COLONNA DESTRA -->
+  <div class="right-panel">
+
+    <h2>Lista Aziende</h2>
+
+    <div class="lista">
+
+      @if (ListAzienda.length === 0) {
+        <p>Nessuna azienda trovata</p>
+      }
+
+      @for (item of ListAzienda; track item.id) {
+
+        <div class="item">
+          {{item.id}}: {{ item.nomeAzienda }}
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

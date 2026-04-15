@@ -1,17 +1,36 @@
+/* NAVBAR CONTAINER */
 .nav {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background-color: grey;
-  color: #fff;
   display: flex;
-  padding: 0 16px;
   align-items: center;
-  height: 56px;
-  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+  background: #1e293b; /* blu scuro moderno */
+  padding: 12px 20px;
+  gap: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-div{
-  margin-right: 15px;
+/* LINK */
+.nav a {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+/* HOVER */
+.nav a:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+/* LINK ATTIVO (Angular router) */
+.nav a.active {
+  background: #3b82f6;
   color: white;
+}
+
+/* SPAZIO TRA GLI ITEM */
+.nav div {
+  display: flex;
 }

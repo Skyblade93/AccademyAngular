@@ -1,9 +1,22 @@
-import { HomeComponent } from './home/home';
-import { UserCompont } from './user/user';
 import { Routes } from '@angular/router';
+import { DipendenteComponent } from './dipendente/dipendente';
+import { AziendaComponent } from './azienda/azienda';
+import { Carrello } from './carrello/carrello';
+import { HomeComponent } from './home/home';
+import { NotificaComponent } from './notifica/notifica';
+import { DroneComponent } from './drone/drone.component';
+import { UserComponent } from './user/user';
+import { AutoComponent } from './auto-component/auto-component';
 
 export const routes: Routes = [
-  {path : 'user', component : UserCompont},
-  {path : 'home' , component: HomeComponent},
-  {path : '**' , redirectTo:'home'}
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'drone', component: DroneComponent },
+  { path: 'auto', component: AutoComponent },
+  { path: 'notifica', component: NotificaComponent },
+  { path: 'dipendente', component: DipendenteComponent },
+  { path: 'azienda', component: AziendaComponent },
+  { path: 'user', component: UserComponent },
+  { path: 'carrello', component: Carrello },
+  { path: '**', redirectTo: 'home' } // Sempre per ultima!
 ];
