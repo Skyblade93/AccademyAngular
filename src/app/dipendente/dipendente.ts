@@ -1,112 +1,104 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DipendenteService } from '../Service/dipendenteService';
 import { DipendenteDto } from '../Dto/DipendenteDto';
 
 @Component({
   selector: 'app-dipendente',
   standalone: true,
-  imports: [FormsModule, CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dipendente.html',
   styleUrl: './dipendente.css',
 })
 export class DipendenteComponent {
 
-  service: DipendenteService;
   ListDipendente: DipendenteDto[] = [];
+  dipendente: DipendenteDto | null = null;
 
-  dipendente: DipendenteDto = new DipendenteDto(0,'','',0,'',0);
+  constructor(private service: DipendenteService) {
+    this.loadAll();
+  }
 
   dipendenteForm = new FormGroup({
-    nome: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required]
-    }),
-    cognome: new FormControl('')
+    nome: new FormControl(''),
+    cognome: new FormControl(''),
+    eta: new FormControl<number | null>(null),
+    email: new FormControl(''),
+    telefono: new FormControl<number | null>(null),
   });
 
-  constructor(service: DipendenteService) { 
-    this.service = service;
-    service.getAll().subscribe(dipendente => {
-      this.ListDipendente = dipendente;
+  loadAll() {
+    this.service.getAll().subscribe(res => {
+      this.ListDipendente = res;
     });
-
-    service.getAllDipendenti().subscribe(res => {
-      console.log(res);
-    });
-    
-  }
-  
-
-  ottieniElemento(id: number) {
-      this.service.read(id).subscribe(dipendente => {
-      this.dipendente = dipendente;
-    })
   }
 
-  cercaNomeCognomeTelefono(nome: string, cognome: string, telefono: number) {
-    this.service
-      .findByNomeDipendenteAndCognomeDipendenteAndNumeroTelefono(nome, cognome, telefono)
+  reset() {
+    this.dipendenteForm.reset();
+    this.dipendente = null;
+    this.loadAll();
+  }
+
+  // =========================
+  // SEARCH (STILE AUTO)
+  // =========================
+
+  searchNome() {
+    const nome = this.dipendenteForm.value.nome ?? '';
+    this.service.findByNomeDipendente(nome)
       .subscribe(res => {
         this.dipendente = res;
+        this.ListDipendente = [];
       });
   }
 
-  cercaNomeECognome(nome: string, cognome: string) {
-    this.service
-      .findByNomeDipendenteAndCognomeDipendente(nome, cognome)
+  searchNomeCognome() {
+    const { nome, cognome } = this.dipendenteForm.value;
+    this.service.findByNomeDipendenteAndCognomeDipendente(nome ?? '', cognome ?? '')
       .subscribe(res => {
         this.dipendente = res;
+        this.ListDipendente = [];
       });
   }
 
-  cercaPerEta(eta: number) {
-  this.service.findByEta(eta).subscribe(res => {
-    this.ListDipendente = res;
-  });
-}
+  searchEta() {
+    const eta = this.dipendenteForm.value.eta;
+    if (!eta) return;
 
-cercaEtaMaggiore(eta: number) {
-  this.service.findByEtaGreaterThan(eta).subscribe(res => {
-    this.ListDipendente = res;
-  });
-}
+    this.service.findByEta(eta)
+      .subscribe(res => {
+        this.ListDipendente = res;
+        this.dipendente = null;
+      });
+  }
 
-cercaPerEmail(email: string) {
-  this.service.findByEmail(email).subscribe(res => {
-    this.dipendente = res;
-  });
-}
+  searchEtaMaggiore() {
+    const eta = this.dipendenteForm.value.eta;
+    if (!eta) return;
 
-cercaEmailEta(email: string, eta: number) {
-  this.service.findByEmailAndEta(email, eta).subscribe(res => {
-    this.dipendente = res;
-  });
-}
+    this.service.findByEtaGreaterThan(eta)
+      .subscribe(res => {
+        this.ListDipendente = res;
+        this.dipendente = null;
+      });
+  }
 
-cercaNomeEta(nome: string, eta: number) {
-  this.service.findByNomeDipendenteAndEta(nome, eta).subscribe(res => {
-    this.dipendente = res;
-  });
-}
+  searchEmail() {
+    const email = this.dipendenteForm.value.email ?? '';
+    this.service.findByEmail(email)
+      .subscribe(res => {
+        this.dipendente = res;
+        this.ListDipendente = [];
+      });
+  }
 
-cercaPerCognome(cognome: string) {
-  this.service.findByCognomeDipendente(cognome).subscribe(res => {
-    this.dipendente = res;
-  });
-}
-
-cercaEmailTelefono(email: string, telefono: number) {
-  this.service.findByEmailAndNumeroTelefono(email, telefono).subscribe(res => {
-    this.dipendente = res;
-  });
-}
-
-cercaPerNome(nome: string) {
-  this.service.findByNomeDipendente(nome).subscribe(res => {
-    this.dipendente = res;
-  });
-}
-
+  searchCognome() {
+    const cognome = this.dipendenteForm.value.cognome ?? '';
+    this.service.findByCognomeDipendente(cognome)
+      .subscribe(res => {
+        this.dipendente = res;
+        this.ListDipendente = [];
+      });
+  }
 }

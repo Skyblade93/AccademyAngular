@@ -3,6 +3,14 @@
 <div class="item"> {{user.name}} {{user.description}}  {{user.id}}</div>
 
 
+@if (isPopupVisible) {
+<div class="overlay" >
+  <div class="popup">
+    <h2>User non trovato</h2>
+    <button (click)="togglePopup()">Chiudi</button>
+  </div>
+</div>
+}
 <div>
   <input type="text" placeholder="id" #id>
   <button (click)="ottieniElemento(+id.value)">Ottieni elemento</button>
@@ -10,7 +18,23 @@
 
 
 
-@for (item of ListUser; track $index) {
+@for (item of UserSignal(); track $index) {
 
-  <div> {{item.name}} {{item.description}}  {{item.id}}</div>
+  <div> {{item.name}} {{item.description}}  {{item.id}}  <button (click)="deleteUser(item.id)">Elimina</button></div>
 }
+
+
+
+
+<div>
+  <form action="" method="post"></form>
+  <div> Inserisci Un nuovo utente</div>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <input placeholder="nome" type="text" formControlName="nome">
+  <input placeholder="descrizione" type="text" formControlName="descrizione">
+  <button type="submit">Salva Persona</button>
+</form>
+
+<div>{{ count() }}</div>
+</div>
