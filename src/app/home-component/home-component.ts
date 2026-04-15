@@ -3,7 +3,7 @@
 @Component({
   selector: 'app-home',
   imports: [],
-  templateUrl: './home.html',
+  templateUrl: './home-component.html',
   styleUrl: './home.css',
 })
 export class HomeComponent {

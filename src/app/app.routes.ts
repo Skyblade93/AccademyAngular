@@ -2,7 +2,7 @@ import { ContactComponent } from './contact/contact';
 import { DipendenteComponent } from './dipendente/dipendente';
 import { AziendaComponent } from './azienda/azienda';
 import { Carrello } from './carrello/carrello';
-import { HomeComponent } from './home/home';
+import { HomeComponent } from './home-component/home-component';
 import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica/notifica';
 import { UserComponent } from './user/user';
