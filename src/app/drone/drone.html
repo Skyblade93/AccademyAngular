@@ -1,49 +1,41 @@
-<div class="drone-dashboard">
-  <header class="dashboard-header">
-    <h1>Drone Control Center</h1>
-    <div class="system-status">
-      <span class="dot"></span> Online
+<div class="page-container">
+    <h2 class="section-title">Gestione Parco Droni</h2>
+
+    <div class="form-container">
+        <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)">
+            <div class="form-group">
+                <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca (es. DJI)" required>
+                <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello (es. Mavic)" required>
+                <input type="number" name="batteria" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batteria %" required>
+                
+                <button type="submit" class="btn-save">
+                    {{ isModifica ? 'Aggiorna Drone' : 'Aggiungi Drone' }}
+                </button>
+                <button type="button" *ngIf="isModifica" (click)="annulla()" class="btn-cancel">Annulla</button>
+            </div>
+        </form>
     </div>
-  </header>
 
-  <div class="main-content">
-    <aside class="control-panel">
-      <h2>{{ isModifica ? 'Modifica Unità' : 'Nuova Missione' }}</h2>
-      <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)">
-        <div class="form-field">
-          <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" required placeholder="Modello velivolo">
-        </div>
-        <div class="form-field">
-          <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" required placeholder="Produttore">
-        </div>
-        <div class="form-field">
-          <input type="number" name="livelloBatteria" [(ngModel)]="droneInModifica.livelloBatteria" required placeholder="Batteria %">
-        </div>
-        
-        <button type="submit" [disabled]="!droneForm.valid" class="btn-action">
-          {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
-        </button>
-        <button type="button" *ngIf="isModifica" (click)="annulla()" class="btn-cancel">X</button>
-      </form>
-    </aside>
+    <hr>
 
-    <section class="monitoring-grid">
-      <div *ngFor="let d of listaDroni" class="drone-card">
-        <div class="card-header">
-          <span class="id">#{{ d.id }}</span>
-          <div class="battery-icon" [style.color]="d.livelloBatteria < 20 ? 'red' : '#00ff88'">
-            {{ d.livelloBatteria }}%
-          </div>
+    <div class="drone-grid">
+        <div class="drone-card" *ngFor="let drone of listaDroni">
+            <div class="drone-info">
+                <h3>{{ drone.marca }} {{ drone.modello }}
+                    <span class="drone-status-tag" [ngClass]="drone.livelloBatteria > 20 ? 'tag-at_base' : 'tag-repairing'">
+                        {{ drone.livelloBatteria }}% Batt.
+                    </span>
+                </h3>
+                <p><strong>ID Sistema:</strong> {{ drone.id }}</p>
+            </div>
+            <div class="card-actions">
+                <button (click)="selezionaPerModifica(drone)" class="btn-edit">Modifica</button>
+                <button (click)="eliminaDrone(drone.id)" class="btn-delete">Elimina</button>
+            </div>
         </div>
-        <div class="card-body">
-          <h3>{{ d.modello }}</h3>
-          <p>{{ d.marca }}</p>
-        </div>
-        <div class="card-footer">
-          <button (click)="selezionaPerModifica(d)" class="btn-icon">✏️</button>
-          <button (click)="eliminaDrone(d.id)" class="btn-icon del">🗑️</button>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
+
+    <div *ngIf="listaDroni.length === 0" class="empty-msg">
+        Nessun drone presente nel database. Aggiungine uno sopra!
+    </div>
 </div>
