@@ -19,6 +19,9 @@ export class SearchDipendenteComponent {
 
   @Output() close = new EventEmitter<void>();
 
+  // =========================
+  // STATE
+  // =========================
   dipendenteForm = new FormGroup({
     nome: new FormControl(''),
     cognome: new FormControl(''),
@@ -32,6 +35,9 @@ export class SearchDipendenteComponent {
 
   popup: DipendenteDto | null = null;
 
+  confirmDelete: DipendenteDto | null = null;
+  successMessage: string | null = null;
+
   // =========================
   // LOAD
   // =========================
@@ -43,7 +49,7 @@ export class SearchDipendenteComponent {
   }
 
   // =========================
-  // FILTRO → POPUP
+  // FILTRO (POPUP O LISTA)
   // =========================
   filtra() {
     const v = this.dipendenteForm.value;
@@ -75,11 +81,9 @@ export class SearchDipendenteComponent {
     request$.subscribe((res: DipendenteDto | DipendenteDto[]) => {
       const data = Array.isArray(res) ? res : [res];
 
-      // 👉 POPUP se 1 risultato
       if (data.length === 1) {
         this.popup = data[0];
       } else {
-        // 👉 più risultati → mostro lista
         this.risultati = data;
       }
     });
@@ -89,8 +93,10 @@ export class SearchDipendenteComponent {
   // RESET COMPLETO
   // =========================
   reset() {
-    this.dipendenteForm.reset();   // ✔ ora funziona davvero
+    this.dipendenteForm.reset();
     this.popup = null;
+    this.confirmDelete = null;
+    this.successMessage = null;
     this.risultati = this.baseList;
   }
 
@@ -99,11 +105,36 @@ export class SearchDipendenteComponent {
   }
 
   // =========================
-  // DELETE
+  // DELETE FLOW
   // =========================
-  elimina(id: number) {
+  elimina(d: DipendenteDto) {
+    this.confirmDelete = d;
+  }
+
+  confirmNo() {
+    this.confirmDelete = null;
+  }
+
+  confirmYes() {
+    if (!this.confirmDelete) return;
+
+    const id = this.confirmDelete.id;
+
     this.service.delete(id).subscribe(() => {
-      this.loadAll();
+
+      // chiudi popup conferma
+      this.confirmDelete = null;
+
+      // aggiorna lista senza reload pesante
+      this.risultati = this.risultati.filter(d => d.id !== id);
+      this.baseList = this.baseList.filter(d => d.id !== id);
+
+      // messaggio successo
+      this.successMessage = 'Dipendente eliminato con successo';
+
+      setTimeout(() => {
+        this.successMessage = null;
+      }, 2000);
     });
   }
 

@@ -38,6 +38,38 @@
     </div>
   </div>
 }
+<!-- 🔥 POPUP CONFERMA ELIMINAZIONE -->
+@if (confirmDelete) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3>Conferma eliminazione</h3>
+
+      <p>
+        Sei sicuro di eliminare
+        <b>{{ confirmDelete.nomeDipendente }} {{ confirmDelete.cognomeDipendente }}</b> ?
+      </p>
+
+      <div class="buttons">
+        <button (click)="confirmYes()">Sì</button>
+        <button (click)="confirmNo()">No</button>
+      </div>
+
+    </div>
+  </div>
+}
+<!-- 🔥 POPUP SUCCESSO ELIMINAZIONE -->
+@if (successMessage) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3>Operazione completata</h3>
+
+      <p>{{ successMessage }}</p>
+
+    </div>
+  </div>
+}
 <!-- 📊 TABELLA SEMPRE VISIBILE SOTTO -->
 <div class="list-section">
 
@@ -67,7 +99,7 @@
 
         <td class="actions">
           <button (click)="modifica(d)">✏️</button>
-          <button (click)="elimina(d.id)">🗑️</button>
+          <button (click)="elimina(d)">🗑️</button>
         </td>
 
       </tr>
