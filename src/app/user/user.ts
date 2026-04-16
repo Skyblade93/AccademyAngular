@@ -2,7 +2,7 @@ import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { userService } from '../Service/userService';
 import { UserDto } from '../Dto/UserDto';
-import { AddUserComponent } from '../addOn/add-user-component/add-user-component';
+import { AddUserComponent } from '../AddOn/add-user-component/add-user-component';
 
 @Component({
   selector: 'app-user',

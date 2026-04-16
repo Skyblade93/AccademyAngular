@@ -28,27 +28,32 @@ export class parcelService extends AbstractService<ParcelDto> {
   findByReceiverName(receiverName: string): Observable<ParcelDto> {
     let params = new HttpParams().set('receiverName', receiverName);
 
-    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindByReceiverName', { params });
+    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindByReceiverName', {
+      params,
+    });
   }
 
-  findByReceiverSurname(receiverSurname: string): Observable<ParcelDto> {
+  findByReceiverSurname(receiverSurname: string): Observable<ParcelDto[]> {
     let params = new HttpParams().set('receiverSurname', receiverSurname);
 
-    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindByReceiverSurname', { params });
+    return this.http.get<ParcelDto[]>(this.baseUrl + '/' + this.type + '/FindByReceiverSurname', {
+      params,
+    });
   }
 
   findBySenderName(senderName: string): Observable<ParcelDto> {
     let params = new HttpParams().set('senderName', senderName);
 
-    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindBySenderName', { params });
+    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindBySenderName', {
+      params,
+    });
   }
 
   findBySenderSurname(senderSurname: string): Observable<ParcelDto> {
     let params = new HttpParams().set('senderSurname', senderSurname);
 
-    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindBySenderSurname', { params }); 
+    return this.http.get<ParcelDto>(this.baseUrl + '/' + this.type + '/FindBySenderSurname', {
+      params,
+    });
   }
-
-
-
 }
