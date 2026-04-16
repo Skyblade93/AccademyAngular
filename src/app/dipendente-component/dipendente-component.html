@@ -3,19 +3,21 @@
   <!-- FORM INSERIMENTO / RICERCA -->
   <div class="form-section">
 
-    <h2>Gestione Dipendenti</h2>
+    <h2 style="text-align:center">Gestione Dipendenti</h2>
 
     <form [formGroup]="dipendenteForm" class="form">
 
-      <input formControlName="nome" placeholder="Nome">
-      <input formControlName="cognome" placeholder="Cognome">
-      <input formControlName="eta" type="number" placeholder="Età">
-      <input formControlName="email" placeholder="Email">
-      <input formControlName="telefono" type="number" placeholder="Telefono">
+      <input class="nome" formControlName="nome" placeholder="Nome">
+      <input class="cognome" formControlName="cognome" placeholder="Cognome">
+      <input class="eta" formControlName="eta" type="number" placeholder="Età">
+      <input class="email" formControlName="email" placeholder="Email">
+      <input class="telefono" formControlName="telefono" type="number" placeholder="Telefono">
 
       <div class="buttons">
-        <button type="button" (click)="filtra()">Filtra</button>
-        <button type="button" (click)="reset()">Reset</button>
+        <button title="Working Progress ..." *ngIf="!dipendente" (click)="aggiungi()" [disabled]="dipendenteForm.invalid">Aggiungi</button>
+        <button title="Working Progress ..." *ngIf="dipendente" (click)="modifica(dipendente)" [disabled]="dipendenteForm.invalid">Modifica</button>
+        <button title="Filtra Dipendenti" type="button" (click)="filtra()">Filtra</button>
+        <button title="Resetta Form" type="button" (click)="reset()">Reset</button>
       </div>
 
     </form>
@@ -26,12 +28,13 @@
 <div class="popup-overlay" *ngIf="dipendente">
   <div class="popup">
 
-    <h3>Risultato ricerca</h3>
+    <h3 style="text-align:center">Risultato ricerca</h3>
 
-    <p><b>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</b></p>
-    <p>{{ dipendente.email }}</p>
-    <p>{{ dipendente.eta }} anni</p>
-    <p>{{ dipendente.numeroTelefono }}</p>
+    <p style="text-align:left;"><b>Nome: </b>{{ dipendente.nomeDipendente }}</p>
+    <p style="text-align:left;"><b>Cognome: </b>{{ dipendente.cognomeDipendente }}</p>
+    <p style="text-align:left;"><b>Email: </b>{{ dipendente.email }}</p>
+    <p style="text-align:left;"><b>Età: </b>{{ dipendente.eta }} anni</p>
+    <p style="text-align:left;"><b>Telefono: </b>{{ dipendente.numeroTelefono }}</p>
 
     <button (click)="chiudiPopup()">Chiudi</button>
 
@@ -41,7 +44,9 @@
   <!-- LISTA -->
   <div class="list-section">
 
-  <h3>Lista Dipendenti</h3>
+  <h3 style="text-align:center">
+    Lista Dipendenti (Totale: {{ ListDipendente.length }})
+  </h3>
 
   <table *ngIf="ListDipendente.length > 0; else empty">
     <thead>
@@ -51,6 +56,7 @@
         <th>Email</th>
         <th>Età</th>
         <th>Telefono</th>
+        <th>Azioni</th>
       </tr>
     </thead>
 
@@ -61,6 +67,12 @@
         <td>{{ d.email }}</td>
         <td>{{ d.eta }}</td>
         <td>{{ d.numeroTelefono }}</td>
+        <td class="actions">
+          <button title="Working Progress ..." (click)="modifica(d)" [disabled]="!d">✏️</button>
+          <button title="Working Progress ..." (click)="elimina(d.id)">🗑️</button>
+          <!--<button title="Modifica {{ d.nomeDipendente }} {{ d.cognomeDipendente }}" (click)="modifica(d)" [disabled]="!d">✏️</button>
+          <button title="Elimina {{ d.nomeDipendente }} {{ d.cognomeDipendente }}" (click)="elimina(d.id)" [disabled]="!d">🗑️</button>-->
+        </td>
       </tr>
     </tbody>
   </table>
