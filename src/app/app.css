@@ -5,7 +5,7 @@
   background: #1e293b; /* blu scuro moderno */
   padding: 12px 20px;
   gap: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* LINK */
@@ -33,4 +33,28 @@
 /* SPAZIO TRA GLI ITEM */
 .nav div {
   display: flex;
+}
+
+/* --- FOOTER GLOBALE --- */
+
+/* Forza l'applicazione a occupare tutta l'altezza dello schermo */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-footer {
+  width: 100%;
+  box-sizing: border-box; /* Evita che il padding sfori a destra */
+  padding: 25px 15px;
+  background-color: var(--color-footer, #eda2f2);
+  color: var(--color-text, #000000);
+  font-weight: bold;
+  text-align: center;
+  border-top: 4px solid var(--color-buttons, #efabff);
+  margin-top: auto; /* Lo tiene in fondo */
+  border-top: 5px solid var(--color-misc);
+  animation: footerFade 0.6s ease-out;
+  overflow: hidden;
 }
