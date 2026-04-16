@@ -1,4 +1,4 @@
-import { userService } from './../Service/userService';
+import { userService } from '../Service/userService';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
 import {

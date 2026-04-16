@@ -1,0 +1,78 @@
+<div class="dipendente-container">
+
+  <!-- FORM INSERIMENTO / RICERCA -->
+  <div class="form-section">
+
+    <h2>Gestione Dipendenti</h2>
+
+    <form [formGroup]="dipendenteForm" class="form">
+
+      <input formControlName="nome" placeholder="Nome">
+      <input formControlName="cognome" placeholder="Cognome">
+      <input formControlName="eta" type="number" placeholder="Età">
+      <input formControlName="email" placeholder="Email">
+      <input formControlName="telefono" type="number" placeholder="Telefono">
+
+      <div class="buttons">
+        <button type="button" (click)="filtra()">Filtra</button>
+        <button type="button" (click)="reset()">Reset</button>
+      </div>
+
+    </form>
+
+  </div>
+
+<!-- POPUP RISULTATO -->
+<div class="popup-overlay" *ngIf="dipendente">
+  <div class="popup">
+
+    <h3>Risultato ricerca</h3>
+
+    <p><b>{{ dipendente.nomeDipendente }} {{ dipendente.cognomeDipendente }}</b></p>
+    <p>{{ dipendente.email }}</p>
+    <p>{{ dipendente.eta }} anni</p>
+    <p>{{ dipendente.numeroTelefono }}</p>
+
+    <button (click)="chiudiPopup()">Chiudi</button>
+
+  </div>
+</div>
+
+  <!-- LISTA -->
+  <div class="list-section">
+
+  <h3>Lista Dipendenti</h3>
+
+  <table *ngIf="ListDipendente.length > 0; else empty">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+        <th>Età</th>
+        <th>Telefono</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let d of ListDipendente">
+        <td>{{ d.nomeDipendente }}</td>
+        <td>{{ d.cognomeDipendente }}</td>
+        <td>{{ d.email }}</td>
+        <td>{{ d.eta }}</td>
+        <td>{{ d.numeroTelefono }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #empty>
+    <p>Nessun dipendente trovato</p>
+  </ng-template>
+
+</div>
+
+</div>
+
+<div class="footer">
+  © 2026 - Gestionale Dipendenti
+</div>

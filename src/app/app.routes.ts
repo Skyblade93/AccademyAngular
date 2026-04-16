@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ContactComponent } from './contact/contact';
 import { DipendenteComponent } from './dipendente/dipendente';
 import { AziendaComponent } from './azienda/azienda';
@@ -9,6 +10,21 @@ import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica/notifica';
 import { UserComponent } from './user/user';
 
+=======
+import { Routes } from '@angular/router';
+
+import { ContactComponent } from './contact/contact.component';
+import { UserComponent } from './user/user';
+import { AutoComponent } from './auto-component/auto-component';
+import { CarrelloComponent } from './carrello/carrello-component';
+import { ElettricistaComponent } from './elettricista/elettricista';
+import { AziendaComponent } from './azienda/azienda';
+import { DipendenteComponent } from './dipendente/dipendente-component';
+import { DroneComponent } from './drone/drone';
+import { NotificaComponent } from './notifica-component/notifica-component';
+import { OrdineComponent } from './ordine-Component/ordine';
+import { HomeComponent } from './home-component/home-component';
+>>>>>>> 1be50c8beb46d79cc73cd7443c0c197a2ead9233
 
 export const routes: Routes = [
   {path : 'drone', component : DroneComponent},
@@ -18,8 +34,11 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path : 'dipendente' , component: DipendenteComponent},
   {path : 'azienda', component: AziendaComponent},
-  { path: 'carrello', component: Carrello },
+  { path: 'carrello', component: CarrelloComponent },
   {path : 'home' , component: HomeComponent},
+  {path : 'ordine' , component: OrdineComponent},
   {path : 'contact' , component: ContactComponent},
+  { path: 'elettricista', component: ElettricistaComponent },
   { path: '**', redirectTo: 'home' },
+
 ];

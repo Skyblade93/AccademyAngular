@@ -2,9 +2,14 @@
   <div class="header-section">
     <h2>📇 Gestione Contatti</h2>
     <div class="search-bar">
-      <input type="text" placeholder="Cerca per nome..." #searchInput (keyup.enter)="search(searchInput.value)">
+      <input
+        type="text"
+        placeholder="Cerca per nome..."
+        #searchInput
+        (keyup.enter)="search(searchInput.value)"
+      />
       <button class="btn-search" (click)="search(searchInput.value)">🔍 Cerca</button>
-      <button class="btn-reset" (click)="caricaContatti(); searchInput.value=''">🔄 Reset</button>
+      <button class="btn-reset" (click)="caricaContatti(); searchInput.value = ''">🔄 Reset</button>
     </div>
   </div>
 
@@ -13,34 +18,42 @@
       <h3>{{ editMode() ? '📝 Modifica Contatto' : '➕ Nuovo Contatto' }}</h3>
       <button class="btn-clear" (click)="annullaEdit()">Nuovo/Pulisci</button>
     </div>
-    
+
     <div class="form-grid">
       <div class="input-group">
         <label>Nome</label>
-        <input [ngModel]="selectedContact().firstName" 
-               (ngModelChange)="selectedContact.update(c => ({...c, firstName: $event}))" 
-               placeholder="Inserisci nome">
+        <input
+          [ngModel]="selectedContact().firstName"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, firstName: $event }))"
+          placeholder="Inserisci nome"
+        />
       </div>
-      
+
       <div class="input-group">
         <label>Cognome</label>
-        <input [ngModel]="selectedContact().lastName" 
-               (ngModelChange)="selectedContact.update(c => ({...c, lastName: $event}))" 
-               placeholder="Inserisci cognome">
+        <input
+          [ngModel]="selectedContact().lastName"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, lastName: $event }))"
+          placeholder="Inserisci cognome"
+        />
       </div>
 
       <div class="input-group">
         <label>Email</label>
-        <input [ngModel]="selectedContact().email" 
-               (ngModelChange)="selectedContact.update(c => ({...c, email: $event}))" 
-               placeholder="esempio@mail.com">
+        <input
+          [ngModel]="selectedContact().email"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, email: $event }))"
+          placeholder="esempio@mail.com"
+        />
       </div>
 
       <div class="input-group">
         <label>Telefono</label>
-        <input [ngModel]="selectedContact().phoneNumber" 
-               (ngModelChange)="selectedContact.update(c => ({...c, phoneNumber: $event}))" 
-               placeholder="+39...">
+        <input
+          [ngModel]="selectedContact().phoneNumber"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, phoneNumber: $event }))"
+          placeholder="+39..."
+        />
       </div>
     </div>
 
@@ -65,7 +78,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let c of contatti()" [class.editing]="selectedContact().id === c.id">
-          <td><strong>{{ c.firstName }}</strong></td>
+          <td>{{ c.firstName }}</td>
           <td>{{ c.lastName }}</td>
           <td>{{ c.email }}</td>
           <td>{{ c.phoneNumber }}</td>

@@ -1,27 +1,22 @@
 /* NAVBAR CONTAINER */
 .nav {
+  background: #8C7AA9;
   display: flex;
   align-items: center;
-  background: #1e293b; /* blu scuro moderno */
+  background: #EDA2F2; /* blu scuro moderno */
   padding: 12px 20px;
   gap: 15px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* LINK */
 .nav a {
-  color: #e2e8f0;
+  color: white;
   text-decoration: none;
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: all 0.25s ease;
+  font-weight: bold;
 }
 
-/* HOVER */
 .nav a:hover {
-  background: #334155;
-  color: #ffffff;
+  color: #EFABFF;
 }
 
 /* LINK ATTIVO (Angular router) */
@@ -33,4 +28,9 @@
 /* SPAZIO TRA GLI ITEM */
 .nav div {
   display: flex;
+}
+body {
+  background: #7192BE;
+  font-family: Arial, sans-serif;
+  margin: 0;
 }
