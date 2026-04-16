@@ -7,12 +7,13 @@ import { NotificaService } from '../Service/NotificaService';
   selector: 'app-notifica',
   standalone: true,
   imports: [DatePipe],
-  templateUrl: './notifica.html',
-  styleUrl: './notifica.css',
+  templateUrl: './notifica-component.html',
+  styleUrl: './notifica-component.css',
 })
 
 export class NotificaComponent implements OnInit {
   listNotifica: NotificaDto[] = [];
+
 
   constructor(private notificaService: NotificaService) {
   }

@@ -154,4 +154,8 @@ export class DipendenteComponent {
   }
 }
 
+<<<<<<< HEAD:src/app/dipendente-component/dipendente-component.ts
 }
+=======
+}
+>>>>>>> 0d7770bc3b477dfaaf3246996c825cddf5b97c18:src/app/dipendente/dipendente-component.ts

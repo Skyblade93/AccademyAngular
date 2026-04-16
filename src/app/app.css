@@ -1,27 +1,22 @@
 /* NAVBAR CONTAINER */
 .nav {
+  background: #8C7AA9;
   display: flex;
   align-items: center;
   background: #EDA2F2; /* blu scuro moderno */
   padding: 12px 20px;
   gap: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* LINK */
 .nav a {
-  color: #e2e8f0;
+  color: white;
   text-decoration: none;
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: all 0.25s ease;
+  font-weight: bold;
 }
 
-/* HOVER */
 .nav a:hover {
-  background: #334155;
-  color: #ffffff;
+  color: #EFABFF;
 }
 
 /* LINK ATTIVO (Angular router) */
@@ -33,4 +28,28 @@
 /* SPAZIO TRA GLI ITEM */
 .nav div {
   display: flex;
+}
+
+/* --- FOOTER GLOBALE --- */
+
+/* Forza l'applicazione a occupare tutta l'altezza dello schermo */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-footer {
+  width: 100%;
+  box-sizing: border-box; /* Evita che il padding sfori a destra */
+  padding: 25px 15px;
+  background-color: var(--color-footer, #eda2f2);
+  color: var(--color-text, #000000);
+  font-weight: bold;
+  text-align: center;
+  border-top: 4px solid var(--color-buttons, #efabff);
+  margin-top: auto; /* Lo tiene in fondo */
+  border-top: 5px solid var(--color-misc);
+  animation: footerFade 0.6s ease-out;
+  overflow: hidden;
 }

@@ -1,0 +1,69 @@
+<div class="container">
+
+  <div class="header">
+    <h1>PRONTO ELETTRICISTA</h1>
+    <p>Elettricista al volo. Intervento immediato, guasto risolto!</p>
+  </div>
+
+  <div class="filter-buttons">
+
+    <button (click)="filtraPerSpec('residenziale')">
+      Residenziale
+    </button>
+
+    <button (click)="filtraPerSpec('industriale')">
+      Industriale
+    </button>
+
+    <button (click)="resetFiltro()">
+      Tutti
+    </button>
+
+  </div>
+
+  <div class="elet-grid">
+
+    <div class="elet-card"
+         *ngFor="let e of elettricistiFiltrati"
+         (click)="seleziona(e)">
+
+      <h3>{{ e.nome }} {{ e.cognome }}</h3>
+
+      <p>{{ e.specializzazione }}</p>
+
+      <div class="btn-group">
+
+        <button class="btn-check"
+                (click)="verificaDisponibilita(e); $event.stopPropagation()">
+          Disponibilità
+        </button>
+
+        <button class="btn-call"
+                (click)="chiama(e); $event.stopPropagation()">
+          Chiama
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="detail" *ngIf="elettricistaSelezionato">
+
+    <h2>Dettaglio Elettricista</h2>
+
+    <p><b>Nome:</b> {{ elettricistaSelezionato.nome }}</p>
+    <p><b>Cognome:</b> {{ elettricistaSelezionato.cognome }}</p>
+    <p><b>Email:</b> {{ elettricistaSelezionato.email }}</p>
+    <p><b>Indirizzo:</b> {{ elettricistaSelezionato.indirizzo }}</p>
+    <p><b>Specializzazione:</b> {{ elettricistaSelezionato.specializzazione }}</p>
+    <p><b>Disponibile:</b> {{ elettricistaSelezionato.disponibile }}</p>
+
+  </div>
+
+</div>
+
+<div class="popup" *ngIf="showPopup">
+  {{ popupMessaggio }}
+</div>

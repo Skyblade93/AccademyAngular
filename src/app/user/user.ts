@@ -1,97 +1,92 @@
-import { userService } from './../Service/userService';
+import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { userService } from '../Service/userService';
 import { UserDto } from '../Dto/UserDto';
+import { AddUserComponent } from '../addOn/add-user-component/add-user-component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, AddUserComponent],
   templateUrl: './user.html',
   styleUrls: ['./user.css'],
 })
 export class UserComponent implements OnInit {
-  /*/* Dichiarazione variabili */
-  service: userService;
 
-  ListUser: UserDto[] = [];
+  /* 🔥 Service */
+  private service = inject(userService);
 
-  count = signal(0);
+  /* 🔥 STATE (WRITABLE SIGNAL) */
+  users = signal<UserDto[]>([]);
 
- isPopupVisible = false;
+  /* 🔥 UI STATE */
+  isPopupVisible = signal(false);
+  selectedUser = signal<UserDto | null>(null);
+  istoggleAddUser = signal(false);
 
-  user: UserDto = new UserDto('', '', 0);
+  /* 🔥 COMPUTED */
+  sortedUsers = computed(() =>
+    [...this.users()].sort((a, b) => a.id - b.id)
+  );
 
-  UserSignal = signal<UserDto[]>([]);
-
-  /*/* FormGroup per la gestione del form */
-  userForm = new FormGroup({
-    nome: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    descrizione: new FormControl(''),
+  count = computed(() => {
+    const list = this.users();
+    return list.length
+      ? Math.max(...list.map(u => u.id))
+      : 0;
   });
 
+  /* ================= INIT ================= */
 
-  /*/* Costruttore e metodi */
-  ngOnInit() {}
-
-  constructor(service: userService) {
-    this.service = service;
-    service.getAll().subscribe((users) => {
-      this.ListUser = users;
-    });
-    this.UserSignal.set(this.ListUser);
-    this.count.set(this.ListUser.sort((a, b) => b.id - a.id)[0]?.id || 0);
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
-/*/* Metodo per ottenere un elemento tramite ID */
-ottieniElemento(id: number) {
-  this.service.read(id).subscribe({
-    next: (user) => {
-      this.user = user;
-    },
-    error: (_err) => {
-      this.isPopupVisible = !this.isPopupVisible; // Mostra il popup in caso di errore
-    }
-  });
+  loadUsers(): void {
+    this.service.getAll().subscribe({
+      next: (data: UserDto[]) => {
+        this.users.set(data);
+      },
+      error: (err: any) => console.error(err),
+    });
+  }
+
+  /* ================= CRUD ================= */
+
+  ottieniElemento(id: number): void {
+    this.service.read(id).subscribe({
+      next: (user: UserDto) => {
+        this.selectedUser.set(user);
+      },
+      error: () => {
+        this.isPopupVisible.set(true);
+      },
+    });
+  }
+
+  deleteUser(id: number): void {
+    this.service.delete(id).subscribe({
+      next: () => {
+        this.users.update(list => list.filter(u => u.id !== id));
+      },
+      error: (err: any) => console.error(err),
+    });
+  }
+
+  /* ================= ADD USER (child output) ================= */
+
+  onUserCreated(user: UserDto): void {
+    this.users.update(list => [...list, user]);
+    console.log('User aggiunto:', user);
+  }
+
+  /* ================= UI ================= */
+
+  togglePopup(): void {
+    this.isPopupVisible.update(v => !v);
+  }
+
+    toggleAddUser(): void {
+    this.istoggleAddUser.update(v=> !v);
+  }
 }
-/*/* Metodo per aggiungere un nuovo utente */
-  onSubmit() {
-    if (this.userForm.valid) {
-      const nome: string = this.userForm.get('nome')?.value || '';
-      const descrizione: string = this.userForm.get('descrizione')?.value || '';
-      this.count.update((c) => c + 1);
-      const newUser = new UserDto(nome, descrizione, this.count()); // ID will be set by the server
-      this.UserSignal.update((users) => [...users, newUser]); // Optimistically update the UI
-      this.ordinaListUser(); // Sort the list after adding a new user
-      this.service.insert(newUser).subscribe(() => {
-        // After successful insertion, refresh the user list
-      });
-    }
-  }
-/*/* Metodo per eliminare un utente */
-  deleteUser(id: number) {
-    this.service.delete(id).subscribe(() => {
-      this.UserSignal.update((users) => users.filter((user) => user.id !== id));
-    });
-  }
-
-  ordinaListUser(){
-    this.UserSignal.update((users) => users.sort((a, b) => a.id - b.id));
-  }
-
-/*/* Metodo per gestire la chiusura del popup */
-togglePopup() {
-    this.isPopupVisible = !this.isPopupVisible;
-  }
-  }
-
