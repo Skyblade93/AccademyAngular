@@ -3,6 +3,7 @@ import { NotificaDto } from '../Dto/NotificaDto';
 import { DatePipe } from '@angular/common';
 import { NotificaService } from '../Service/NotificaService';
 import { AddNotificaComponent } from '../addOn/add-notifica-component/add-notifica-component';
+import { PrioritaNotifica, TipoNotifica } from '../Dto/enums/notifica-enums';
 
 @Component({
   selector: 'app-notifica',
@@ -13,6 +14,8 @@ import { AddNotificaComponent } from '../addOn/add-notifica-component/add-notifi
 })
 export class NotificaComponent implements OnInit {
   listNotifica: NotificaDto[] = [];
+  protected readonly TipoEnum = TipoNotifica;
+  protected readonly PrioritaEnum = PrioritaNotifica;
 
   istoggleAddNotifica = signal(false);
 
@@ -42,12 +45,15 @@ export class NotificaComponent implements OnInit {
   }
 
   cercaPerTitolo(titolo: string): void {
-    if (!titolo) {
+    const titoloPulito = titolo.trim();
+
+    if (!titoloPulito) {
       this.caricaTutte();
       return;
     }
-    this.notificaService.getNotificaByTitolo(titolo).subscribe({
-      next: (data) => this.listNotifica = data ? [data] : [],
+
+    this.notificaService.getNotificheByTitoloContaining(titoloPulito).subscribe({
+      next: (data) => this.listNotifica = data,
       error: (err) => {
         console.error('Errore nella ricerca per titolo:', err);
         this.listNotifica = [];
