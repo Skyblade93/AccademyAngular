@@ -3,17 +3,19 @@ import { AutoComponent } from "./auto-component/auto-component";
 import { AziendaComponent } from "./azienda-component/azienda-component";
 import { ContactComponent } from "./contact/contact.component";
 import { DipendenteComponent } from "./dipendente/dipendente-component";
-import { DroneComponent } from "./drone/drone";
+import { DroneComponent } from "./drone/drone-component";
 import { HomeComponent } from "./home-component/home-component";
 import { NotificaComponent } from "./notifica-component/notifica-component";
 import { UserComponent } from "./user/user";
 import { CarrelloComponent } from "./carrello/carrello-component";
 import { ElettricistaComponent } from "./elettricista/elettricista";
 import { OrdineComponent } from "./ordine-Component/ordine";
+import { ParcelComponent } from "./parcel/parcel";
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path : 'parcel', component : ParcelComponent},
   {path : 'elettricista', component : ElettricistaComponent},
   {path : 'ordine', component : OrdineComponent},
   {path : 'contact', component : ContactComponent},

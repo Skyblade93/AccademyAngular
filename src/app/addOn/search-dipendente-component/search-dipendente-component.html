@@ -1,0 +1,82 @@
+<div class="form-section">
+
+  <h2>Ricerca Dipendenti</h2>
+
+  <!-- 🔍 FILTRO SEMPRE VISIBILE -->
+  <form [formGroup]="dipendenteForm" class="form">
+
+    <input formControlName="nome" placeholder="Nome">
+    <input formControlName="cognome" placeholder="Cognome">
+    <input formControlName="eta" type="number" placeholder="Età">
+    <input formControlName="email" placeholder="Email">
+    <input formControlName="telefono" type="number" placeholder="Telefono">
+
+    <div class="buttons">
+      <button type="button" (click)="filtra()">Filtra</button>
+      <button type="button" (click)="reset()">Reset</button>
+      <button type="button" (click)="close.emit()">Torna Indietro</button>
+    </div>
+
+  </form>
+
+</div>
+<!-- 🔥 POPUP RISULTATO FILTRO -->
+@if (popup) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3>Risultato ricerca</h3>
+
+      <p><b>Nome:</b> {{ popup.nomeDipendente }}</p>
+      <p><b>Cognome:</b> {{ popup.cognomeDipendente }}</p>
+      <p><b>Email:</b> {{ popup.email }}</p>
+      <p><b>Età:</b> {{ popup.eta }}</p>
+      <p><b>Telefono:</b> {{ popup.numeroTelefono }}</p>
+
+      <button (click)="closePopup()">Chiudi</button>
+
+    </div>
+  </div>
+}
+<!-- 📊 TABELLA SEMPRE VISIBILE SOTTO -->
+<div class="list-section">
+
+  <h3>Dipendenti ({{ risultati.length }})</h3>
+
+  <table *ngIf="risultati.length > 0; else empty">
+
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+        <th>Età</th>
+        <th>Telefono</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let d of risultati">
+
+        <td>{{ d.nomeDipendente }}</td>
+        <td>{{ d.cognomeDipendente }}</td>
+        <td>{{ d.email }}</td>
+        <td>{{ d.eta }}</td>
+        <td>{{ d.numeroTelefono }}</td>
+
+        <td class="actions">
+          <button (click)="modifica(d)">✏️</button>
+          <button (click)="elimina(d.id)">🗑️</button>
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+  <ng-template #empty>
+    <p>Nessun dipendente trovato</p>
+  </ng-template>
+
+</div>

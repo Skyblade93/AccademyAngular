@@ -13,7 +13,7 @@ import { TipoNotifica, PrioritaNotifica } from '../../Dto/enums/notifica-enums';
 })
 export class AddNotificaComponent {
 
-  notificaCreata = output<NotificaDto>();
+ notificaCreata = output<NotificaDto>();
 
   protected readonly TipoEnum = TipoNotifica;
   protected readonly PrioritaEnum = PrioritaNotifica;

@@ -1,15 +1,7 @@
 <div class="controls">
-<<<<<<< HEAD
-  <div class="search-group">
-    <input type="text" #inputTitolo placeholder="Cerca per titolo...">
-=======
-  <button class="btn-add" (click)="toggleAddNotifica()">
-    {{ istoggleAddNotifica() ? '✖ Chiudi Form Aggiunta' : '✚ Aggiungi Nuova Notifica' }}
-  </button>
 
   <div class="search-group">
-    <input type="text" #inputTitolo placeholder="Cerca per titolo..." (keyup.enter)="cercaPerTitolo(inputTitolo.value)" />
->>>>>>> ff30a49 (aggiunto l'add on)
+    <input type="text" #inputTitolo placeholder="Cerca per titolo...">
     <button (click)="cercaPerTitolo(inputTitolo.value)">Cerca</button>
   </div>
 
@@ -26,30 +18,25 @@
     <input type="text" #inputTipo placeholder="Tipo (es. INFO)">
     <input type="text" #inputPriorita placeholder="Priorità (es. ALTA)">
     <button (click)="cercaPerTipoEPriorita(inputTipo.value, inputPriorita.value)">Filtra Doppio</button>
-=======
-    <input type="text" #inputTipo placeholder="Tipo (es. INFORMAZIONE)" />
-    <input type="text" #inputPriorita placeholder="Priorità (es. ALTA)" />
-    <button (click)="cercaPerTipoEPriorita(inputTipo.value, inputPriorita.value)">
-      Filtra Doppio
-    </button>
->>>>>>> ff30a49 (aggiunto l'add on)
   </div>
 
   <button class="btn-all" (click)="caricaTutte()">Mostra Tutte le Notifiche</button>
 </div>
 
-<<<<<<< HEAD
+
 @for (notifica of listNotifica; track $index) {
+  <div class="notifiche-container"></div>
   <div class="notifica-card">
     <div class="notifica-header">
       <strong>{{notifica.titolo}}</strong>
       <span class="priorita-tag">{{notifica.priorita}}</span>
     </div>
+    </div>
+  }
 
-=======
 @if (istoggleAddNotifica()) {
   <div style="margin-bottom: 25px;">
-    <app-add-notifica-component 
+    <app-add-notifica-component
       (notificaCreata)="onNotificaAggiunta($event)">
     </app-add-notifica-component>
   </div>
@@ -68,21 +55,13 @@
       {{ notifica.tipo }}
     </div>
 
->>>>>>> ff30a49 (aggiunto l'add on)
+
     <div class="messaggio">
       <em>{{notifica.tipo}}</em>: {{notifica.messaggio}}
     </div>
 
     <div class="footer">
-<<<<<<< HEAD
-      <span>Data: {{notifica.dataCreazione | date:'short'}}</span>
-      <span>Stato: <b>{{notifica.letta ? 'Letta' : 'Da leggere'}}</b></span>
-    </div>
-  </div>
-} @empty {
-  <p style="text-align: center; color: #999;">Nessuna notifica presente in archivio.</p>
-}
-=======
+
       <span>📅 {{ notifica.dataCreazione | date: 'dd/MM/yyyy HH:mm' }}</span>
       <span class="stato-indicator" [class]="notifica.letta ? 'letta' : 'non-letta'">
         {{ notifica.letta ? '✔ Letta' : '✉ Da leggere' }}
@@ -94,4 +73,3 @@
     <p>📭 Nessuna notifica presente in archivio.</p>
   </div>
 }
->>>>>>> ff30a49 (aggiunto l'add on)
