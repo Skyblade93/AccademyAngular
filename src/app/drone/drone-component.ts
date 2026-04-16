@@ -8,8 +8,8 @@ import { DroneDto } from '../Dto/DroneDto';
   selector: 'app-drone',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './drone.component.html',
-  styleUrl: './drone.component.css'
+  templateUrl: './drone-component.html',
+  styleUrl: './drone-component.css'
 })
 export class DroneComponent implements OnInit {
   listaDroni: DroneDto[] = [];
