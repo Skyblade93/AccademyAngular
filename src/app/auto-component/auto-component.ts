@@ -24,8 +24,6 @@ export class AutoComponent implements OnInit, OnDestroy {
   userSrv: userService;
   aziendaSrv: aziendaService;
   dipendenteSrv: DipendenteService;
-
-
   listAuto: AutoDto[] = [];
   userList: UserDto[] = [];
   aziendaList: AziendaDto[] = [];
@@ -65,6 +63,7 @@ export class AutoComponent implements OnInit, OnDestroy {
   });
 
 filterForm!: FormGroup;
+confirmDeleteId: number | null = null;
 popupVisible: boolean = false;
 popupType: 'create' | 'update' | 'delete' = 'create';
 popupMessage = '';
@@ -377,13 +376,22 @@ const searchType = filters.searchType || 'exact';
     }
   }
 
-deleteAuto(id: number) {
-if (confirm('Sei sicuro di voler eliminare questa auto?')) {
-this.service.delete(id).subscribe(() => {
-this.listAuto = this.listAuto.filter(a => a.id !== id);
-this.showPopup('delete', 'Eliminazione auto completata con successo.');
-});
+requestDeleteAuto(id: number) {
+  this.confirmDeleteId = id;
 }
+
+confirmDelete() {
+  if (this.confirmDeleteId === null) return;
+  const id = this.confirmDeleteId;
+  this.confirmDeleteId = null;
+  this.service.delete(id).subscribe(() => {
+    this.listAuto = this.listAuto.filter(a => a.id !== id);
+    this.showPopup('delete', 'Eliminazione auto completata con successo.');
+  });
+}
+
+cancelDelete() {
+  this.confirmDeleteId = null;
 }
 
   clearFilters() {

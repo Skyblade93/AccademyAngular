@@ -1,4 +1,4 @@
-﻿<div class="app">
+<div class="app">
 
   <!-- HEADER -->
   <header class="header">
@@ -26,6 +26,20 @@
       </div>
       <p>{{ popupMessage }}</p>
     </section>
+  }
+
+  @if (confirmDeleteId !== null) {
+    <div class="delete-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title">
+      <div class="delete-dialog">
+        <span class="delete-dialog-icon">&#x1F5D1;</span>
+        <h3 id="delete-dialog-title">Eliminare questa auto?</h3>
+        <p>Questa azione è irreversibile.</p>
+        <div class="delete-dialog-actions">
+          <button class="btn-ghost" (click)="cancelDelete()">Annulla</button>
+          <button class="btn-danger" (click)="confirmDelete()">Elimina</button>
+        </div>
+      </div>
+    </div>
   }
 
   <!-- FORM INSERIMENTO -->
@@ -239,7 +253,7 @@
         <!-- azioni -->
         <div class="card-actions">
           <button class="btn-edit" (click)="editAuto(item)">&#x270F; Modifica</button>
-          <button class="btn-delete" (click)="deleteAuto(item.id)">&#x1F5D1;</button>
+          <button class="btn-delete" (click)="requestDeleteAuto(item.id)">&#x1F5D1;</button>
         </div>
 
       </div>
