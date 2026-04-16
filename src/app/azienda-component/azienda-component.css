@@ -1,3 +1,12 @@
+/* FONT GENERALE */
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: black;
+  background: #7192BE;
+  margin: 0;
+}
+
 /* CONTENITORE PRINCIPALE */
 
 .container {
@@ -6,7 +15,7 @@
   width: auto;
   gap: 20px;
   padding: 20px;
-  background: #f4f6f9;
+  background: #7192BE;
 }
 
 /* COLONNA SINISTRA */
@@ -24,10 +33,12 @@
   overflow-y: auto;
 }
 
+
+
 /* CARD RICERCA */
 
 .card {
-  background: white;
+  background: #EDA2F2;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -42,37 +53,38 @@
 input {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #8C7AA9;
   font-size: 14px;
+  color: black;
 }
 
 input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #DC6BAD;
 }
 
-/* BOTTONE */
+/* BOTTONE PRINCIPALE */
 
 button {
   padding: 10px;
   border: none;
   border-radius: 6px;
-  background: #3498db;
-  color: white;
+  background: #EFABFF;
+  color: black;
   cursor: pointer;
   font-weight: bold;
   transition: 0.2s;
 }
 
 button:hover {
-  background: #2980b9;
+  background: #DC6BAD;
 }
 
 /* CARD RISULTATO */
 
 .result-card {
   margin-top: 15px;
-  background: white;
+  background: #EDA2F2;
   border-radius: 12px;
   padding: 18px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -94,14 +106,14 @@ button:hover {
 
 .result-header h3 {
   margin: 0;
-  color: #2c3e50;
+  color: black;
 }
 
 /* BADGE ID */
 
 .badge {
-  background: #3498db;
-  color: white;
+  background: #EFABFF;
+  color: black;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -111,7 +123,7 @@ button:hover {
 /* DESCRIZIONE */
 
 .descrizione {
-  color: #555;
+  color: black;
   line-height: 1.5;
 }
 
@@ -123,11 +135,11 @@ button:hover {
   gap: 10px;
 }
 
-/* BOTTONI */
+/* BOTTONI SECONDARI */
 
 .btn-secondary {
-  background: #6c757d;
-  color: white;
+  background: #8C7AA9;
+  color: black;
   border: none;
   padding: 8px 14px;
   border-radius: 8px;
@@ -135,12 +147,14 @@ button:hover {
 }
 
 .btn-secondary:hover {
-  background: #5a6268;
+  background: #DC6BAD;
 }
 
+/* BOTTONI PERICOLO */
+
 .btn-danger {
-  background: #e74c3c;
-  color: white;
+  background: #DC6BAD;
+  color: black;
   border: none;
   padding: 8px 14px;
   border-radius: 8px;
@@ -148,7 +162,7 @@ button:hover {
 }
 
 .btn-danger:hover {
-  background: #c0392b;
+  background: #8C7AA9;
 }
 
 /* LISTA */
@@ -160,7 +174,7 @@ button:hover {
 /* ITEM LISTA */
 
 .item {
-  background: white;
+  background: #EDA2F2;
   padding: 12px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -171,7 +185,7 @@ button:hover {
 
 .item:hover {
   transform: translateX(4px);
-  background: #ecf0f1;
+  background: #DC6BAD;
 }
 
 /* RISULTATO RICERCA */
@@ -179,15 +193,66 @@ button:hover {
 .result {
   margin-top: 15px;
   padding: 10px;
-  background: #eaf6ff;
+  background: #DC6BAD;
   border-radius: 6px;
+}
+
+/* POPUP */
+
+.popup {
+  background: #DC6BAD;
+  border: 2px solid #8C7AA9;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* FOOTER */
+
+.footer {
+  background: #EDA2F2;
+  color: black;
+  padding: 15px;
+  text-align: center;
 }
 
 /* TITOLI */
 
 h2 {
   margin-bottom: 10px;
-  color: #2c3e50;
+  color: black;
+}
+
+.popup-overlay {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+
+}
+
+.popup {
+
+  background: #DC6BAD;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  min-width: 300px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
 }
 
 /* RESPONSIVE */

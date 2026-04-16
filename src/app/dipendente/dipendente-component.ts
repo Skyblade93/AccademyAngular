@@ -53,6 +53,43 @@ export class DipendenteComponent {
     this.dipendente = null;
   }
 
+  aggiungi() {
+    const dto = this.mapFormToDto();
+
+    this.service.insert(dto).subscribe(() => {
+      this.loadAll();
+      this.reset();
+    });
+  }
+
+  modifica(d: DipendenteDto) {
+    this.dipendente = d;
+
+    this.dipendenteForm.patchValue({
+      nome: d.nomeDipendente,
+      cognome: d.cognomeDipendente,
+      eta: d.eta,
+      email: d.email,
+      telefono: d.numeroTelefono
+    });
+  }
+
+  elimina(id: number) {
+    this.service.delete(id).subscribe(() => {
+      this.loadAll();
+    });
+  }
+
+  mapFormToDto(): any {
+    return {
+      nomeDipendente: this.dipendenteForm.value.nome,
+      cognomeDipendente: this.dipendenteForm.value.cognome,
+      eta: this.dipendenteForm.value.eta,
+      email: this.dipendenteForm.value.email,
+      numeroTelefono: this.dipendenteForm.value.telefono
+    };
+  }
+
   // =========================
   // SEARCH
   // =========================
@@ -95,8 +132,23 @@ export class DipendenteComponent {
 
   } else if (eta) {
     this.service.findByEta(eta)
-      .subscribe(res => this.setList(res));
+      .subscribe(res => {
+        if (res.length === 1) {
+          this.setSingle(res[0]);  // 👉 popup
+        } else {
+          this.setList(res);       // 👉 lista
+        }
+      });
 
+  } else if (telefono) {
+    this.service.findByNumeroTelefono(telefono)
+      .subscribe(res => {
+        if (res.length === 1) {
+          this.setSingle(res[0]);  // 👉 popup
+        } else {
+          this.setList(res);
+        }
+      });
   } else {
     this.loadAll();
   }

@@ -1,0 +1,221 @@
+<div class="container">
+
+  <!-- COLONNA SINISTRA -->
+  <div class="left-panel">
+
+<form [formGroup]="aziendaForm">
+
+  <div class="card">
+
+    <input
+      type="number"
+      placeholder="ID azienda"
+      formControlName="id"
+    />
+
+
+    <input
+      type="text"
+      placeholder="Nome azienda"
+      formControlName="nomeAzienda"
+    />
+
+    <input
+      type="text"
+      placeholder="Descrizione"
+      formControlName="descrizione"
+    />
+
+    <input
+      type="number"
+      placeholder="ID Titolare"
+      formControlName="titolareId"
+    />
+
+    <div class="result-actions">
+
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="cerca()"
+      >
+        Cerca
+      </button>
+
+      <button
+        type="button"
+        class="btn-danger"
+        (click)="resetRicerca()"
+      >
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+</form>
+
+
+
+
+
+
+    @if (azienda) {
+
+  <div class="result-card">
+
+    <div class="result-header">
+      <span class="badge">ID {{ azienda.id }}</span>
+      <h3>{{ azienda.nomeAzienda }}</h3>
+    </div>
+    <div class="result-body">
+      <p class="descrizione">
+        {{ azienda.descrizioneAzienda }}
+      </p>
+      <p>Titolare: {{azienda.titolare.name}}</p>
+      Auto: {{azienda.auto.marca}}
+    </div>
+
+    <div class="result-actions">
+
+      <button class="btn-secondary"
+        (click)="openEditPopup()">
+        Modifica
+      </button>
+
+      <button class="btn-danger">
+        Elimina
+      </button>
+
+    </div>
+
+  </div>
+
+}
+
+
+  </div>
+
+  <!-- COLONNA DESTRA -->
+  <div class="right-panel">
+
+    <h2>Lista Aziende</h2>
+
+    <div class="result-actions">
+
+  <button
+    type="button"
+    class="btn-secondary"
+    (click)="ordinaPerId()"
+  >
+    Ordina per ID
+  </button>
+
+  <button
+    type="button"
+    class="btn-secondary"
+    (click)="ordinaPerIniziale()"
+  >
+    Ordina per Nome
+  </button>
+
+</div>
+
+    <div class="lista">
+
+      @if (ListAzienda.length === 0) {
+        <p>Nessuna azienda trovata</p>
+      }
+
+      @for (item of ListAzienda; track item.id) {
+
+        <div class="item"
+     (click)="ottieniAzienda(item.id)">
+          {{item.id}}: {{ item.nomeAzienda }}
+        </div>
+
+      }
+
+    </div>
+      <div class="result-actions">
+
+  <button type="button" (click)="prev()">
+    Prev
+  </button>
+
+  <span>Pagina {{ page + 1 }}</span>
+
+  <button type="button" (click)="next()">
+    Next
+  </button>
+
+</div>
+
+  </div>
+
+
+</div>
+
+@if (showErrorPopup) {
+  <div class="popup-overlay">
+    <div class="popup">
+      <h3>Azienda non trovata</h3>
+      <p>L'azienda con questo ID non esiste.</p>
+      <button (click)="closeErrorPopup()">
+        Chiudi
+      </button>
+    </div>
+  </div>
+}
+
+
+<!-- POPUP MODIFICA AZIENDA -->
+
+@if (showEditPopup) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3>Modifica Azienda</h3>
+
+      <input
+        type="text"
+        placeholder="Nome azienda"
+        [(ngModel)]="azienda.nomeAzienda"
+      />
+
+      <input
+        type="text"
+        placeholder="Descrizione azienda"
+        [(ngModel)]="azienda.descrizioneAzienda"
+      />
+
+      <input
+        type="text"
+        placeholder="titolare"
+        [(ngModel)]="azienda.titolare.name"
+      />
+
+      <input
+        type="text"
+        placeholder="auto"
+        [(ngModel)]="azienda.auto.modello"
+      />
+
+      <div class="result-actions">
+
+        <button class="btn-secondary"
+                (click)="salvaModifica()">
+          Salva
+        </button>
+
+        <button class="btn-danger"
+                (click)="closeEditPopup()">
+          Annulla
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+}

@@ -86,6 +86,30 @@
           <span class="field-icon">&#x1F464;</span>
         </div>
 
+        <div class="field select-field" [class.has-value]="autoForm.controls.aziendaId.value !== null">
+          <select formControlName="aziendaId" id="aziendaId">
+            <option [ngValue]="null" disabled hidden></option>
+            <option [ngValue]="0">Nessuna azienda</option>
+            @for (azienda of aziendaList; track azienda.id) {
+              <option [ngValue]="azienda.id">{{ azienda.nomeAzienda }}</option>
+            }
+          </select>
+          <label for="aziendaId">Azienda</label>
+          <span class="field-icon">&#x1F3E2;</span>
+        </div>
+
+        <div class="field select-field" [class.has-value]="autoForm.controls.dipendenteId.value !== null">
+          <select formControlName="dipendenteId" id="dipendenteId">
+            <option [ngValue]="null" disabled hidden></option>
+            <option [ngValue]="0">Nessun dipendente</option>
+            @for (dipendente of dipendenteList; track dipendente.id) {
+              <option [ngValue]="dipendente.id">{{ getDipendenteLabel(dipendente) }}</option>
+            }
+          </select>
+          <label for="dipendenteId">Dipendente</label>
+          <span class="field-icon">&#x1F464;</span>
+        </div>
+
       </div>
 
       <div class="buttons">
@@ -201,6 +225,14 @@
           <div class="detail-item">
             <span class="detail-label">&#x1F464; Utente</span>
             <span class="detail-value">{{ item.user?.name || 'Nessuno' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">&#x1F3E2; Azienda</span>
+            <span class="detail-value">{{ item.azienda?.nomeAzienda || 'Nessuna' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">&#x1F464; Dipendente</span>
+            <span class="detail-value">{{ getDipendenteLabel(item.dipendente) }}</span>
           </div>
         </div>
 

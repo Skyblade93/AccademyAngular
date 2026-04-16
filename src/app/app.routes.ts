@@ -1,16 +1,16 @@
 import { Routes } from '@angular/router';
-
 import { ContactComponent } from './contact/contact.component';
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
 import { CarrelloComponent } from './carrello/carrello-component';
 import { ElettricistaComponent } from './elettricista/elettricista';
-import { AziendaComponent } from './azienda/azienda';
+import { AziendaComponent } from './azienda-component/azienda-component';
 import { DipendenteComponent } from './dipendente/dipendente-component';
 import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica-component/notifica-component';
 import { OrdineComponent } from './ordine-Component/ordine';
 import { HomeComponent } from './home-component/home-component';
+
 
 export const routes: Routes = [
   {path : 'drone', component : DroneComponent},

@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { AbstractService } from "./abstract-service";
 import { Observable } from "rxjs";
 import { DipendenteDto } from "../Dto/DipendenteDto";
-import { text } from "stream/consumers";
 
 @Injectable({
     providedIn: 'root'
@@ -60,11 +59,11 @@ export class DipendenteService extends AbstractService<DipendenteDto>{
         );
     }
 
-    findByEtaGreaterThan(eta: number): Observable<DipendenteDto[]> {
-        let params = new HttpParams().set('eta', eta);
+    findByNumeroTelefono(telefono: number): Observable<DipendenteDto[]> {
+        let params = new HttpParams().set('numeroTelefono', telefono);
 
         return this.http.get<DipendenteDto[]>(
-            `${this.baseProjectUrl}/findByEtaGreaterThan`,
+            `${this.baseProjectUrl}/findByNumeroTelefono`,
             { params }
         );
     }

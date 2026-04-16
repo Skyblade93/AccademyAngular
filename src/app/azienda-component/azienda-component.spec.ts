@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Azienda } from './azienda';
+import { Azienda } from './azienda-component';
 
 describe('Azienda', () => {
   let component: Azienda;

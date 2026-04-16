@@ -5,6 +5,10 @@ import { AutoDto } from '../Dto/AutoDto';
 import { autoService } from '../Service/autoService';
 import { userService } from '../Service/userService';
 import { UserDto } from '../Dto/UserDto';
+import { AziendaDto } from '../Dto/AziendaDto';
+import { DipendenteDto } from '../Dto/DipendenteDto';
+import { aziendaService } from '../Service/aziendaService';
+import { DipendenteService } from '../Service/dipendenteService';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -18,14 +22,18 @@ import { throwError } from 'rxjs';
 export class AutoComponent implements OnInit, OnDestroy {
   service: autoService;
   userSrv: userService;
+  aziendaSrv: aziendaService;
+  dipendenteSrv: DipendenteService;
   
 
   listAuto: AutoDto[] = [];
   userList: UserDto[] = [];
+  aziendaList: AziendaDto[] = [];
+  dipendenteList: DipendenteDto[] = [];
   searchResults: AutoDto[] = [];
   carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'METANO', 'ELETTRICA', 'IBRIDA'];
 
-  auto: AutoDto = new AutoDto('', '', '', '', null);
+  auto: AutoDto = new AutoDto('', '', '', '', null, null, null);
 
   autoForm = new FormGroup({
     modello: new FormControl('', {
@@ -45,6 +53,8 @@ export class AutoComponent implements OnInit, OnDestroy {
       validators: [Validators.required],
     }),
     userId: new FormControl<number | null>(null),
+    aziendaId: new FormControl<number | null>(null),
+    dipendenteId: new FormControl<number | null>(null),
   });
 
   searchForm = new FormGroup({
@@ -61,9 +71,11 @@ popupMessage = '';
 private popupTimer: ReturnType<typeof setTimeout> | null = null;
 
 
-  constructor(service: autoService, userSrv: userService) {
+  constructor(service: autoService, userSrv: userService, aziendaSrv: aziendaService, dipendenteSrv: DipendenteService) {
     this.service = service;
     this.userSrv = userSrv;
+    this.aziendaSrv = aziendaSrv;
+    this.dipendenteSrv = dipendenteSrv;
   }
 
   ngOnInit() {
@@ -77,6 +89,8 @@ private popupTimer: ReturnType<typeof setTimeout> | null = null;
   });
     this.loadAll();
     this.loadUsers();
+    this.loadAziende();
+    this.loadDipendenti();
   }
 
   loadAll() {
@@ -88,6 +102,18 @@ private popupTimer: ReturnType<typeof setTimeout> | null = null;
   loadUsers() {
     this.userSrv.getAll().subscribe((users) => {
       this.userList = users;
+    });
+  }
+
+  loadAziende() {
+    this.aziendaSrv.getAll().subscribe((aziende) => {
+      this.aziendaList = aziende;
+    });
+  }
+
+  loadDipendenti() {
+    this.dipendenteSrv.getAll().subscribe((dipendenti) => {
+      this.dipendenteList = dipendenti;
     });
   }
 
@@ -104,6 +130,8 @@ private popupTimer: ReturnType<typeof setTimeout> | null = null;
         targa: auto.targa,
         carburante: auto.carburante,
         userId: auto.user?.id ?? null,
+        aziendaId: auto.azienda?.id ?? null,
+        dipendenteId: auto.dipendente?.id ?? null,
       });
     });
   }
@@ -119,11 +147,19 @@ marca: string;
 targa: string;
 carburante: string;
 userId: number | null;
+aziendaId: number | null;
+dipendenteId: number | null;
 };
 
 const selectedUser = formValue.userId === 0
 ? null
 : this.userList.find((u) => u.id === formValue.userId) ?? null;
+const selectedAzienda = formValue.aziendaId === 0
+? null
+: this.aziendaList.find((azienda) => azienda.id === formValue.aziendaId) ?? null;
+const selectedDipendente = formValue.dipendenteId === 0
+? null
+: this.dipendenteList.find((dipendente) => dipendente.id === formValue.dipendenteId) ?? null;
 const isEditMode = !!this.auto.id;
 
 this.auto.modello = formValue.modello;
@@ -131,6 +167,8 @@ this.auto.marca = formValue.marca;
 this.auto.targa = formValue.targa;
 this.auto.carburante = formValue.carburante;
 this.auto.user = selectedUser;
+this.auto.azienda = selectedAzienda;
+this.auto.dipendente = selectedDipendente;
 
 const request = isEditMode
 ? this.service.update(this.auto)
@@ -146,13 +184,15 @@ this.resetForm();
 }
 
   resetForm() {
-    this.auto = new AutoDto('', '', '', '', null);
+    this.auto = new AutoDto('', '', '', '', null, null, null);
     this.autoForm.reset({
       modello: '',
       marca: '',
       targa: '',
       carburante: '',
       userId: null,
+      aziendaId: null,
+      dipendenteId: null,
     });
   }
 
@@ -164,9 +204,19 @@ this.resetForm();
       targa: auto.targa,
       carburante: auto.carburante,
       userId: auto.user?.id ?? null,
+      aziendaId: auto.azienda?.id ?? null,
+      dipendenteId: auto.dipendente?.id ?? null,
     });
     // Scroll to top to show the form
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  getDipendenteLabel(dipendente: DipendenteDto | null | undefined) {
+    if (!dipendente) {
+      return 'Nessuno';
+    }
+
+    return `${dipendente.nomeDipendente} ${dipendente.cognomeDipendente}`.trim();
   }
 
   applyFilters() {
