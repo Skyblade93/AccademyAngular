@@ -26,7 +26,6 @@ export class NotificaComponent implements OnInit {
     this.istoggleAddNotifica.update(v => !v);
   }
 
-  // Metodo per gestire l'output del componente figlio
   onNotificaAggiunta(nuovaNotifica: NotificaDto): void {
     this.listNotifica = [nuovaNotifica, ...this.listNotifica];
     this.istoggleAddNotifica.set(false);
