@@ -85,4 +85,28 @@ button:hover {
     color: #888;
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #EDA2F2;
+    padding: 1rem;
+    color: #000000;
+}
+
+.popup-container {
+    background-color: #DC6BAD;
+    border: 1px solid #8C7AA9;
+    color: #000000;
+}
+.empty-message {
+    text-align: center;
+    color: #2c3e50;
+    font-weight: 500;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    font-style: italic;
+    border: 1px dashed #abb2b9;
 }

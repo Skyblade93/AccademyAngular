@@ -1,0 +1,20 @@
+<div class="form-section">
+
+  <h2>Aggiungi Dipendente</h2>
+
+  <form [formGroup]="dipendenteForm" (ngSubmit)="onSubmit()" class="form">
+
+    <input class="nome" formControlName="nome" placeholder="Nome">
+    <input class="cognome" formControlName="cognome" placeholder="Cognome">
+    <input class="eta" formControlName="eta" type="number" placeholder="Età">
+    <input class="email" formControlName="email" placeholder="Email">
+    <input class="telefono" formControlName="telefono" type="number" placeholder="Telefono">
+
+    <div class="buttons">
+      <button type="submit">Salva</button>
+      <button type="button" (click)="close.emit()">Torna Indietro</button>
+    </div>
+
+  </form>
+
+</div>
