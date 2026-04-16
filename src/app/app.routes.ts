@@ -8,10 +8,14 @@ import { HomeComponent } from "./home-component/home-component";
 import { NotificaComponent } from "./notifica-component/notifica-component";
 import { UserComponent } from "./user/user";
 import { CarrelloComponent } from "./carrello/carrello-component";
+import { ElettricistaComponent } from "./elettricista/elettricista";
+import { OrdineComponent } from "./ordine-Component/ordine";
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path : 'elettricista', component : ElettricistaComponent},
+  {path : 'ordine', component : OrdineComponent},
   {path : 'contact', component : ContactComponent},
   { path: 'home', component: HomeComponent },
   { path: 'drone', component: DroneComponent },
