@@ -26,28 +26,57 @@ export class NotificaComponent implements OnInit {
     this.istoggleAddNotifica.update(v => !v);
   }
 
+  // Metodo per gestire l'output del componente figlio
+  onNotificaAggiunta(nuovaNotifica: NotificaDto): void {
+    this.listNotifica = [nuovaNotifica, ...this.listNotifica];
+    this.istoggleAddNotifica.set(false);
+  }
+
   caricaTutte(): void {
-    this.notificaService.getAll().subscribe(data => {
-      this.listNotifica = data;
+    this.notificaService.getAll().subscribe({
+      next: (data) => this.listNotifica = data,
+      error: (err) => {
+        console.error('Errore nel caricamento totale:', err);
+        this.listNotifica = [];
+      }
     });
   }
 
   cercaPerTitolo(titolo: string): void {
-    if(!titolo) return;
-    this.notificaService.getNotificaByTitolo(titolo).subscribe(data => {
-      this.listNotifica = data ? [data] : [];
+    if (!titolo) {
+      this.caricaTutte();
+      return;
+    }
+    this.notificaService.getNotificaByTitolo(titolo).subscribe({
+      next: (data) => this.listNotifica = data ? [data] : [],
+      error: (err) => {
+        console.error('Errore nella ricerca per titolo:', err);
+        this.listNotifica = [];
+      }
     });
   }
 
   cercaPerStato(letta: boolean): void {
-    this.notificaService.getNotificheByLetta(letta).subscribe(data => {
-      this.listNotifica = data;
+    this.notificaService.getNotificheByLetta(letta).subscribe({
+      next: (data) => this.listNotifica = data,
+      error: (err) => {
+        console.error('Errore nella ricerca per stato:', err);
+        this.listNotifica = [];
+      }
     });
   }
 
   cercaPerTipoEPriorita(tipo: string, priorita: string): void {
-    this.notificaService.getNotificheByTipoAndPriorita(tipo, priorita).subscribe(data => {
-      this.listNotifica = data;
+    if (!tipo && !priorita) {
+      this.caricaTutte();
+      return;
+    }
+    this.notificaService.getNotificheByTipoAndPriorita(tipo, priorita).subscribe({
+      next: (data) => this.listNotifica = data,
+      error: (err) => {
+        console.error('Errore nella ricerca per tipo e priorità:', err);
+        this.listNotifica = [];
+      }
     });
   }
 }
