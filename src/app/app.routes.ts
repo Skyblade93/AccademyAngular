@@ -1,6 +1,6 @@
 import { ContactComponent } from './contact/contact';
 import { DipendenteComponent } from './dipendente/dipendente';
-import { AziendaComponent } from './azienda/azienda';
+import { AziendaComponent } from './azienda-component/azienda-component';
 import { Carrello } from './carrello/carrello';
 import { HomeComponent } from './home/home';
 import { DroneComponent } from './drone/drone';
