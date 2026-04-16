@@ -1,77 +1,136 @@
-/* SFONDO E FONT */
 .page-container {
-    background-color: #7192BE !important; /* Blue Grey */
-    font-family: 'Helvetica', Arial, sans-serif !important;
-    color: #000000 !important;
+    background-color: #7192BE !important;
+    font-family: 'Helvetica', sans-serif;
     min-height: 100vh;
     padding: 30px;
+    color: black;
 }
 
-/* CONTENITORE: 8C7AA9 */
-.form-container {
-    background-color: #8C7AA9 !important; /* Amethyst Smoke */
-    border: 2px solid #000000;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-/* IL FORM ORIZZONTALE */
-.modern-form {
+.filter-strip {
+    background-color: #EDA2F2 !important;
+    padding: 15px;
+    border: 3px solid black;
+    border-radius: 12px;
+    margin-bottom: 25px;
     display: flex;
-    flex-wrap: wrap; /* Fa andare a capo se non c'è spazio */
+    justify-content: center;
+    box-shadow: 6px 6px 0px black;
+}
+
+.btn-trigger-filter {
+    background-color: #EFABFF !important;
+    border: 2px solid black;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background-color: #8C7AA9 !important;
+    padding: 40px;
+    border: 3px solid black;
+    border-radius: 20px;
+    text-align: center;
+    width: 380px;
+    box-shadow: 15px 15px 0px black;
+}
+
+.animate-pop { animation: popScale 0.4s ease-out; }
+@keyframes popScale {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.popup-input {
+    width: 85%;
+    padding: 12px;
+    background-color: #EDA2F2;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.form-container-box {
+    background-color: #8C7AA9 !important;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
+}
+
+.flex-form {
+    display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     align-items: center;
 }
 
-/* GLI INPUT: EDA2F2 */
-.input-group {
-    position: relative;
-    flex: 1 1 200px; /* Larghezza minima 200px */
-    max-width: 250px; /* Impedisce che diventino troppo lunghi */
-}
-
-.input-group.battery {
-    flex: 0 0 120px; /* Più stretto per la batteria */
-}
-
-input {
-    width: 100%;
-    background-color: #EDA2F2 !important; /* Plum */
-    border: 2px solid #000000 !important;
-    color: #000000 !important;
-    padding: 12px 10px;
+.input-plum {
+    background-color: #EDA2F2 !important;
+    border: 2px solid black !important;
+    padding: 12px 15px; /* Aggiunto 15px di padding per far respirare il testo */
     border-radius: 10px;
     font-weight: bold;
+    flex: 1;
 }
 
-/* BOTTONE: EFABFF */
-.actions {
-    display: flex;
-    gap: 10px;
-}
+.input-plum.short { flex: 0 0 90px; }
 
-.btn-main {
-    background-color: #EFABFF !important; /* Mauve */
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-    padding: 12px 25px;
+.btn-mauve {
+    background-color: #EFABFF !important;
+    border: 2px solid black !important;
+    padding: 12px 35px;
     border-radius: 50px;
     font-weight: 900;
     cursor: pointer;
-    white-space: nowrap; /* Impedisce al testo del bottone di andare a capo */
 }
 
-/* CARD LISTA */
+.btn-reset {
+    background-color: #7192BE !important;
+    color: white !important;
+    border: 2px solid black !important;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-mauve:hover, .btn-reset:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0px 5px 0px black; 
+}
+
 .drone-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
 }
 
 .drone-card {
-    background-color: #8C7AA9 !important;
-    border: 2px solid #000000;
-    padding: 15px;
-    border-radius: 12px;
+    background-color: #8C7AA9;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 18px;
 }
+
+.batt-bar-container {
+    background: #eee;
+    height: 12px;
+    border-radius: 6px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.batt-bar-fill { height: 100%; transition: width 0.6s ease; }

@@ -12,18 +12,16 @@ import { DroneDto } from '../Dto/DroneDto';
   styleUrl: './drone.component.css'
 })
 export class DroneComponent implements OnInit {
-  // Questa è la lista che l'HTML deve scorrere con *ngFor="let d of listaDroni"
   listaDroni: DroneDto[] = [];
+  listaFiltrata: DroneDto[] = []; 
   
-  // Modello per il Two-Way Data Binding [(ngModel)]
   droneInModifica: DroneDto = {
-    modello: '',
-    marca: '',
-    livelloBatteria: 0,
-    codiceSeriale: ''
+    modello: '', marca: '', livelloBatteria: 0, codiceSeriale: ''
   };
 
   isModifica: boolean = false;
+  isPopupOpen: boolean = false; 
+  filtroMarca: string = '';     
 
   constructor(private readonly droneService: DroneService) {}
 
@@ -33,15 +31,30 @@ export class DroneComponent implements OnInit {
 
   caricaDroni(): void {
     this.droneService.getAll().subscribe({
-      next: (data: DroneDto[]) => { 
+      next: (data) => { 
         this.listaDroni = data; 
+        this.listaFiltrata = data; 
       },
-      error: (err: any) => console.error("Errore caricamento:", err)
+      error: (err) => console.error("Verifica IntelliJ!", err)
     });
   }
 
+  togglePopup(): void {
+    this.isPopupOpen = !this.isPopupOpen;
+  }
+
+  applicaFiltro(): void {
+    if (this.filtroMarca.trim() !== '') {
+      this.listaFiltrata = this.listaDroni.filter(d => 
+        d.marca.toLowerCase().includes(this.filtroMarca.toLowerCase())
+      );
+    } else {
+      this.listaFiltrata = this.listaDroni;
+    }
+    this.isPopupOpen = false; 
+  }
+
   selezionaPerModifica(drone: DroneDto): void {
-    // Creiamo una copia per non modificare l'originale nella lista finché non salviamo
     this.droneInModifica = { ...drone };
     this.isModifica = true;
   }
@@ -49,6 +62,8 @@ export class DroneComponent implements OnInit {
   annulla(): void {
     this.droneInModifica = { modello: '', marca: '', livelloBatteria: 0, codiceSeriale: '' };
     this.isModifica = false;
+    this.filtroMarca = '';
+    this.listaFiltrata = this.listaDroni;
   }
 
   salvaDrone(droneForm: any): void {
@@ -59,25 +74,19 @@ export class DroneComponent implements OnInit {
 
       call.subscribe({
         next: () => {
-          this.caricaDroni(); // Ricarica la lista aggiornata dal DB
-          this.annulla();     // Pulisce i campi
+          this.caricaDroni();
+          this.annulla();
           alert("Operazione riuscita!");
         },
-        error: (err) => {
-          console.error(err);
-          alert("Errore nel salvataggio! Controlla il codice seriale.");
-        }
+        error: () => alert("Errore! Verifica il Backend.")
       });
     }
   }
 
   eliminaDrone(id: number | undefined): void {
-    if (id !== undefined && confirm("Sei sicuro di voler eliminare questo drone?")) {
+    if (id !== undefined && confirm("Eliminare questo drone?")) {
       this.droneService.delete(id).subscribe({
-        next: () => {
-          this.caricaDroni(); // Aggiorna la vista dopo l'eliminazione
-        },
-        error: (err) => console.error("Errore eliminazione:", err)
+        next: () => this.caricaDroni()
       });
     }
   }
