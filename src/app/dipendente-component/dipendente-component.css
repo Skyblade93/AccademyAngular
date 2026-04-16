@@ -180,15 +180,6 @@ tr:hover {
   font-style: italic;
 }
 
-/* FOOTER */
-.footer {
-  margin-top: 30px;
-  padding: 15px;
-  text-align: center;
-  background: #EDA2F2;
-  border-radius: 10px;
-}
-
 /* OVERLAY SFONDO */
 .popup-overlay {
   position: fixed;
@@ -245,8 +236,34 @@ tr:hover {
     opacity: 1;
     transform: scale(1);
   }
-<<<<<<< HEAD:src/app/dipendente-component/dipendente-component.css
 }
-=======
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
->>>>>>> 0d7770bc3b477dfaaf3246996c825cddf5b97c18:src/app/dipendente/dipendente-component.css
+
+.popup {
+  background: #EDA2F2;
+  padding: 20px;
+  border-radius: 12px;
+  width: 600px;
+}
+
+.popup-inner input {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  border: 2px solid black;
+  background: #EFABBF;
+  cursor: pointer;
+}

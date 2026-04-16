@@ -5,7 +5,7 @@ import { AutoComponent } from './auto-component/auto-component';
 import { CarrelloComponent } from './carrello/carrello-component';
 import { ElettricistaComponent } from './elettricista/elettricista';
 import { AziendaComponent } from './azienda-component/azienda-component';
-import { DipendenteComponent } from './dipendente/dipendente-component';
+import { DipendenteComponent } from './dipendente-component/dipendente-component';
 import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica-component/notifica-component';
 import { OrdineComponent } from './ordine-Component/ordine';
@@ -16,16 +16,10 @@ export const routes: Routes = [
   {path : 'user', component : UserComponent},
   {path : 'home' , component: HomeComponent},
   {path : 'drone', component : DroneComponent},
-<<<<<<< HEAD
-  {path : 'user', component : UserComponent},
-  { path: 'auto', component: AutoComponent },
-  { path: 'notifica', component: NotificaComponent },
-=======
   { path: 'auto', component: AutoComponent },
   { path: 'notifica', component: NotificaComponent },
   { path: 'user', component: UserComponent },
   { path: 'home', component: HomeComponent },
->>>>>>> 1361c50 (fix: update navigation and routing for Notifiche component)
   {path : 'dipendente' , component: DipendenteComponent},
   {path : 'azienda', component: AziendaComponent},
   { path: 'carrello', component: CarrelloComponent },

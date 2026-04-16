@@ -1,0 +1,79 @@
+/* CONTAINER IDENTICO AL PADRE */
+.form-section {
+  background: #EDA2F2;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* TITOLO */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: black;
+}
+
+/* FORM GRID (COPIATA DAL PADRE) */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px;
+  gap: 15px 40px;
+}
+
+/* INPUT POSIZIONAMENTO */
+.nome { grid-column: 1; }
+.cognome { grid-column: 2; }
+.eta {
+  grid-column: 3;
+  max-width: 100px;
+}
+
+.email {
+  grid-column: 1 / 3;
+}
+
+.telefono {
+  grid-column: 3;
+}
+
+/* INPUT STYLE */
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f9f9f9;
+}
+
+input:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 2px #8C7AA9;
+}
+
+/* BUTTONS */
+.buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  background: #EFABBF;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background: #EFABBF;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.03);
+  background: #dc6bad;
+}

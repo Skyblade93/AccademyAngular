@@ -1,0 +1,123 @@
+/* FORM SECTION */
+.form-section {
+  background: #EDA2F2;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* TITOLO */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* FORM */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px;
+  gap: 15px 40px;
+}
+
+/* INPUT GENERICI (NON SERVE POSIZIONE COMPLESSA QUI) */
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f9f9f9;
+}
+
+input:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 2px #8C7AA9;
+}
+
+/* BUTTONS */
+.buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  background: #EFABBF;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background: #EFABBF;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.03);
+  background: #dc6bad;
+}
+
+/* LISTA */
+.list-section {
+  background: #EDA2F2;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background: #f4f4f4;
+}
+
+tr:hover {
+  background: #dc6bad;
+  color: white;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: #DC6BAD;
+  padding: 25px;
+  border-radius: 12px;
+  width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.popup button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  background: #EFABBF;
+  cursor: pointer;
+  border-radius: 8px;
+}
