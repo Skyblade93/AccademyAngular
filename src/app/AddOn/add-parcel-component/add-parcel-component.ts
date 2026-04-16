@@ -9,7 +9,7 @@ import { ParcelDto } from '../../Dto/ParcelDto';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-parcel-component.html',
-  styleUrl: './add-parcel-component.css',
+  styleUrl: './add-parcel-component.ts',
 })
 export class AddParcelComponent {
   constructor(private service: parcelService) {}
