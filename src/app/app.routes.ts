@@ -1,32 +1,34 @@
-import { Routes } from '@angular/router';
-import { ContactComponent } from './contact/contact.component';
-import { UserComponent } from './user/user';
-import { AutoComponent } from './auto-component/auto-component';
-import { CarrelloComponent } from './carrello/carrello-component';
-import { ElettricistaComponent } from './elettricista/elettricista';
-import { AziendaComponent } from './azienda-component/azienda-component';
-import { DipendenteComponent } from './dipendente-component/dipendente-component';
-import { DroneComponent } from './drone/drone';
-import { NotificaComponent } from './notifica-component/notifica-component';
-import { OrdineComponent } from './ordine-Component/ordine';
-import { HomeComponent } from './home-component/home-component';
+import { Routes } from "@angular/router";
+import { AutoComponent } from "./auto-component/auto-component";
+import { AziendaComponent } from "./azienda-component/azienda-component";
+import { ContactComponent } from "./contact/contact.component";
+import { DipendenteComponent } from "./dipendente/dipendente-component";
+import { DroneComponent } from "./drone/drone-component";
+import { HomeComponent } from "./home-component/home-component";
+import { NotificaComponent } from "./notifica-component/notifica-component";
+import { UserComponent } from "./user/user";
+import { CarrelloComponent } from "./carrello/carrello-component";
+import { ElettricistaComponent } from "./elettricista/elettricista";
+import { OrdineComponent } from "./ordine-Component/ordine";
+import { ParcelComponent } from "./parcel/parcel";
 
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path : 'parcel', component : ParcelComponent},
+  {path : 'elettricista', component : ElettricistaComponent},
+  {path : 'ordine', component : OrdineComponent},
+  {path : 'contact', component : ContactComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'drone', component: DroneComponent },
+  {path : 'home', component : HomeComponent},
   {path : 'user', component : UserComponent},
-  {path : 'home' , component: HomeComponent},
   {path : 'drone', component : DroneComponent},
   { path: 'auto', component: AutoComponent },
   { path: 'notifica', component: NotificaComponent },
+  { path: 'dipendente', component: DipendenteComponent },
+  { path: 'azienda', component: AziendaComponent },
   { path: 'user', component: UserComponent },
-  { path: 'home', component: HomeComponent },
-  {path : 'dipendente' , component: DipendenteComponent},
-  {path : 'azienda', component: AziendaComponent},
   { path: 'carrello', component: CarrelloComponent },
-  {path : 'home' , component: HomeComponent},
-  {path : 'ordine' , component: OrdineComponent},
-  {path : 'contact' , component: ContactComponent},
-  { path: 'elettricista', component: ElettricistaComponent },
-  { path: '**', redirectTo: 'home' },
-
+  { path: '**', redirectTo: 'home' } // Sempre per ultima!
 ];

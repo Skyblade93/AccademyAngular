@@ -24,7 +24,7 @@ export class AutoComponent implements OnInit, OnDestroy {
   userSrv: userService;
   aziendaSrv: aziendaService;
   dipendenteSrv: DipendenteService;
-  
+
 
   listAuto: AutoDto[] = [];
   userList: UserDto[] = [];
