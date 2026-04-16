@@ -1,10 +1,5 @@
-import { ContactComponent } from './contact/contact';
-import { DipendenteComponent } from './dipendente/dipendente';
-import { AziendaComponent } from './azienda-component/azienda-component';
-import { Carrello } from './carrello/carrello';
-import { HomeComponent } from './home/home';
-import { DroneComponent } from './drone/drone';
-import { NotificaComponent } from './notifica/notifica';
+import { Routes } from '@angular/router';
+import { ContactComponent } from './contact/contact.component';
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
 import { CarrelloComponent } from './carrello/carrello-component';
