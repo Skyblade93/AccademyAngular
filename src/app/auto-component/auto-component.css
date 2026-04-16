@@ -957,3 +957,11 @@
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(220, 107, 173, 0.50);
 }
+
+.add-auto-toggle-card .add-auto-slot {
+  margin-top: 18px;
+}
+
+.add-search-toggle-card .add-search-slot {
+  margin-top: 18px;
+}

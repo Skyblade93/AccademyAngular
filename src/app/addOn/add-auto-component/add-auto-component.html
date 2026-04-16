@@ -1,0 +1,90 @@
+<section class="card form-card">
+	<div class="card-header">
+		<div class="card-title">
+			<span class="icon">&#x2736;</span>
+			<h2>{{ isEditMode() ? 'Modifica Auto' : 'Nuova Auto' }}</h2>
+		</div>
+		<span class="badge-status">{{ isEditMode() ? 'EDIT' : 'NEW' }}</span>
+	</div>
+
+	<p class="form-intro">
+		Compila i dati del veicolo e salva. Tutti i campi principali sono ottimizzati per inserimento rapido.
+	</p>
+
+	<form [formGroup]="autoForm" (ngSubmit)="submitForm()" aria-label="Form inserimento auto">
+		<div class="form-grid">
+			<div class="field">
+				<input formControlName="marca" placeholder=" " id="add-marca" autocomplete="organization" />
+				<label for="add-marca">Marca</label>
+				<span class="field-icon">&#x1F3F7;</span>
+			</div>
+
+			<div class="field">
+				<input formControlName="modello" placeholder=" " id="add-modello" autocomplete="off" />
+				<label for="add-modello">Modello</label>
+				<span class="field-icon">&#x1F699;</span>
+			</div>
+
+			<div class="field">
+				<input formControlName="targa" placeholder=" " id="add-targa" autocomplete="off" />
+				<label for="add-targa">Targa</label>
+				<span class="field-icon">&#x1F522;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="!!autoForm.controls.carburante.value">
+				<select formControlName="carburante" id="add-carburante">
+					<option value="" disabled hidden></option>
+					@for (option of carburanteOptions(); track $index) {
+						<option [value]="option">{{ option }}</option>
+					}
+				</select>
+				<label for="add-carburante">Carburante</label>
+				<span class="field-icon">&#x26FD;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="autoForm.controls.userId.value !== null">
+				<select formControlName="userId" id="add-userId">
+					<option [ngValue]="null" disabled hidden></option>
+					<option [ngValue]="0">Nessun utente</option>
+					@for (user of userList(); track user.id) {
+						<option [ngValue]="user.id">{{ user.name }}</option>
+					}
+				</select>
+				<label for="add-userId">Utente</label>
+				<span class="field-icon">&#x1F464;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="autoForm.controls.aziendaId.value !== null">
+				<select formControlName="aziendaId" id="add-aziendaId">
+					<option [ngValue]="null" disabled hidden></option>
+					<option [ngValue]="0">Nessuna azienda</option>
+					@for (azienda of aziendaList(); track azienda.id) {
+						<option [ngValue]="azienda.id">{{ azienda.nomeAzienda }}</option>
+					}
+				</select>
+				<label for="add-aziendaId">Azienda</label>
+				<span class="field-icon">&#x1F3E2;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="autoForm.controls.dipendenteId.value !== null">
+				<select formControlName="dipendenteId" id="add-dipendenteId">
+					<option [ngValue]="null" disabled hidden></option>
+					<option [ngValue]="0">Nessun dipendente</option>
+					@for (dipendente of dipendenteList(); track dipendente.id) {
+						<option [ngValue]="dipendente.id">{{ getDipendenteLabel(dipendente) }}</option>
+					}
+				</select>
+				<label for="add-dipendenteId">Dipendente</label>
+				<span class="field-icon">&#x1F464;</span>
+			</div>
+		</div>
+
+		<div class="buttons">
+			<button type="submit" class="btn-primary">
+				{{ isEditMode() ? '&#x2736; Salva Modifiche' : '&#x2736; Crea Nuova Auto' }}
+			</button>
+			<button type="button" class="btn-ghost" (click)="clearForm()">Svuota Campi</button>
+			<button type="button" class="btn-ghost" (click)="cancel()">Annulla</button>
+		</div>
+	</form>
+</section>
