@@ -1,0 +1,169 @@
+body {
+  background: #7192BE;
+  font-family: Arial, sans-serif;
+}
+.container {
+  margin: 20px;
+  padding: 20px;
+  background: #8C7AA9;
+  border-radius: 12px;
+}
+/* TITOLO */
+h2 {
+  color: white;
+}
+/* INPUT */
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 10px;
+}
+
+/* bottoni generali */
+button {
+  background: #EFABFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #EDA2F2;
+}
+
+/* TABELLA */
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  background: #8C7AA9;
+  color: white;
+}
+
+th {
+  background: #EDA2F2;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid white;
+}
+
+tr:hover {
+  background: #EDA2F2;
+  cursor: pointer;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #DC6BAD;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* CARD DETTAGLIO */
+.card {
+  margin-top: 20px;
+  padding: 15px;
+  background: #DC6BAD;
+  border-radius: 10px;
+  color: white;
+}
+
+.elet-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.elet-card {
+  background: #8C7AA9;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.elet-card:hover {
+  transform: scale(1.05);
+  background: #EDA2F2;
+}
+
+/* BOTTONI INTERNI CARD */
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-check {
+  background: #EFABFF;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-call {
+  background: #DC6BAD;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-check:hover,
+.btn-call:hover {
+  opacity: 0.85;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  color: white;
+  font-size: 32px;
+}
+
+.header p {
+  color: white;
+  font-size: 24px;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.elet-card {
+  background: #8C7AA9;
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-check {
+  border: 2px solid black;
+}

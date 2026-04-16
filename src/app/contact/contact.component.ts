@@ -6,11 +6,11 @@ import { ContactDto } from '../Dto/ContactDto';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-contact',
+  selector: 'app-contact-component',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './contact.html',
-  styleUrl: './contact.css',
+  templateUrl: './contact.component.html',
+  styleUrl: './contact.component.css',
 })
 
 export class ContactComponent implements OnInit {

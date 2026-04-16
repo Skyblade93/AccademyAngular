@@ -1,40 +1,50 @@
-
-
-<div class="item"> {{user.name}} {{user.description}}  {{user.id}}</div>
-
-
-@if (isPopupVisible) {
-<div class="overlay" >
-  <div class="popup">
-    <h2>User non trovato</h2>
-    <button (click)="togglePopup()">Chiudi</button>
+<!-- 🔥 Utente selezionato -->
+@if (selectedUser()) {
+  <div class="item">
+    {{ selectedUser()?.name }}
+    {{ selectedUser()?.description }}
+    {{ selectedUser()?.id }}
   </div>
-</div>
 }
+
+<!-- 🔥 Popup errore -->
+@if (isPopupVisible()) {
+  <div class="overlay">
+    <div class="popup">
+      <h2>User non trovato</h2>
+      <button (click)="togglePopup()">Chiudi</button>
+    </div>
+  </div>
+}
+
+<!-- 🔥 Ricerca per ID -->
 <div>
   <input type="text" placeholder="id" #id>
-  <button (click)="ottieniElemento(+id.value)">Ottieni elemento</button>
+  <button (click)="ottieniElemento(+id.value)">
+    Ottieni elemento
+  </button>
+</div>
+
+<!-- 🔥 Lista utenti -->
+<div class="container">
+  @for (item of sortedUsers(); track item.id) {
+    <div class="item">
+      {{ item.name }}
+      {{ item.description }}
+      {{ item.id }}
+
+      <button (click)="deleteUser(item.id)">
+        Elimina
+      </button>
+    </div>
+  }
 </div>
 
 
 
-@for (item of UserSignal(); track $index) {
-
-  <div> {{item.name}} {{item.description}}  {{item.id}}  <button (click)="deleteUser(item.id)">Elimina</button></div>
+<button (click)="toggleAddUser()">Incrementa count</button>
+@if (istoggleAddUser()) {
+  <div>
+   <app-add-user-component [count] = "count()"  (countValue)="onUserCreated($event)"></app-add-user-component>
+  </div>
 }
-
-
-
-
-<div>
-  <form action="" method="post"></form>
-  <div> Inserisci Un nuovo utente</div>
-
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <input placeholder="nome" type="text" formControlName="nome">
-  <input placeholder="descrizione" type="text" formControlName="descrizione">
-  <button type="submit">Salva Persona</button>
-</form>
-
-<div>{{ count() }}</div>
-</div>

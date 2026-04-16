@@ -21,7 +21,7 @@ export class AziendaComponent implements OnInit {
   service: aziendaService;
   ListAzienda: AziendaDto[] = []
 
-  azienda: AziendaDto =  new AziendaDto('', '', 0, new UserDto('','',0), new AutoDto('','','','',null,0));
+  azienda: AziendaDto =  new AziendaDto('', '', 0, new UserDto('','',0), new AutoDto('','','','',null, null));
 
   aziendaForm = new FormGroup({
     id: new FormControl(''),
@@ -247,6 +247,12 @@ prev() {
     this.loadPage();
   }
 }
+
+  cercaPerTitolare(id: number) {
+    this.service.findByTitolareId(id).subscribe(res => {
+      this.azienda = res;
+    });
+  }
 
 
 }
