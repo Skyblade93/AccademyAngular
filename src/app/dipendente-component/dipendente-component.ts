@@ -46,9 +46,6 @@ export class DipendenteComponent {
 
   setSingle(res: DipendenteDto) {
     this.dipendente = res;
-
-    // 🔥 ricarica SEMPRE tutta la lista
-    this.loadAll();
   }
 
   setList(res: DipendenteDto[]) {
@@ -68,60 +65,39 @@ export class DipendenteComponent {
   const email = this.dipendenteForm.value.email?.trim() || '';
   const telefono = this.dipendenteForm.value.telefono;
 
-  console.log('Filtri:', { nome, cognome, eta, email, telefono });
-
-  // PRIORITÀ LOGICA (come Auto)
-
   if (email && telefono) {
     this.service.findByEmailAndNumeroTelefono(email, telefono!)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (email && eta) {
     this.service.findByEmailAndEta(email, eta)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (nome && cognome) {
     this.service.findByNomeDipendenteAndCognomeDipendente(nome, cognome)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (nome && eta) {
     this.service.findByNomeDipendenteAndEta(nome, eta)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (nome) {
     this.service.findByNomeDipendente(nome)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (cognome) {
     this.service.findByCognomeDipendente(cognome)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (email) {
     this.service.findByEmail(email)
-      .subscribe(res => {
-        this.setSingle(res);
-      });
+      .subscribe(res => this.setSingle(res));
 
   } else if (eta) {
     this.service.findByEta(eta)
-      .subscribe(res => {
-        this.setList(res);
-      });
+      .subscribe(res => this.setList(res));
 
   } else {
-    // nessun filtro → carica tutto
     this.loadAll();
   }
 }
