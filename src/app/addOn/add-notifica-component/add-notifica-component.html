@@ -1,0 +1,38 @@
+<div class="add-notifica-container">
+  <h3>Nuova Notifica</h3>
+  
+  <form [formGroup]="notificaForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="titolo">Titolo:</label>
+      <input type="text" id="titolo" formControlName="titolo" placeholder="Inserisci il titolo">
+    </div>
+
+    <div class="form-group">
+      <label for="messaggio">Messaggio:</label>
+      <textarea id="messaggio" formControlName="messaggio" placeholder="Scrivi il testo..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="priorita">Priorità:</label>
+      <select id="priorita" formControlName="priorita">
+        <option value="" disabled>Seleziona priorità</option>
+        <option [value]="PrioritaEnum.ALTA">Alta</option>
+        <option [value]="PrioritaEnum.MEDIA">Media</option>
+        <option [value]="PrioritaEnum.BASSA">Bassa</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tipo">Tipo:</label>
+      <select id="tipo" formControlName="tipo">
+        <option [value]="TipoEnum.INFORMAZIONE">Info</option>
+        <option [value]="TipoEnum.AVVERTIMENTO">Avvertimento</option>
+        <option [value]="TipoEnum.ERRORE">Errore</option>
+        <option [value]="TipoEnum.MANUTENZIONE">Manutenzione</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="notificaForm.invalid">Salva Notifica</button>
+  </form>
+</div>
