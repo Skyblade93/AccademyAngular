@@ -8,13 +8,15 @@ import { CarrelloDto } from '../Dto/CarrelloDto';
   selector: 'app-carrello',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './carrello.html',
-  styleUrl: './carrello.css',
+  templateUrl: './carrello-component.html',
+  styleUrl: './carrello-component.css',
 })
 export class Carrello implements OnInit {
   listCarrello: CarrelloDto[] = [];
 
   constructor(private carrelloService: CarrelloService) {}
+
+  isAperto: boolean = false;
 
   ngOnInit(): void {
     this.caricaTutti();
@@ -46,5 +48,9 @@ export class Carrello implements OnInit {
       next: (data) => (this.listCarrello = data),
       error: (err) => console.error('Errore ricerca prezzo', err),
     });
+  }
+
+  toggleFinestra() {
+    this.isAperto = !this.isAperto;
   }
 }

@@ -1,17 +1,49 @@
 .container {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: #7192be;
-  padding: 20px;
+  padding: 30px;
   border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-h2 {
+.titolo-finestra {
+  cursor: pointer;
+  background-color: #8c7aa9;
+  padding: 15px 30px;
+  border-radius: 8px;
+  border: 2px solid #eda2f2;
+  transition: all 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  min-width: 350px;
+}
+
+.titolo-finestra:hover {
+  background-color: #efabff;
+  border-color: #dc6bad;
+}
+
+.titolo-finestra h2 {
+  margin: 0;
   color: #ffffff;
-  border-bottom: 2px solid #eda2f2;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
+  border-bottom: none;
+  padding-bottom: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.contenuto-finestra {
+  width: 100%;
+  animation: fadeIn 0.4s ease;
+  margin-top: 30px;
 }
 
 .card {
@@ -26,7 +58,6 @@ h2 {
 .card-title {
   font-weight: 600;
   color: #efabff;
-  margin-top: 0;
 }
 
 .form-control {
@@ -67,14 +98,7 @@ h2 {
   color: white;
 }
 
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
+/* Tabella */
 .table-responsive {
   margin-top: 20px;
   background: #8c7aa9;
@@ -101,31 +125,23 @@ h2 {
   border-bottom: 1px solid rgba(237, 162, 242, 0.3);
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(239, 171, 255, 0.2);
-}
-
-.table td:nth-child(3) {
-  font-weight: bold;
-  color: #efabff;
-}
-
-.modal-content {
-  background-color: #8c7aa9;
-  border: 3px solid #dc6bad;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
-  .row {
-    flex-direction: column;
+  .titolo-finestra {
+    min-width: 90%;
   }
 
-  .col-md-3 {
-    width: 100%;
-    margin-bottom: 15px;
+  .row {
+    flex-direction: column;
   }
 }
