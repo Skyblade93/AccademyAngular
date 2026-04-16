@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { ContactComponent } from './contact/contact';
-import { DipendenteComponent } from './dipendente/dipendente';
-import { AziendaComponent } from './azienda/azienda';
-import { Carrello } from './carrello/carrello';
-import { HomeComponent } from './home/home';
-import { Routes } from '@angular/router';
-import { AutoComponent } from './auto-component/auto-component';
-import { DroneComponent } from './drone/drone';
-import { NotificaComponent } from './notifica/notifica';
-import { UserComponent } from './user/user';
-
-=======
 import { Routes } from '@angular/router';
 
 import { ContactComponent } from './contact/contact.component';
@@ -24,7 +11,6 @@ import { DroneComponent } from './drone/drone';
 import { NotificaComponent } from './notifica-component/notifica-component';
 import { OrdineComponent } from './ordine-Component/ordine';
 import { HomeComponent } from './home-component/home-component';
->>>>>>> 1be50c8beb46d79cc73cd7443c0c197a2ead9233
 
 export const routes: Routes = [
   {path : 'drone', component : DroneComponent},
