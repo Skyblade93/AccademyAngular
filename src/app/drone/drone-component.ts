@@ -35,7 +35,7 @@ export class DroneComponent implements OnInit {
         this.listaDroni = data; 
         this.listaFiltrata = data; 
       },
-      error: (err) => console.error("Verifica IntelliJ!", err)
+      error: (err) => console.error("Errore Backend!", err)
     });
   }
 
@@ -43,6 +43,7 @@ export class DroneComponent implements OnInit {
     this.isPopupOpen = !this.isPopupOpen;
   }
 
+  // FILTRO PARZIALE
   applicaFiltro(): void {
     if (this.filtroMarca.trim() !== '') {
       this.listaFiltrata = this.listaDroni.filter(d => 
@@ -76,9 +77,9 @@ export class DroneComponent implements OnInit {
         next: () => {
           this.caricaDroni();
           this.annulla();
-          alert("Operazione riuscita!");
+          alert("Successo!");
         },
-        error: () => alert("Errore! Verifica il Backend.")
+        error: () => alert("Errore nel salvataggio!")
       });
     }
   }

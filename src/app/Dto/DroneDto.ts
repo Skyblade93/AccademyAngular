@@ -1,7 +1,15 @@
-export interface DroneDto {
+export class DroneDto {
   id?: number;
-  modello: string;
   marca: string;
+  modello: string;
+  codiceSeriale: string;
   livelloBatteria: number;
-  codiceSeriale: string; // <--- AGGIUNTO: Senza questo il backend esplode
+
+  constructor(marca: string, modello: string, codiceSeriale: string, livelloBatteria: number, id?: number) {
+    this.id = id;
+    this.marca = marca;
+    this.modello = modello;
+    this.codiceSeriale = codiceSeriale;
+    this.livelloBatteria = livelloBatteria;
+  }
 }

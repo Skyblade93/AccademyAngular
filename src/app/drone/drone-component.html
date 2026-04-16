@@ -6,24 +6,24 @@
     </button>
   </div>
 
-  <div class="modal-overlay" *ngIf="isPopupOpen">
-    <div class="modal-box animate-pop">
-      <h3>Filtra Droni</h3>
-      <p>Cerca per marca (es. DJI)</p>
-      
-      <input type="text" [(ngModel)]="filtroMarca" placeholder="Scrivi qui..." class="popup-input">
+  @if (isPopupOpen) {
+    <div class="modal-overlay">
+      <div class="modal-box animate-pop">
+        <h3>Filtra Droni</h3>
+        <p>Ricerca parziale per marca</p>
+        
+        <input type="text" [(ngModel)]="filtroMarca" placeholder="Es: DJI, Par..." class="popup-input">
 
-      <div class="modal-btns">
-        <button (click)="applicaFiltro()" class="btn-confirm">CERCA</button>
-        <button (click)="togglePopup()" class="btn-cancel">CHIUDI</button>
+        <div class="modal-btns">
+          <button (click)="applicaFiltro()" class="btn-confirm">CERCA</button>
+          <button (click)="togglePopup()" class="btn-cancel">CHIUDI</button>
+        </div>
       </div>
     </div>
-  </div>
+  }
 
   <div class="form-container-box">
     <h3 class="title">Gestione Flotta Droni</h3>
-    <p class="subtitle">Inserisci i dati tecnici per la registrazione.</p>
-    
     <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)" class="flex-form">
       <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca" class="input-plum" required>
       <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello" class="input-plum" required>
@@ -40,22 +40,15 @@
   </div>
 
   <div class="drone-grid">
-    <div *ngFor="let d of listaFiltrata" class="drone-card">
-      <h4>{{d.marca}} {{d.modello}}</h4>
-      <p class="sn">SN: {{d.codiceSeriale}}</p>
-      
-      <div class="battery-visual">
-        <span class="batt-text">Batteria: {{d.livelloBatteria}}%</span>
-        <div class="batt-bar-container">
-          <div class="batt-bar-fill" [style.width.%]="d.livelloBatteria"
-               [style.background-color]="d.livelloBatteria < 30 ? '#ff4d4d' : '#2ecc71'"></div>
+    @for (d of listaFiltrata; track d.id) {
+      <div class="drone-card">
+        <h4>{{d.marca}} {{d.modello}}</h4>
+        <p class="sn">SN: {{d.codiceSeriale}} | Batt: {{d.livelloBatteria}}%</p>
+        <div class="card-btns">
+          <button (click)="selezionaPerModifica(d)" class="btn-edit">Modifica</button>
+          <button (click)="eliminaDrone(d.id)" class="btn-del">Elimina</button>
         </div>
       </div>
-
-      <div class="card-btns">
-        <button (click)="selezionaPerModifica(d)" class="btn-edit">Modifica</button>
-        <button (click)="eliminaDrone(d.id)" class="btn-del">Elimina</button>
-      </div>
-    </div>
+    }
   </div>
 </div>
