@@ -2,9 +2,11 @@
 .nav {
   background: #8C7AA9;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 12px;
+  align-items: center;
+  background: #1e293b; /* blu scuro moderno */
+  padding: 12px 20px;
+  gap: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .nav a {
@@ -26,9 +28,4 @@
 /* SPAZIO TRA GLI ITEM */
 .nav div {
   display: flex;
-}
-body {
-  background: #7192BE;
-  font-family: Arial, sans-serif;
-  margin: 0;
 }

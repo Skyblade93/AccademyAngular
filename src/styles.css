@@ -1,8 +1,10 @@
 body {
+  margin: 0;
   background: #7192BE;
   font-family: Arial, sans-serif;
-  margin: 0;
-}button {
+}
+
+button {
   background: #EFABFF;
   border: none;
   padding: 8px 12px;

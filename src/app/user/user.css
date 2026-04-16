@@ -1,4 +1,3 @@
-/* RESET BASE */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,26 +5,21 @@
   font-family: Arial, sans-serif;
 }
 
-/* CONTENITORE GENERALE */
 body {
   background: #f4f6f9;
   padding: 20px;
 }
 
-
-/* TITOLI */
 h2 {
   margin: 15px 0;
   color: #2c3e50;
 }
 
-/* INPUT */
 input {
   padding: 8px;
   margin: 5px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  transition: 0.2s;
 }
 
 input:focus {
@@ -33,7 +27,6 @@ input:focus {
   border-color: #3498db;
 }
 
-/* BOTTONI */
 button {
   padding: 8px 12px;
   margin: 5px;
@@ -42,51 +35,39 @@ button {
   background: tomato;
   color: white;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 button:hover {
   background: #49be25;
 }
 
-/* SEZIONE LISTA NUMERI */
-.lista {
-  margin-top: 10px;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .item {
-  display: inline-block;
-  background: #ecf0f1;
-  padding: 8px 12px;
-  margin: 5px;
+  border: 1px solid #555;
+  padding: 10px;
   border-radius: 8px;
-  font-weight: bold;
+  background: #fff;
 }
 
-/* FLEX BOX */
-.flex {
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
   display: flex;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
 }
 
-/* FORM */
-form {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
+.popup {
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: inline-block;
-}
-
-/* LISTA PERSONE */
-p {
-  margin-top: 10px;
-  padding: 8px;
-  background: white;
-  border-radius: 6px;
-  width: fit-content;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 20px;
+  border-radius: 8px;
 }

@@ -1,11 +1,23 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home';
-import { UserComponent } from './user/user';
-import { ElettricistaComponent } from './elettricista/elettricista';
 
 export const routes: Routes = [
-  { path: 'user', component: UserComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'elettricista', component: ElettricistaComponent },
-   { path: '', redirectTo: 'home', pathMatch: 'full' }
+  {
+    path: 'user',
+    loadComponent: () =>
+      import('./user/user').then(m => m.UserComponent)
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home-component/home-component').then(m => m.HomeComponent)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];

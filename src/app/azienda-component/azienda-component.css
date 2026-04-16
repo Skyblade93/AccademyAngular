@@ -1,0 +1,271 @@
+/* FONT GENERALE */
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: black;
+  background: #7192BE;
+  margin: 0;
+}
+
+/* CONTENITORE PRINCIPALE */
+
+.container {
+  display: flex;
+  height: 80vh;
+  width: auto;
+  gap: 20px;
+  padding: 20px;
+  background: #7192BE;
+}
+
+/* COLONNA SINISTRA */
+
+.left-panel {
+  width: 30%;
+  min-width: 280px;
+}
+
+/* COLONNA DESTRA */
+
+.right-panel {
+  width: 70%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+
+/* CARD RICERCA */
+
+.card {
+  background: #EDA2F2;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* INPUT */
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #8C7AA9;
+  font-size: 14px;
+  color: black;
+}
+
+input:focus {
+  outline: none;
+  border-color: #DC6BAD;
+}
+
+/* BOTTONE PRINCIPALE */
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #EFABFF;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #DC6BAD;
+}
+
+/* CARD RISULTATO */
+
+.result-card {
+  margin-top: 15px;
+  background: #EDA2F2;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+}
+
+/* HEADER */
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.result-header h3 {
+  margin: 0;
+  color: black;
+}
+
+/* BADGE ID */
+
+.badge {
+  background: #EFABFF;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* DESCRIZIONE */
+
+.descrizione {
+  color: black;
+  line-height: 1.5;
+}
+
+/* ACTIONS */
+
+.result-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTTONI SECONDARI */
+
+.btn-secondary {
+  background: #8C7AA9;
+  color: black;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #DC6BAD;
+}
+
+/* BOTTONI PERICOLO */
+
+.btn-danger {
+  background: #DC6BAD;
+  color: black;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #8C7AA9;
+}
+
+/* LISTA */
+
+.lista {
+  margin-top: 15px;
+}
+
+/* ITEM LISTA */
+
+.item {
+  background: #EDA2F2;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.item:hover {
+  transform: translateX(4px);
+  background: #DC6BAD;
+}
+
+/* RISULTATO RICERCA */
+
+.result {
+  margin-top: 15px;
+  padding: 10px;
+  background: #DC6BAD;
+  border-radius: 6px;
+}
+
+/* POPUP */
+
+.popup {
+  background: #DC6BAD;
+  border: 2px solid #8C7AA9;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* FOOTER */
+
+.footer {
+  background: #EDA2F2;
+  color: black;
+  padding: 15px;
+  text-align: center;
+}
+
+/* TITOLI */
+
+h2 {
+  margin-bottom: 10px;
+  color: black;
+}
+
+.popup-overlay {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+
+}
+
+.popup {
+
+  background: #DC6BAD;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  min-width: 300px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+}
