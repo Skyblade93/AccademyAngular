@@ -1,12 +1,3 @@
-<<<<<<< HEAD:src/app/home-component/home-component.ts
- import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-home',
-  imports: [],
-  templateUrl: './home-component.html',
-  styleUrl: './home-component.css',
-=======
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -15,9 +6,8 @@ import { Router, RouterModule } from '@angular/router';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
->>>>>>> 5ac41b4 (edit home + edit style contact):src/app/home/home.ts
+  templateUrl: './home-component.html',
+  styleUrl: './home-component.css',
 })
 
 export class HomeComponent {

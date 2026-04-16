@@ -10,8 +10,11 @@ body {
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
-}
 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 /* NAVBAR */
 .navbar {
   background: #EDA2F2;
@@ -31,11 +34,18 @@ body {
   border-radius: 12px;
   margin-bottom: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  flex: 1;
 }
 
 .form-section h2 {
   margin-bottom: 15px;
   color: black;
+}
+
+.main-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
 
 /* INPUT */
@@ -57,16 +67,16 @@ body {
 
 /* BUTTONS */
 .buttons {
+  grid-column: 1 / -1;
   display: flex;
   gap: 10px;
-  margin-top: 15px;
-  background: EFABBFF;
+  background: #EFABBF;
 }
 
 button {
   flex: 1;
   padding: 12px;
-  border: none;
+  border: 2px solid black;  /* 👈 bordo */
   border-radius: 8px;
   background: #EFABBF;
   color: black;
@@ -97,6 +107,7 @@ button:hover {
 .list-section {
   background: #EDA2F2;
   padding: 20px;
+  flex: 2;
   border-radius: 12px;
 }
 

@@ -1,20 +1,16 @@
-<<<<<<< HEAD
-import { ContactComponent } from './contact/contact';
-import { DipendenteComponent } from './dipendente/dipendente-component';
-import { AziendaComponent } from './azienda/azienda';
-import { HomeComponent } from './home-component/home-component';
-import { DroneComponent } from './drone/drone';
-import { NotificaComponent } from './notifica-component/notifica-component';
-import { OrdineComponent } from './ordine-Component/ordine';
-=======
+import { Routes } from '@angular/router';
 
 import { ContactComponent } from './contact/contact.component';
-import { HomeComponent } from './home/home';
->>>>>>> 5ac41b4 (edit home + edit style contact)
 import { UserComponent } from './user/user';
 import { AutoComponent } from './auto-component/auto-component';
 import { CarrelloComponent } from './carrello/carrello-component';
-import { Routes } from '@angular/router';
+import { ElettricistaComponent } from './elettricista/elettricista';
+import { AziendaComponent } from './azienda/azienda';
+import { DipendenteComponent } from './dipendente/dipendente-component';
+import { DroneComponent } from './drone/drone';
+import { NotificaComponent } from './notifica-component/notifica-component';
+import { OrdineComponent } from './ordine-Component/ordine';
+import { HomeComponent } from './home-component/home-component';
 
 export const routes: Routes = [
   {path : 'drone', component : DroneComponent},
@@ -27,6 +23,7 @@ export const routes: Routes = [
   {path : 'home' , component: HomeComponent},
   {path : 'ordine' , component: OrdineComponent},
   {path : 'contact' , component: ContactComponent},
+  { path: 'elettricista', component: ElettricistaComponent },
   { path: '**', redirectTo: 'home' },
 
 ];

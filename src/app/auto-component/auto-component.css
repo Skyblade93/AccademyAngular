@@ -1,30 +1,22 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-:host {
-  --bg: #090b10;
-  --card-glass: rgba(20, 25, 34, 0.86);
-  --card-border: rgba(249, 115, 22, 0.22);
-  --card-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
-
-  --primary: #f97316;
-  --primary-glow: rgba(249, 115, 22, 0.35);
-  --accent: #38bdf8;
-  --accent-glow: rgba(56, 189, 248, 0.3);
-  --danger: #ef4444;
-
-  --fuel-benzina: #f59e0b;
-  --fuel-diesel: #9ca3af;
-  --fuel-gpl: #22c55e;
-  --fuel-elettrica: #22d3ee;
-  --fuel-ibrida: #a855f7;
-
-  --text: #edf2f7;
-  --text-muted: #9aa6b2;
-  --text-light: #b8c3cf;
-
-  --radius: 32px;
-  --radius-sm: 20px;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+﻿﻿:host {
+  --site-bg: #7192be;
+  --surface: #eda2f2;
+  --surface-soft: rgba(237, 162, 242, 0.78);
+  --surface-strong: #dc6bad;
+  --button: #efabbf;
+  --accent: #8c7aa9;
+  --text: #000000;
+  --text-soft: rgba(0, 0, 0, 0.68);
+  --border: rgba(0, 0, 0, 0.16);
+  --shadow: 0 18px 40px rgba(44, 30, 68, 0.18);
+  --radius: 28px;
+  --radius-sm: 18px;
+  --transition: 0.28s ease;
+  --fuel-benzina: #dc6bad;
+  --fuel-diesel: #8c7aa9;
+  --fuel-gpl: #efabbf;
+  --fuel-elettrica: #7192be;
+  --fuel-ibrida: #eda2f2;
   display: block;
   color: var(--text);
 }

@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 /* You can add global styles to this file, and also import other style files */
-body {
-  background: #7192BE;
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-}
-=======
 /* Stili Globali del Progetto Academy */
 :root {
   --color-buttons: #efabff; /* Bottoni*/
@@ -23,4 +16,3 @@ body {
   background-color: var(--color-bg-site); /* */
   color: var(--color-text); /* */
 }
->>>>>>> 5ac41b4 (edit home + edit style contact)
