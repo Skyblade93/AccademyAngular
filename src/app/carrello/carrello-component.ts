@@ -53,4 +53,5 @@ export class Carrello implements OnInit {
   toggleFinestra() {
     this.isAperto = !this.isAperto;
   }
+  //
 }
