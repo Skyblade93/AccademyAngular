@@ -40,29 +40,6 @@
 
 @if (istoggleAddNotifica()) {
   <div style="margin-bottom: 25px;">
-    <app-add-notifica-component 
-      (notificaCreata)="onNotificaAggiunta($event)">
-    </app-add-notifica-component>
-  </div>
-}
-
-@for (notifica of listNotifica; track notifica.id) {
-  <div class="notifica-card" [class]="notifica.priorita.toLowerCase()">
-    <div class="notifica-header">
-      <strong>{{ notifica.titolo }}</strong>
-      <span class="priorita-tag" [class]="notifica.priorita.toLowerCase()">
-        {{ notifica.priorita }}
-      </span>
-    </div>
-
-    <div class="tipo-badge">
-      {{ notifica.tipo }}
-    </div>
-    </div>
-  }
-
-@if (istoggleAddNotifica()) {
-  <div style="margin-bottom: 25px;">
     <app-add-notifica-component
       (notificaCreata)="onNotificaAggiunta($event)">
     </app-add-notifica-component>
@@ -81,7 +58,6 @@
     <div class="tipo-badge">
       {{ notifica.tipo }}
     </div>
-
 
     <div class="messaggio">
       {{ notifica.messaggio }}

@@ -20,6 +20,8 @@ body {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 input, select {
@@ -41,6 +43,16 @@ button, .btn-all {
     cursor: pointer;
     transition: opacity 0.2s;
     font-weight: 500;
+    white-space: nowrap;
+}
+
+.search-group button {
+    flex: 0 0 fit-content;
+    padding: 8px 16px;
+    background-color: #EFABBF;
+    border-radius: 4px;
+    border: 2px solid black;
+    font-weight: bold;
 }
 
 button:hover, .btn-all:hover {
@@ -64,41 +76,67 @@ button:hover, .btn-all:hover {
     padding: 15px;
     border-radius: 12px;
     box-shadow: 6px 6px 0 black;
-    transition: transform 0.1s;
     color: #000000;
-}
-
-.notifica-card:hover {
-    transform: translateY(-2px);
+    user-select: none;
 }
 
 .notifica-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
     margin-bottom: 8px;
 }
 
 .priorita-tag {
     font-size: 11px;
     text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 10px;
+    padding: 4px 12px;
+    border-radius: 16px;
     background: #8C7AA9;
-    color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.tipo-badge {
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 16px;
+    background: #DC6BAD;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.stato-indicator {
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 16px;
+    background: #8C7AA9;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .messaggio {
     color: #000000;
-    margin: 10px 0;
+    margin: 12px 0 15px 0;
+    line-height: 1.4;
 }
 
 .footer {
     background-color: #EDA2F2;
-    padding: 15px;
+    padding: 15px 0 0;
     font-size: 12px;
     color: #000000;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
     margin-top: 20px;
 }
 
@@ -115,7 +153,7 @@ button:hover, .btn-all:hover {
 }
 .empty-message {
     text-align: center;
-    color: #2c3e50; 
+    color: #2c3e50;
     font-weight: 500;
     margin-top: 40px;
     padding: 20px;
@@ -123,5 +161,4 @@ button:hover, .btn-all:hover {
     border-radius: 8px;
     font-style: italic;
     border: 1px dashed #abb2b9;
-    
 }
