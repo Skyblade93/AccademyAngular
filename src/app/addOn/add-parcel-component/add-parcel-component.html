@@ -1,0 +1,16 @@
+<div>
+  <div>Inserisci una nuova spedizione</div>
+
+  <form [formGroup]="parcelForm" (ngSubmit)="onSubmit()">
+    <input placeholder="Nome Destinatario" type="text" formControlName="receiverName" />
+    <input placeholder="Cognome Destinatario" type="text" formControlName="receiverSurname" />
+    <input placeholder="Nome Mittente" type="text" formControlName="senderName" />
+    <input placeholder="Cognome Mittente" type="text" formControlName="senderSurname" />
+    <input placeholder="Peso" type="number" formControlName="weight" />
+    <input placeholder="Altezza" type="number" formControlName="height" />
+    <input placeholder="Larghezza" type="number" formControlName="width" />
+    <input placeholder="Lunghezza" type="number" formControlName="length" />
+    <label><input type="checkbox" formControlName="fragile" /> Fragile</label>
+    <button type="submit">Salva Spedizione</button>
+  </form>
+</div>

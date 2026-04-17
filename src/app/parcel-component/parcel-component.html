@@ -1,0 +1,52 @@
+<div class="page">
+  <app-add-parcel-component (parcelAdded)="onParcelAdded($event)" />
+</div>
+
+<div class="page">
+
+  @if (isPopupVisible) {
+    <div class="overlay">
+      <div class="popup">
+        <h2>Spedizione non trovata</h2>
+        <button (click)="togglePopup()">Chiudi</button>
+      </div>
+    </div>
+  }
+
+  <div class="search-box">
+    <input type="text" placeholder="Inserisci Cognome Destinatario" #receiverSurname />
+    <button (click)="findByReceiverSurname(receiverSurname.value)">Cerca</button>
+
+    @if (isSearching) {
+      <button (click)="resetSearch()">Mostra Tutti</button>
+    }
+  </div>
+
+  <table class="item">
+    <tr>
+      <th>ID</th>
+      <th>Destinatario</th>
+      <th>Mittente</th>
+      <th>Peso</th>
+      <th>Misure</th>
+      <th>Fragile</th>
+      <th>Operazioni</th>
+    </tr>
+
+    @for (p of isSearching ? searchResults : ListParcel; track p.id) {
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.receiverName }} {{ p.receiverSurname }}</td>
+        <td>{{ p.senderName }} {{ p.senderSurname }}</td>
+        <td>{{ p.weight }} kg</td>
+        <td>{{ p.height }}cm x {{ p.width }}cm x {{ p.length }}cm</td>
+        <td>{{ p.fragile ? 'Si' : 'No' }}</td>
+        <td>
+          <button>Modifica</button> |
+          <button class="super-button" (click)="deleteParcel(p.id)">Elimina</button>
+        </td>
+      </tr>
+    }
+  </table>
+
+</div>

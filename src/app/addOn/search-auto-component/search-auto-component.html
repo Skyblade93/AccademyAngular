@@ -1,0 +1,70 @@
+<section class="card filter-card">
+	<div class="card-header">
+		<div class="card-title">
+			<span class="icon">&#x1F50D;</span>
+			<h2>Filtri Ricerca</h2>
+		</div>
+		<span class="badge-status">FILTER</span>
+	</div>
+
+	<p class="form-intro">
+		Cerca per ID o combina i filtri per una ricerca piu precisa. Seleziona anche il tipo di confronto testuale.
+	</p>
+
+	<form [formGroup]="filterForm" aria-label="Filtri ricerca auto">
+		<div class="form-grid">
+			<div class="field">
+				<input formControlName="id" type="number" placeholder=" " id="s-fid" />
+				<label for="s-fid">ID</label>
+				<span class="field-icon">#</span>
+			</div>
+
+			<div class="field">
+				<input formControlName="targa" placeholder=" " id="s-ftarga" />
+				<label for="s-ftarga">Targa</label>
+				<span class="field-icon">&#x1F522;</span>
+			</div>
+
+			<div class="field">
+				<input formControlName="marca" placeholder=" " id="s-fmarca" />
+				<label for="s-fmarca">Marca</label>
+				<span class="field-icon">&#x1F3F7;</span>
+			</div>
+
+			<div class="field">
+				<input formControlName="modello" placeholder=" " id="s-fmodello" />
+				<label for="s-fmodello">Modello</label>
+				<span class="field-icon">&#x1F699;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="!!filterForm.controls.carburante.value">
+				<select formControlName="carburante" id="s-fcarburante">
+					<option value="" disabled hidden></option>
+					<option value="">Tutti</option>
+					@for (option of carburanteOptions(); track $index) {
+						<option [value]="option">{{ option }}</option>
+					}
+				</select>
+				<label for="s-fcarburante">Carburante</label>
+				<span class="field-icon">&#x26FD;</span>
+			</div>
+
+			<div class="field select-field" [class.has-value]="!!filterForm.controls.searchType.value">
+				<select formControlName="searchType" id="s-fsearchType">
+					<option value="" disabled hidden></option>
+					<option value="exact">Esatto</option>
+					<option value="containing">Contiene</option>
+					<option value="starting">Inizia con</option>
+					<option value="ending">Finisce con</option>
+				</select>
+				<label for="s-fsearchType">Tipo ricerca</label>
+				<span class="field-icon">&#x1F50E;</span>
+			</div>
+		</div>
+
+		<div class="buttons">
+			<button type="button" class="btn-accent" (click)="applySearch()">&#x1F50D; Applica Ricerca</button>
+			<button type="button" class="btn-ghost" (click)="clearFilters()">Azzera Filtri</button>
+		</div>
+	</form>
+</section>

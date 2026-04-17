@@ -1,0 +1,54 @@
+<div class="page-container">
+
+  <div class="filter-strip">
+    <button type="button" (click)="togglePopup()" class="btn-trigger-filter">
+      🔍 FILTRA LA TUA FLOTTA
+    </button>
+  </div>
+
+  @if (isPopupOpen) {
+    <div class="modal-overlay">
+      <div class="modal-box animate-pop">
+        <h3>Filtra Droni</h3>
+        <p>Ricerca parziale per marca</p>
+
+        <input type="text" [(ngModel)]="filtroMarca" placeholder="Es: DJI, Par..." class="popup-input">
+
+        <div class="modal-btns">
+          <button (click)="applicaFiltro()" class="btn-confirm">CERCA</button>
+          <button (click)="togglePopup()" class="btn-cancel">CHIUDI</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="form-container-box">
+    <h3 class="title">Gestione Flotta Droni</h3>
+    <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)" class="flex-form">
+      <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca" class="input-plum" required>
+      <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello" class="input-plum" required>
+      <input type="text" name="seriale" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Seriale" class="input-plum" required>
+      <input type="number" name="batt" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batt %" class="input-plum short" required>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-mauve" [disabled]="!droneForm.valid">
+          {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
+        </button>
+        <button type="button" (click)="annulla()" class="btn-reset">SVUOTA</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="drone-grid">
+    @for (d of listaFiltrata; track d.id) {
+      <div class="drone-card">
+        <h4>{{d.marca}} {{d.modello}}</h4>
+        <p class="sn">SN: {{d.codiceSeriale}} | Batt: {{d.livelloBatteria}}%</p>
+        <div class="card-btns">
+          <button (click)="selezionaPerModifica(d)" class="btn-edit">Modifica</button>
+          <button (click)="eliminaDrone(d.id)" class="btn-del">Elimina</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

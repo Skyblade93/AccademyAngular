@@ -1,0 +1,110 @@
+.page-container {
+    background-color: #7192BE !important;
+    font-family: 'Helvetica', sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+    color: black;
+}
+
+.filter-strip {
+    background-color: #EDA2F2 !important;
+    padding: 15px;
+    border: 3px solid black;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 6px 6px 0px black;
+}
+
+.btn-trigger-filter {
+    background-color: #EFABFF !important;
+    border: 2px solid black;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background-color: #8C7AA9 !important;
+    padding: 40px;
+    border: 3px solid black;
+    border-radius: 20px;
+    text-align: center;
+    width: 380px;
+    box-shadow: 15px 15px 0px black;
+}
+
+.animate-pop { animation: popScale 0.4s ease-out; }
+@keyframes popScale {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.popup-input {
+    width: 85%;
+    padding: 12px;
+    background-color: #EDA2F2;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.form-container-box {
+    background-color: #8C7AA9 !important;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.input-plum {
+    background-color: #EDA2F2 !important;
+    border: 2px solid black !important;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.btn-mauve {
+    background-color: #EFABFF !important;
+    border: 2px solid black !important;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.btn-reset {
+    background-color: #7192BE !important;
+    color: white !important;
+    border: 2px solid black !important;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.drone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.drone-card {
+    background-color: #8C7AA9;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 18px;
+}

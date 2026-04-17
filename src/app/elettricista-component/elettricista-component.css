@@ -1,0 +1,265 @@
+body {
+  background: #7192BE;
+  font-family: Arial, sans-serif;
+}
+.container {
+  margin: 20px;
+  padding: 20px;
+  background: #8C7AA9;
+  border-radius: 12px;
+}
+/* TITOLO */
+h2 {
+  color: white;
+}
+/* INPUT */
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 10px;
+}
+
+/* bottoni generali */
+button {
+  background: #EFABFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #EDA2F2;
+}
+
+/* TABELLA */
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  background: #8C7AA9;
+  color: white;
+}
+
+th {
+  background: #EDA2F2;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid white;
+}
+
+tr:hover {
+  background: #EDA2F2;
+  cursor: pointer;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #DC6BAD;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* CARD DETTAGLIO */
+.card {
+  margin-top: 20px;
+  padding: 15px;
+  background: #DC6BAD;
+  border-radius: 10px;
+  color: white;
+}
+
+.elet-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.elet-card {
+  background: #8C7AA9;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.elet-card:hover {
+  transform: scale(1.05);
+  background: #EDA2F2;
+}
+
+/* BOTTONI INTERNI CARD */
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.btn-check {
+  background: #EFABFF;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-call {
+  background: #DC6BAD;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-check:hover,
+.btn-call:hover {
+  opacity: 0.85;
+}
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  color: white;
+  font-size: 32px;
+}
+
+.header p {
+  color: white;
+  font-size: 24px;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.elet-card {
+  background: #8C7AA9;
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-check {
+  border: 2px solid black;
+}
+.container-form {
+  margin: 30px auto;
+  padding: 25px;
+  background: #8C7AA9;
+  border-radius: 15px;
+  max-width: 600px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+}
+.container-form input {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #EFABFF;  /* colore input */
+  color: #2c2c2c;
+  font-weight: bold;
+}
+
+.container-form input::placeholder {
+  color: rgba(0,0,0,0.6);
+}
+.container-form button {
+  margin-top: 10px;
+  background: #DC6BAD;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.container-form button:hover {
+  transform: scale(1.05);
+  background: #c7559c;
+}
+input {
+  width: 250px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 270px;
+  padding: 10px;
+  background-color: #EFABFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #EDA2F2;
+}
+
+/* POPUP */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay .popup {
+  background: #DC6BAD;
+  padding: 25px;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  min-width: 300px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

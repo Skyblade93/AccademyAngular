@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Drone } from './drone';
+import { SearchAutoComponent } from './search-auto-component';
 
-describe('Drone', () => {
-  let component: Drone;
-  let fixture: ComponentFixture<Drone>;
+describe('SearchAutoComponent', () => {
+  let component: SearchAutoComponent;
+  let fixture: ComponentFixture<SearchAutoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Drone],
+      imports: [SearchAutoComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Drone);
+    fixture = TestBed.createComponent(SearchAutoComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
