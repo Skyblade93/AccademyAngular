@@ -15,36 +15,19 @@ export class OrdineComponent implements OnInit{
 
   service: ordineService;
   ListOrdini= signal<OrdineDto[]>([]);
-  service: ordineService;
-  ListOrdini= signal<OrdineDto[]>([]);
   ordine: OrdineDto | null = null;;
-  ordini = signal<OrdineDto[]>([]);
 
   isPopupVisible = signal(false);
   istoggleAddOrdine = signal(false);
 
   sortedOrdini = computed(() =>
-    [...this.ordini()].sort((a, b) => a.id - b.id)
-  );
-
-  count = computed(() => {
-    const list = this.ordini();
-    return list.length
-      ? Math.max(...list.map(u => u.id))
-      : 0;
-  });
-
-  isPopupVisible = signal(false);
-  istoggleAddOrdine = signal(false);
-
-  sortedOrdini = computed(() =>
-    [...this.ListOrdini()].sort((a, b) => a.id - b.id)
+    [...this.ListOrdini()].sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
   );
 
   count = computed(() => {
     const list = this.ListOrdini();
     return list.length
-      ? Math.max(...list.map(u => u.id))
+      ? Math.max(...list.map(u => u.id ?? 0))
       : 0;
   });
 
@@ -135,20 +118,6 @@ trovaTraDueCosti(min: number, max: number) {
 this.ListOrdini.set(ordini);
   this.ordine = null;
   });
-}
-
-  onOrdineCreated(ordine: OrdineDto): void {
-    this.ordini.update(list => [...list, ordine]);
-    console.log('Ordine aggiunto:', ordine);
-  }
-
-  togglePopup(): void {
-    this.isPopupVisible.update(v => !v);
-  }
-
-    toggleAddOrdine(): void {
-    this.istoggleAddOrdine.update(v=> !v);
-  }
 }
 
   onOrdineCreated(ordine: OrdineDto): void {

@@ -17,14 +17,17 @@ export class AddDipendenteComponent {
 
   constructor(private service: DipendenteService) {}
 
-  // 👇 INPUT come nel tuo esempio
+  // input dal padre (non più usato per id ma lasciato)
   count = input<number>(0);
 
-  // 👇 OUTPUT
-  @Output() dipendenteCreated = new EventEmitter<DipendenteDto>();
+  @Output() countValue = new EventEmitter<DipendenteDto>();
+
+  sendCount(dipendenteDto: DipendenteDto) {
+    this.countValue.emit(dipendenteDto);
+  }
+
   @Output() close = new EventEmitter<void>();
 
-  // 👇 FORM
   dipendenteForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     cognome: new FormControl('', Validators.required),
@@ -33,10 +36,6 @@ export class AddDipendenteComponent {
     telefono: new FormControl<number | null>(null),
   });
 
-
-  // =========================
-  // SUBMIT
-  // =========================
   onSubmit(): void {
     if (this.dipendenteForm.invalid) return;
 
@@ -49,30 +48,15 @@ export class AddDipendenteComponent {
       undefined as unknown as number
     );
 
+    // 🔥 backend call
     this.service.insert(dto).subscribe({
       next: () => {
         this.dipendenteForm.reset();
 
-        // 🔥 FAKE ID COME USER
-        next: (res: DipendenteDto) => {
-          this.dipendenteCreated.emit(res);
-        }
-
-        // 🔥 EMIT
-        this.dipendenteCreated.emit(dto);
-
-        // 🔥 POPUP
         this.successMessage = 'Dipendente inserito con successo';
-
-        setTimeout(() => {
-          this.successMessage = null;
-        }, 2000);
+        setTimeout(() => this.successMessage = null, 2000);
       },
       error: (err: any) => console.error(err),
     });
   }
-
-
-
-
 }

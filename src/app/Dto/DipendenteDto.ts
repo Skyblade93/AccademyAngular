@@ -1,7 +1,7 @@
 
 export class DipendenteDto {
 
-id: number;
+id?: number | null;
 nomeDipendente: string;
 cognomeDipendente: string;
 eta : number;
@@ -15,7 +15,7 @@ dorne: string;
 auto: string;
   */
 
-constructor (nomeDipendente : string, cognomeDipendente: string, eta : number, email: string, numeroTelefono: number, id: number) {
+constructor (nomeDipendente : string, cognomeDipendente: string, eta : number, email: string, numeroTelefono: number, id: number | null) {
     this.nomeDipendente = nomeDipendente;
     this.cognomeDipendente = cognomeDipendente;
     this.eta = eta;

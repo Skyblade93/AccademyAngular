@@ -268,3 +268,21 @@ button {
   background: #EFABBF;
   cursor: pointer;
 }
+
+/* prima riga */
+.buttons-top {
+  display: flex;
+  gap: 10px;
+}
+
+/* seconda riga centrata */
+.buttons-bottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* bottone home più piccolo e centrato */
+.home-btn {
+  max-width: 200px;
+}

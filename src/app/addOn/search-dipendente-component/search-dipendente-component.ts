@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, FormsModule } from '@angular/forms';
 import { DipendenteService } from '../../Service/dipendenteService';
@@ -11,16 +11,20 @@ import { DipendenteDto } from '../../Dto/DipendenteDto';
   templateUrl: './search-dipendente-component.html',
   styleUrl: './search-dipendente-component.css',
 })
-export class SearchDipendenteComponent {
+export class SearchDipendenteComponent implements OnInit {
 
-  constructor(private service: DipendenteService) {
-    this.loadAll();
-  }
+  constructor(private service: DipendenteService) {}
 
   @Output() close = new EventEmitter<void>();
 
   // =========================
-  // FORM FILTRI
+  // SIGNAL STATE
+  // =========================
+  baseList = signal<DipendenteDto[]>([]);
+  risultati = signal<DipendenteDto[]>([]);
+
+  // =========================
+  // FORM
   // =========================
   dipendenteForm = new FormGroup({
     nome: new FormControl(''),
@@ -31,26 +35,28 @@ export class SearchDipendenteComponent {
   });
 
   // =========================
-  // DATI
+  // UI STATE
   // =========================
-  baseList: DipendenteDto[] = [];
-  risultati: DipendenteDto[] = [];
+  popup: DipendenteDto | null = null;
+  confirmDelete: DipendenteDto | null = null;
+  editPopup: DipendenteDto | null = null;
+  successMessage: string | null = null;
+  successTimeout: any;
 
   // =========================
-  // POPUP VARI
+  // INIT
   // =========================
-  popup: DipendenteDto | null = null;               // dettaglio filtro
-  confirmDelete: DipendenteDto | null = null;       // delete popup
-  editPopup: DipendenteDto | null = null;           // modifica popup
-  successMessage: string | null = null;             // messaggio successo
+  ngOnInit(): void {
+    this.loadAll();
+  }
 
   // =========================
   // LOAD
   // =========================
   loadAll() {
     this.service.getAll().subscribe(res => {
-      this.baseList = res;
-      this.risultati = res;
+      this.baseList.set(res);
+      this.risultati.set(res);
     });
   }
 
@@ -58,35 +64,44 @@ export class SearchDipendenteComponent {
   // FILTRO
   // =========================
   filtra() {
-    const v = this.dipendenteForm.value;
+  const v = this.dipendenteForm.value;
 
-    let request$: any;
+  const nome = v.nome?.trim() || null;
+  const cognome = v.cognome?.trim() || null;
+  const email = v.email?.trim() || null;
+  const eta = v.eta ?? null;
+  const telefono = v.telefono ?? null;
 
-    if (v.nome && v.cognome) {
-      request$ = this.service.findByNomeDipendenteAndCognomeDipendente(v.nome, v.cognome);
-    } else if (v.nome) {
-      request$ = this.service.findByNomeDipendente(v.nome);
-    } else if (v.cognome) {
-      request$ = this.service.findByCognomeDipendente(v.cognome);
-    } else if (v.email) {
-      request$ = this.service.findByEmail(v.email);
-    } else if (v.eta != null) {
-      request$ = this.service.findByEta(v.eta);
-    } else if (v.telefono != null) {
-      request$ = this.service.findByNumeroTelefono(v.telefono);
-    } else {
-      return;
-    }
+  let request$: any;
+
+    if (nome && cognome) {
+  request$ = this.service.findByNomeDipendenteAndCognomeDipendente(nome, cognome);
+} else if (nome) {
+  request$ = this.service.findByNomeDipendente(nome);
+} else if (cognome) {
+  request$ = this.service.findByCognomeDipendente(cognome);
+} else if (email) {
+  request$ = this.service.findByEmail(email);
+} else if (eta !== null) {
+  request$ = this.service.findByEta(eta);
+} else if (telefono !== null) {
+  request$ = this.service.findByNumeroTelefono(telefono);
+} else {
+  this.risultati.set(this.baseList());
+  return;
+}
 
     request$.subscribe((res: DipendenteDto | DipendenteDto[]) => {
-      const data = Array.isArray(res) ? res : [res];
+    const data = Array.isArray(res) ? res : [res];
 
-      if (data.length === 1) {
-        this.popup = data[0];
-      } else {
-        this.risultati = data;
-      }
-    });
+    if (data.length === 1) {
+      this.popup = data[0];
+      this.risultati.set([]); // 👈 evita tabella incoerente
+    } else {
+      this.popup = null;
+      this.risultati.set(data);
+    }
+  });
   }
 
   // =========================
@@ -97,7 +112,7 @@ export class SearchDipendenteComponent {
     this.popup = null;
     this.editPopup = null;
     this.confirmDelete = null;
-    this.risultati = this.baseList;
+    this.risultati.set(this.baseList());
   }
 
   closePopup() {
@@ -120,37 +135,32 @@ export class SearchDipendenteComponent {
   }
 
   confirmYes() {
-      if (!this.confirmDelete) return;
+    if (!this.confirmDelete) return;
 
-      const id = this.confirmDelete.id;
+    const id = this.confirmDelete.id;
 
-      this.service.delete(id).subscribe(() => {
+    if (id === null || id === undefined) return;
+
+    this.service.delete(id).subscribe(() => {
       this.confirmDelete = null;
-
       this.showSuccess('Dipendente eliminato con successo');
-
       this.loadAll();
     });
   }
 
   // =========================
-  // MODIFICA (OPEN POPUP)
+  // MODIFICA
   // =========================
-
   modifica(d: DipendenteDto) {
-    this.editPopup = { ...d }; // clone sicuro
+    this.editPopup = { ...d };
   }
 
-  // =========================
-  // SALVATAGGIO MODIFICA
-  // =========================
   saveEdit() {
     if (!this.editPopup) return;
-      this.service.update(this.editPopup).subscribe(() => {
+
+    this.service.update(this.editPopup).subscribe(() => {
       this.editPopup = null;
-
       this.showSuccess('Dipendente modificato con successo');
-
       this.loadAll();
     });
   }
@@ -159,12 +169,12 @@ export class SearchDipendenteComponent {
     this.editPopup = null;
   }
 
-  successTimeout: any;
-
+  // =========================
+  // SUCCESS
+  // =========================
   showSuccess(msg: string) {
     this.successMessage = msg;
 
-    // 🔥 evita sovrapposizione timeout
     if (this.successTimeout) {
       clearTimeout(this.successTimeout);
     }
@@ -173,5 +183,4 @@ export class SearchDipendenteComponent {
       this.successMessage = null;
     }, 2000);
   }
-
 }
