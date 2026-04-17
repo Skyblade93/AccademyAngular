@@ -1,8 +1,9 @@
-import { Component, OnInit, signal} from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NotificaDto } from '../Dto/NotificaDto';
 import { DatePipe } from '@angular/common';
 import { NotificaService } from '../Service/NotificaService';
-import { AddNotificaComponent } from "../addOn/add-notifica-component/add-notifica-component";
+import { AddNotificaComponent } from '../addOn/add-notifica-component/add-notifica-component';
+import { PrioritaNotifica, TipoNotifica } from '../Dto/enums/notifica-enums';
 
 @Component({
   selector: 'app-notifica',
@@ -11,14 +12,14 @@ import { AddNotificaComponent } from "../addOn/add-notifica-component/add-notifi
   templateUrl: './notifica-component.html',
   styleUrl: './notifica-component.css',
 })
-
 export class NotificaComponent implements OnInit {
   listNotifica: NotificaDto[] = [];
+  protected readonly TipoEnum = TipoNotifica;
+  protected readonly PrioritaEnum = PrioritaNotifica;
 
   istoggleAddNotifica = signal(false);
 
-  constructor(private notificaService: NotificaService) {
-  }
+  constructor(private notificaService: NotificaService) {}
 
   ngOnInit(): void {
     this.caricaTutte();
@@ -28,7 +29,6 @@ export class NotificaComponent implements OnInit {
     this.istoggleAddNotifica.update(v => !v);
   }
 
-  // Metodo per gestire l'output del componente figlio
   onNotificaAggiunta(nuovaNotifica: NotificaDto): void {
     this.listNotifica = [nuovaNotifica, ...this.listNotifica];
     this.istoggleAddNotifica.set(false);
@@ -45,12 +45,15 @@ export class NotificaComponent implements OnInit {
   }
 
   cercaPerTitolo(titolo: string): void {
-    if (!titolo) {
+    const titoloPulito = titolo.trim();
+
+    if (!titoloPulito) {
       this.caricaTutte();
       return;
     }
-    this.notificaService.getNotificaByTitolo(titolo).subscribe({
-      next: (data) => this.listNotifica = data ? [data] : [],
+
+    this.notificaService.getNotificheByTitoloContaining(titoloPulito).subscribe({
+      next: (data) => this.listNotifica = data,
       error: (err) => {
         console.error('Errore nella ricerca per titolo:', err);
         this.listNotifica = [];

@@ -1,8 +1,11 @@
 <div class="controls">
+  <button class="btn-add" (click)="toggleAddNotifica()">
+    {{ istoggleAddNotifica() ? '✖ Chiudi Form Aggiunta' : '✚ Aggiungi Nuova Notifica' }}
+  </button>
 
   <div class="search-group">
-    <input type="text" #inputTitolo placeholder="Cerca per titolo...">
-    <button (click)="cercaPerTitolo(inputTitolo.value)">Cerca</button>
+    <input type="text" #inputTitolo placeholder="Cerca per titolo..." (keyup.enter)="cercaPerTitolo(inputTitolo.value)" />
+    <button (click)="cercaPerTitolo(inputTitolo.value)">Cerca per titolo</button>
   </div>
 
   <div class="search-group">
@@ -10,32 +13,35 @@
       <option value="true">Lette</option>
       <option value="false">Non Lette</option>
     </select>
-    <button (click)="cercaPerStato(selectLetta.value === 'true')">Filtra Stato</button>
+    <button (click)="cercaPerStato(selectLetta.value === 'true')">
+      Cerca per stato
+    </button>
   </div>
 
   <div class="search-group">
-    <input type="text" #inputTipo placeholder="Tipo (es. INFO)">
-    <input type="text" #inputPriorita placeholder="Priorità (es. ALTA)">
-    <button (click)="cercaPerTipoEPriorita(inputTipo.value, inputPriorita.value)">Filtra Doppio</button>
+    <select #inputTipo>
+      <option [value]="TipoEnum.INFORMAZIONE">Informazione</option>
+      <option [value]="TipoEnum.AVVERTIMENTO">Avvertimento</option>
+      <option [value]="TipoEnum.ERRORE">Errore</option>
+      <option [value]="TipoEnum.MANUTENZIONE">Manutenzione</option>
+    </select>
+    <select #inputPriorita>
+      <option [value]="PrioritaEnum.ALTA">Alta</option>
+      <option [value]="PrioritaEnum.MEDIA">Media</option>
+      <option [value]="PrioritaEnum.BASSA">Bassa</option>
+    </select>
+    <button (click)="cercaPerTipoEPriorita(inputTipo.value, inputPriorita.value)">
+      Cerca per tipo e priorità
+    </button>
   </div>
 
   <button class="btn-all" (click)="caricaTutte()">Mostra Tutte le Notifiche</button>
 </div>
 
 
-@for (notifica of listNotifica; track $index) {
-  <div class="notifiche-container"></div>
-  <div class="notifica-card">
-    <div class="notifica-header">
-      <strong>{{notifica.titolo}}</strong>
-      <span class="priorita-tag">{{notifica.priorita}}</span>
-    </div>
-    </div>
-  }
-
 @if (istoggleAddNotifica()) {
   <div style="margin-bottom: 25px;">
-    <app-add-notifica-component
+    <app-add-notifica-component 
       (notificaCreata)="onNotificaAggiunta($event)">
     </app-add-notifica-component>
   </div>
@@ -54,13 +60,11 @@
       {{ notifica.tipo }}
     </div>
 
-
     <div class="messaggio">
-      <em>{{notifica.tipo}}</em>: {{notifica.messaggio}}
+      {{ notifica.messaggio }}
     </div>
 
     <div class="footer">
-
       <span>📅 {{ notifica.dataCreazione | date: 'dd/MM/yyyy HH:mm' }}</span>
       <span class="stato-indicator" [class]="notifica.letta ? 'letta' : 'non-letta'">
         {{ notifica.letta ? '✔ Letta' : '✉ Da leggere' }}

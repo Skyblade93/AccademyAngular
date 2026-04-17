@@ -12,8 +12,8 @@ import { TipoNotifica, PrioritaNotifica } from '../../Dto/enums/notifica-enums';
   styleUrl: './add-notifica-component.css',
 })
 export class AddNotificaComponent {
-
- notificaCreata = output<NotificaDto>();
+  
+  notificaCreata = output<NotificaDto>();
 
   protected readonly TipoEnum = TipoNotifica;
   protected readonly PrioritaEnum = PrioritaNotifica;
@@ -53,16 +53,16 @@ export class AddNotificaComponent {
       formValues.tipo,
       formValues.priorita,
       dataFormattata,
-
+      
       false
     );
 
     this.service.insert(newNotifica).subscribe({
       next: (res: NotificaDto) => {
         console.log('Notifica inserita con successo:', res);
-
+        
         this.notificaCreata.emit(res);
-
+        
         this.notificaForm.reset({
           titolo: '',
           messaggio: '',
