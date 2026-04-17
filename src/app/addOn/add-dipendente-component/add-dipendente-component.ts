@@ -13,6 +13,8 @@ import { DipendenteDto } from '../../Dto/DipendenteDto';
 })
 export class AddDipendenteComponent {
 
+  successMessage: string | null = null;
+
   constructor(private service: DipendenteService) {}
 
   // 👇 INPUT come nel tuo esempio
@@ -31,8 +33,6 @@ export class AddDipendenteComponent {
     telefono: new FormControl<number | null>(null),
   });
 
-  // 👇 POPUP SUCCESSO
-  successMessage: string | null = null;
 
   // =========================
   // SUBMIT
@@ -51,7 +51,24 @@ export class AddDipendenteComponent {
 
     // 👉 chiamata backend (IGNORATA)
     this.service.insert(dto).subscribe({
-      next: () => this.dipendenteForm.reset(),
+      next: () => {
+        this.dipendenteForm.reset();
+
+        // 🔥 FAKE ID COME USER
+        next: (res: DipendenteDto) => {
+          this.dipendenteCreated.emit(res);
+        }
+
+        // 🔥 EMIT
+        this.dipendenteCreated.emit(dto);
+
+        // 🔥 POPUP
+        this.successMessage = 'Dipendente inserito con successo';
+
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 2000);
+      },
       error: (err: any) => console.error(err),
     });
 
@@ -68,4 +85,8 @@ export class AddDipendenteComponent {
       this.successMessage = null;
     }, 2000);
   }
+
+
+
+
 }

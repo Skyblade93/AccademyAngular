@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ElettricistaService } from '../Service/elettricista.service';
-import { ElettricistaDto } from '../Dto/elettricistadto';
+
+import { ElettricistaDto } from '../Dto/ElettricistaDto';
 
 @Component({
   selector: 'app-elettricista',
@@ -10,7 +10,7 @@ import { ElettricistaDto } from '../Dto/elettricistadto';
   templateUrl: './elettricista.html',
   styleUrls: ['./elettricista.css']
 })
-export class ElettricistaComponent implements OnInit {
+export class ElettricistaComponent /*implements OnInit*/ {
 
   elettricisti: ElettricistaDto[] = [];
   elettricistiFiltrati: ElettricistaDto[] = [];
@@ -19,8 +19,8 @@ export class ElettricistaComponent implements OnInit {
   popupMessaggio: string = '';
   showPopup: boolean = false;
 
-  constructor(private service: ElettricistaService) {}
-
+  constructor( ) {}
+/*
   ngOnInit(): void {
     this.caricaTutti();
   }
@@ -34,7 +34,7 @@ export class ElettricistaComponent implements OnInit {
       error: () => this.apriPopup('Errore caricamento dati')
     });
   }
-
+*/
   filtraPerSpec(spec: string): void {
     this.elettricistiFiltrati = this.elettricisti.filter(e =>
       e.specializzazione.toLowerCase() === spec.toLowerCase()

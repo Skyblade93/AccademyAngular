@@ -57,7 +57,6 @@
     border: 2px solid black;
     border-radius: 10px;
     margin: 20px 0;
-    font-weight: bold;
 }
 
 .form-container-box {
@@ -66,26 +65,16 @@
     border-radius: 20px;
     padding: 30px;
     margin-bottom: 40px;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
-}
-
-.flex-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: center;
 }
 
 .input-plum {
     background-color: #EDA2F2 !important;
     border: 2px solid black !important;
-    padding: 12px 15px; /* Aggiunto 15px di padding per far respirare il testo */
+    padding: 12px 15px;
     border-radius: 10px;
     font-weight: bold;
-    flex: 1;
+    margin-right: 10px;
 }
-
-.input-plum.short { flex: 0 0 90px; }
 
 .btn-mauve {
     background-color: #EFABFF !important;
@@ -104,12 +93,7 @@
     border-radius: 50px;
     font-weight: bold;
     cursor: pointer;
-    margin-left: 5px;
-}
-
-.btn-mauve:hover, .btn-reset:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0px 5px 0px black; 
+    margin-left: 10px;
 }
 
 .drone-grid {
@@ -124,13 +108,3 @@
     padding: 20px;
     border-radius: 18px;
 }
-
-.batt-bar-container {
-    background: #eee;
-    height: 12px;
-    border-radius: 6px;
-    border: 1px solid black;
-    overflow: hidden;
-}
-
-.batt-bar-fill { height: 100%; transition: width 0.6s ease; }

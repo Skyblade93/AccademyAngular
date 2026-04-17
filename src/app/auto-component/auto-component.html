@@ -1,4 +1,4 @@
-﻿<div class="app">
+<div class="app">
 
   <!-- HEADER -->
   <header class="header">
@@ -28,173 +28,87 @@
     </section>
   }
 
-  <!-- FORM INSERIMENTO -->
-  <section class="card form-card">
+  @if (confirmDeleteId !== null) {
+    <div class="delete-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title">
+      <div class="delete-dialog">
+        <span class="delete-dialog-icon">&#x1F5D1;</span>
+        <h3 id="delete-dialog-title">Eliminare questa auto?</h3>
+        <p>Questa azione è irreversibile.</p>
+        <div class="delete-dialog-actions">
+          <button class="btn-ghost" (click)="cancelDelete()">Annulla</button>
+          <button class="btn-danger" (click)="confirmDelete()">Elimina</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <section class="card add-auto-toggle-card">
     <div class="card-header">
       <div class="card-title">
-        <span class="icon">&#x2736;</span>
-        <h2>{{ auto.id ? 'Modifica Auto' : 'Nuova Auto' }}</h2>
+        <span class="icon">&#x2795;</span>
+        <h2>Inserimento Auto</h2>
       </div>
-      <span class="badge-status">{{ auto.id ? 'EDIT' : 'NEW' }}</span>
+      <span class="badge-status">{{ selectedAutoForEdit?.id ? 'EDIT' : 'ADD' }}</span>
     </div>
 
     <p class="form-intro">
-      Compila i dati del veicolo e salva. Tutti i campi principali sono ottimizzati per inserimento rapido.
+      Il form di inserimento e modifica e visibile solo quando necessario.
     </p>
 
-    <form [formGroup]="autoForm" (ngSubmit)="save()" aria-label="Form inserimento auto">
-      <div class="form-grid">
+    <div class="buttons">
+      <button type="button" class="btn-primary" (click)="toggleAddAuto()">
+        {{ isToggleAddAuto ? 'Chiudi form auto' : 'Aggiungi auto' }}
+      </button>
+    </div>
 
-        <div class="field">
-          <input formControlName="marca" placeholder=" " id="marca" autocomplete="organization" />
-          <label for="marca">Marca</label>
-          <span class="field-icon">&#x1F3F7;</span>
-        </div>
-
-        <div class="field">
-          <input formControlName="modello" placeholder=" " id="modello" autocomplete="off" />
-          <label for="modello">Modello</label>
-          <span class="field-icon">&#x1F699;</span>
-        </div>
-
-        <div class="field">
-          <input formControlName="targa" placeholder=" " id="targa" autocomplete="off" />
-          <label for="targa">Targa</label>
-          <span class="field-icon">&#x1F522;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="!!autoForm.controls.carburante.value">
-          <select formControlName="carburante" id="carburante">
-            <option value="" disabled hidden></option>
-            @for (option of carburanteOptions; track $index) {
-              <option [value]="option">{{ option }}</option>
-            }
-          </select>
-          <label for="carburante">Carburante</label>
-          <span class="field-icon">&#x26FD;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="autoForm.controls.userId.value !== null">
-          <select formControlName="userId" id="userId">
-            <option [ngValue]="null" disabled hidden></option>
-            <option [ngValue]="0">Nessun utente</option>
-            @for (user of userList; track $index) {
-              <option [ngValue]="user.id">{{ user.name }}</option>
-            }
-          </select>
-          <label for="userId">Utente</label>
-          <span class="field-icon">&#x1F464;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="autoForm.controls.aziendaId.value !== null">
-          <select formControlName="aziendaId" id="aziendaId">
-            <option [ngValue]="null" disabled hidden></option>
-            <option [ngValue]="0">Nessuna azienda</option>
-            @for (azienda of aziendaList; track azienda.id) {
-              <option [ngValue]="azienda.id">{{ azienda.nomeAzienda }}</option>
-            }
-          </select>
-          <label for="aziendaId">Azienda</label>
-          <span class="field-icon">&#x1F3E2;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="autoForm.controls.dipendenteId.value !== null">
-          <select formControlName="dipendenteId" id="dipendenteId">
-            <option [ngValue]="null" disabled hidden></option>
-            <option [ngValue]="0">Nessun dipendente</option>
-            @for (dipendente of dipendenteList; track dipendente.id) {
-              <option [ngValue]="dipendente.id">{{ getDipendenteLabel(dipendente) }}</option>
-            }
-          </select>
-          <label for="dipendenteId">Dipendente</label>
-          <span class="field-icon">&#x1F464;</span>
-        </div>
-
+    @if (isToggleAddAuto) {
+      <div class="add-auto-slot">
+        <app-add-auto-component
+          [auto]="selectedAutoForEdit"
+          [carburanteOptions]="carburanteOptions"
+          [userList]="userList"
+          [aziendaList]="aziendaList"
+          [dipendenteList]="dipendenteList"
+          (saveAuto)="onSaveAuto($event)"
+          (cancelForm)="onCancelAutoForm()"
+        ></app-add-auto-component>
       </div>
-
-      <div class="buttons">
-        <button type="submit" class="btn-primary">
-          {{ auto.id ? '&#x2736; Salva Modifiche' : '&#x2736; Crea Nuova Auto' }}
-        </button>
-        <button type="button" class="btn-ghost" (click)="resetForm()">Svuota Campi</button>
-      </div>
-    </form>
+    }
   </section>
 
-  <!-- FILTRI -->
-  <section class="card filter-card">
+  <section class="card add-search-toggle-card">
     <div class="card-header">
       <div class="card-title">
         <span class="icon">&#x1F50D;</span>
         <h2>Ricerca Auto</h2>
       </div>
+      <span class="badge-status">SEARCH</span>
     </div>
 
     <p class="form-intro">
-      Cerca per ID o combina i filtri per una ricerca piu precisa. Seleziona anche il tipo di confronto testuale.
+      Il form di ricerca e visibile solo quando necessario.
     </p>
 
-    <form [formGroup]="filterForm" aria-label="Filtri ricerca auto">
-      <div class="form-grid">
+    <div class="buttons">
+      <button type="button" class="btn-accent" (click)="toggleSearchAuto()">
+        {{ isToggleSearchAuto ? 'Chiudi ricerca auto' : 'Cerca auto' }}
+      </button>
+      <button type="button" class="btn-primary" (click)="mostraTutti()">Mostra tutti</button>
+    </div>
 
-        <div class="field">
-          <input formControlName="id" type="number" placeholder=" " id="fid" />
-          <label for="fid">ID</label>
-          <span class="field-icon">#</span>
-        </div>
-
-        <div class="field">
-          <input formControlName="targa" placeholder=" " id="ftarga" />
-          <label for="ftarga">Targa</label>
-          <span class="field-icon">&#x1F522;</span>
-        </div>
-
-        <div class="field">
-          <input formControlName="marca" placeholder=" " id="fmarca" />
-          <label for="fmarca">Marca</label>
-          <span class="field-icon">&#x1F3F7;</span>
-        </div>
-
-        <div class="field">
-          <input formControlName="modello" placeholder=" " id="fmodello" />
-          <label for="fmodello">Modello</label>
-          <span class="field-icon">&#x1F699;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="!!filterForm.controls['carburante'].value">
-          <select formControlName="carburante" id="fcarburante">
-            <option value="" disabled hidden></option>
-            <option value="">Tutti</option>
-            @for (option of carburanteOptions; track $index) {
-              <option [value]="option">{{ option }}</option>
-            }
-          </select>
-          <label for="fcarburante">Carburante</label>
-          <span class="field-icon">&#x26FD;</span>
-        </div>
-
-        <div class="field select-field" [class.has-value]="!!filterForm.controls['searchType'].value">
-          <select formControlName="searchType" id="fsearchType">
-            <option value="" disabled hidden></option>
-            <option value="exact">Esatto</option>
-            <option value="containing">Contiene</option>
-            <option value="starting">Inizia con</option>
-            <option value="ending">Finisce con</option>
-          </select>
-          <label for="fsearchType">Tipo ricerca</label>
-          <span class="field-icon">&#x1F50E;</span>
-        </div>
-
+    @if (isToggleSearchAuto) {
+      <div class="add-search-slot">
+        <app-search-auto-component
+          [carburanteOptions]="carburanteOptions"
+          (searchFilters)="onSearchFilters($event)"
+          (clearSearch)="onClearSearchFilters()"
+        ></app-search-auto-component>
       </div>
-
-      <div class="buttons">
-        <button type="button" class="btn-accent" (click)="applyFilters()">&#x1F50D; Applica Ricerca</button>
-        <button type="button" class="btn-ghost" (click)="clearFilters()">Azzera Filtri</button>
-      </div>
-    </form>
+    }
   </section>
 
   <!-- LISTA AUTO -->
+  @if (showAutoList) {
   <section class="auto-grid">
     @for (item of listAuto; track $index) {
       <div class="auto-card" [attr.data-fuel]="item.carburante">
@@ -239,12 +153,13 @@
         <!-- azioni -->
         <div class="card-actions">
           <button class="btn-edit" (click)="editAuto(item)">&#x270F; Modifica</button>
-          <button class="btn-delete" (click)="deleteAuto(item.id)">&#x1F5D1;</button>
+          <button class="btn-delete" (click)="requestDeleteAuto(item.id)">&#x1F5D1;</button>
         </div>
 
       </div>
     }
   </section>
+  }
 
 <footer class="auto-footer" aria-label="Footer sezione auto">
   <div>
