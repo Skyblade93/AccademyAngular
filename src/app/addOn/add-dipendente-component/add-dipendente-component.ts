@@ -15,9 +15,14 @@ export class AddDipendenteComponent {
 
   constructor(private service: DipendenteService) {}
 
-  @Output() close = new EventEmitter<void>();
-  @Output() dipendenteCreated = new EventEmitter<DipendenteDto>();
+  // 👇 INPUT come nel tuo esempio
+  count = input<number>(0);
 
+  // 👇 OUTPUT
+  @Output() dipendenteCreated = new EventEmitter<DipendenteDto>();
+  @Output() close = new EventEmitter<void>();
+
+  // 👇 FORM
   dipendenteForm = new FormGroup({
     nome: new FormControl('', Validators.required),
     cognome: new FormControl('', Validators.required),
@@ -26,37 +31,44 @@ export class AddDipendenteComponent {
     telefono: new FormControl<number | null>(null),
   });
 
+  // 👇 POPUP SUCCESSO
+  successMessage: string | null = null;
+
+  // =========================
+  // SUBMIT
+  // =========================
   onSubmit(): void {
     if (this.dipendenteForm.invalid) return;
 
-    const dto: DipendenteDto = {
-      id: undefined as any,
-      nomeDipendente: this.dipendenteForm.value.nome!,
-      cognomeDipendente: this.dipendenteForm.value.cognome!,
-      eta: this.dipendenteForm.value.eta!,
-      email: this.dipendenteForm.value.email!,
-      numeroTelefono: this.dipendenteForm.value.telefono!
-    };
+    const dto = new DipendenteDto(
+      this.dipendenteForm.value.nome!,
+      this.dipendenteForm.value.cognome!,
+      this.dipendenteForm.value.eta!,
+      this.dipendenteForm.value.email!,
+      this.dipendenteForm.value.telefono!,
+      undefined as unknown as number
+    );
 
     this.service.insert(dto).subscribe({
-      next: (res: DipendenteDto) => {
-
-        this.dipendenteCreated.emit(res);
+      next: () => {
         this.dipendenteForm.reset();
 
-        // 🔥 popup successo
+        // 🔥 FAKE ID COME USER
+        next: (res: DipendenteDto) => {
+          this.dipendenteCreated.emit(res);
+        }
+
+        // 🔥 EMIT
+        this.dipendenteCreated.emit(dto);
+
+        // 🔥 POPUP
         this.successMessage = 'Dipendente inserito con successo';
 
         setTimeout(() => {
           this.successMessage = null;
         }, 2000);
-
       },
-      error: err => console.error(err)
+      error: (err: any) => console.error(err),
     });
   }
-
-  successMessage: string | null = null;
-
-
 }
