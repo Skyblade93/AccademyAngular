@@ -10,7 +10,8 @@ import { UserComponent } from "./user/user";
 import { CarrelloComponent } from "./carrello/carrello-component";
 import { ElettricistaComponent } from "./elettricista/elettricista";
 import { OrdineComponent } from "./ordine-component/ordine";
-import { ParcelComponent } from "./parcel/parcel";
+import { ParcelComponent } from "./parcel-component/parcel-component";
+
 
 
 export const routes: Routes = [
