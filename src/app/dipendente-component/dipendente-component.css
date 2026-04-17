@@ -81,6 +81,8 @@ body {
   transition: 0.2s;
 }
 
+/*  */
+
 .form input:focus {
   outline: none;
   background: #ffffff;

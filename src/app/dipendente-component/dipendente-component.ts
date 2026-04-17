@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AddDipendenteComponent } from '../addOn/add-dipendente-component/add-dipendente-component';
 import { SearchDipendenteComponent } from '../addOn/search-dipendente-component/search-dipendente-component';
 
+// Componente Dipendente
 @Component({
   selector: 'app-dipendente',
   standalone: true,
