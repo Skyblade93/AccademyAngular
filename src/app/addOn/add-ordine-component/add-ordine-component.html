@@ -1,0 +1,27 @@
+<div class="ordine-form-container">
+  <div class="form-title">Inserisci un nuovo ordine</div>
+
+  <form class="ordine-form" [formGroup]="ordineForm" (ngSubmit)="onSubmit()">
+
+    <input
+      placeholder="Costo totale"
+      type="number"
+      formControlName="costo_totale"
+    />
+
+    <input
+      placeholder="Indirizzo Spedizione"
+      type="text"
+      formControlName="indirizzo_spedizione"
+    />
+
+    <input
+      placeholder="Numero prodotti"
+      type="number"
+      formControlName="numero_prodotti"
+    />
+
+    <button type="submit">Salva Ordine</button>
+
+  </form>
+</div>
