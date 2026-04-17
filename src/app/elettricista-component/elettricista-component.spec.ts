@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ElettricistaComponent } from './elettricista';
+import { ElettricistaComponent } from './elettricista-component';
 
 describe('ElettricistaComponent', () => {
   let component: ElettricistaComponent;

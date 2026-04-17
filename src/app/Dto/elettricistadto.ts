@@ -6,4 +6,5 @@ export class ElettricistaDto {
   indirizzo!: string;
   specializzazione!: string;
   disponibile!: boolean;
+  telefono!: string;
 }

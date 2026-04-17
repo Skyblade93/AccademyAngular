@@ -9,7 +9,7 @@ import { HomeComponent } from "./home-component/home-component";
 import { NotificaComponent } from "./notifica-component/notifica-component";
 import { UserComponent } from "./user/user";
 import { CarrelloComponent } from "./carrello/carrello-component";
-import { ElettricistaComponent } from "./elettricista-component/elettricista";
+import { ElettricistaComponent } from "./elettricista-component/elettricista-component";
 import { OrdineComponent } from "./ordine-Component/ordine";
 import { ParcelComponent } from "./parcel/parcel";
 
