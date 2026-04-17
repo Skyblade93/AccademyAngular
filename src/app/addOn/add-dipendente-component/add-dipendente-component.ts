@@ -49,26 +49,23 @@ export class AddDipendenteComponent {
       undefined as unknown as number
     );
 
+    // 👉 chiamata backend (IGNORATA)
     this.service.insert(dto).subscribe({
-      next: () => {
-        this.dipendenteForm.reset();
-
-        // 🔥 FAKE ID COME USER
-        next: (res: DipendenteDto) => {
-          this.dipendenteCreated.emit(res);
-        }
-
-        // 🔥 EMIT
-        this.dipendenteCreated.emit(dto);
-
-        // 🔥 POPUP
-        this.successMessage = 'Dipendente inserito con successo';
-
-        setTimeout(() => {
-          this.successMessage = null;
-        }, 2000);
-      },
+      next: () => this.dipendenteForm.reset(),
       error: (err: any) => console.error(err),
     });
+
+    // 🔥 FAKE ID IDENTICO A USER
+    dto.id = this.count().valueOf() + 1;
+
+    // 🔥 EMIT SUBITO (FUORI DALLA SUBSCRIBE)
+    this.dipendenteCreated.emit(dto);
+
+    // 🔥 POPUP
+    this.successMessage = 'Dipendente inserito con successo';
+
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 2000);
   }
 }
