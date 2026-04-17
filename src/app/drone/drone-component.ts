@@ -12,14 +12,19 @@ import { DroneDto } from '../Dto/DroneDto';
   styleUrl: './drone-component.css'
 })
 export class DroneComponent implements OnInit {
-  listaDroni: DroneDto[] = [];      
-  listaFiltrata: DroneDto[] = [];   
-  filtroMarca: string = '';     
+  listaDroni: DroneDto[] = [];      // Dati originali dal DB
+  listaFiltrata: DroneDto[] = [];   // Dati visualizzati dopo il filtro
+  filtroMarca: string = '';         // Testo inserito dall'utente nel popup
   isPopupOpen: boolean = false; 
   isModifica: boolean = false;
 
+  // Corretto: aggiunto 'marca' per evitare errore TS2741
   droneInModifica: DroneDto = {
-    modello: '', marca: '', livelloBatteria: 0, codiceSeriale: ''
+    id: undefined,
+    modello: '', 
+    marca: '', 
+    codiceSeriale: '',
+    livelloBatteria: 0
   };
 
   constructor(private readonly droneService: DroneService) {}
@@ -38,11 +43,15 @@ export class DroneComponent implements OnInit {
     });
   }
 
+  // --- LOGICA DEL FILTRO ---
   applicaFiltro(): void {
     const termine = this.filtroMarca.toLowerCase().trim();
+    
     if (termine) {
+      // Filtriamo sulla proprietà 'modello' (dove nel DB hai i nomi come Sony/DJI)
       this.listaFiltrata = this.listaDroni.filter(d => 
-        d.marca.toLowerCase().includes(termine)
+        (d.modello && d.modello.toLowerCase().includes(termine)) || 
+        (d.marca && d.marca.toLowerCase().includes(termine))
       );
     } else {
       this.listaFiltrata = this.listaDroni;
@@ -50,9 +59,11 @@ export class DroneComponent implements OnInit {
     this.isPopupOpen = false; 
   }
 
-  togglePopup() { this.isPopupOpen = !this.isPopupOpen; }
+  togglePopup() { 
+    this.isPopupOpen = !this.isPopupOpen; 
+  }
 
-  salvaDrone(form: any): void {
+  salvaDrone(): void {
     const operazione = this.isModifica 
       ? this.droneService.update(this.droneInModifica)
       : this.droneService.insert(this.droneInModifica);
@@ -64,7 +75,7 @@ export class DroneComponent implements OnInit {
   }
 
   eliminaDrone(id?: number): void {
-    if (id && confirm("Eliminare drone?")) {
+    if (id && confirm("Sei sicuro di voler eliminare questo drone?")) {
       this.droneService.delete(id).subscribe(() => this.caricaDroni());
     }
   }
@@ -76,6 +87,12 @@ export class DroneComponent implements OnInit {
 
   annulla() {
     this.isModifica = false;
-    this.droneInModifica = { modello: '', marca: '', livelloBatteria: 0, codiceSeriale: '' };
+    // Corretto: aggiunto 'marca' anche qui
+    this.droneInModifica = { 
+      modello: '', 
+      marca: '', 
+      codiceSeriale: '', 
+      livelloBatteria: 0 
+    };
   }
 }

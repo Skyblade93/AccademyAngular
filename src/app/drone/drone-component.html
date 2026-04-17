@@ -1,56 +1,51 @@
 <div class="page-container">
-
   <div class="action-bar">
-    <button type="button" (click)="togglePopup()" class="btn-filter-toggle">
-      🔍 CERCA PER MARCA (PARZIALE)
-    </button>
+    <button (click)="togglePopup()" class="btn-filter-toggle">🔍 FILTRA DRONI</button>
   </div>
 
-  @if (isPopupOpen) {
-    <div class="overlay">
-      <div class="popup-card animate-in">
-        <h3>Filtro Avanzato</h3>
-        <p>Inserisci anche solo una parte della marca</p>
-        
-        <input type="text" [(ngModel)]="filtroMarca" placeholder="Es. 'dj' per trovare 'DJI'..." class="search-input">
-
-        <div class="popup-actions">
-          <button (click)="applicaFiltro()" class="btn-action-confirm">APPLICA</button>
-          <button (click)="togglePopup()" class="btn-action-cancel">ANNULLA</button>
-        </div>
+  <div *ngIf="isPopupOpen" class="overlay">
+    <div class="popup-card">
+      <h3>Ricerca Rapida</h3>
+      <input type="text" [(ngModel)]="filtroMarca" class="search-input" placeholder="Scrivi marca o modello...">
+      <div class="popup-buttons">
+        <button (click)="applicaFiltro()" class="btn-primary">APPLICA</button>
+        <button (click)="togglePopup()" class="btn-secondary">CHIUDI</button>
       </div>
     </div>
-  }
+  </div>
 
   <div class="main-card">
-    <h3 class="card-title">Gestione Flotta Droni</h3>
-    <form #droneForm="ngForm" (ngSubmit)="salvaDrone(droneForm)" class="horizontal-layout">
-      <input type="text" name="marca" [(ngModel)]="droneInModifica.marca" placeholder="Marca" class="form-input" required>
-      <input type="text" name="modello" [(ngModel)]="droneInModifica.modello" placeholder="Modello" class="form-input" required>
-      <input type="text" name="seriale" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Seriale" class="form-input" required>
-      <input type="number" name="batt" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batt %" class="form-input tiny" required>
-      
-      <div class="btn-set">
-        <button type="submit" class="btn-primary" [disabled]="!droneForm.valid">
-          {{ isModifica ? 'AGGIORNA' : 'REGISTRA' }}
-        </button>
-        <button type="button" (click)="annulla()" class="btn-secondary">SVUOTA</button>
-      </div>
-    </form>
+    <h3>Registra Nuovo Drone</h3>
+    <div class="horizontal-layout">
+      <input type="text" [(ngModel)]="droneInModifica.marca" placeholder="Marca (es. DJI)" class="form-input">
+      <input type="text" [(ngModel)]="droneInModifica.modello" placeholder="Modello (es. Mavic)" class="form-input">
+      <input type="text" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Seriale SN" class="form-input">
+      <input type="number" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batteria %" class="form-input tiny">
+      <button (click)="salvaDrone()" class="btn-primary">SALVA DRONE</button>
+    </div>
   </div>
 
   <div class="results-grid">
-    @for (d of listaFiltrata; track d.id) {
-      <div class="drone-item">
-        <div class="info">
-          <strong>{{d.marca}}</strong> - {{d.modello}}
-          <small>SN: {{d.codiceSeriale}}</small>
-        </div>
-        <div class="actions">
-          <button (click)="selezionaPerModifica(d)" class="btn-small-edit">✎</button>
-          <button (click)="eliminaDrone(d.id)" class="btn-small-del">✖</button>
+    <div *ngFor="let d of listaFiltrata" class="drone-item">
+      <div class="drone-info">
+        <div class="drone-title">{{ d.marca }} {{ d.modello }}</div>
+        <div class="drone-sn">SN: {{ d.codiceSeriale }}</div>
+        
+        <div class="battery-section">
+          <span>Stato Energia: {{ d.livelloBatteria }}%</span>
+          <div class="battery-container">
+            <div class="battery-fill" 
+                 [style.width.%]="d.livelloBatteria"
+                 [style.background-color]="d.livelloBatteria < 20 ? '#ff4d4d' : '#2ecc71'">
+            </div>
+          </div>
         </div>
       </div>
-    }
+      
+      <div class="drone-actions">
+        <button (click)="selezionaPerModifica(d)" class="btn-edit">✏️ Modifica</button>
+        <button (click)="eliminaDrone(d.id)" class="btn-delete">❌ Elimina</button>
+      </div>
+    </div>
   </div>
 </div>
