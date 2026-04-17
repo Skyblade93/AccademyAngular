@@ -3,6 +3,7 @@ import { NotificaDto } from '../Dto/NotificaDto';
 import { DatePipe } from '@angular/common';
 import { NotificaService } from '../Service/NotificaService';
 import { AddNotificaComponent } from "../addOn/add-notifica-component/add-notifica-component";
+import { PrioritaNotifica, TipoNotifica } from '../Dto/enums/notifica-enums';
 
 @Component({
   selector: 'app-notifica',
@@ -14,6 +15,9 @@ import { AddNotificaComponent } from "../addOn/add-notifica-component/add-notifi
 
 export class NotificaComponent implements OnInit {
   listNotifica: NotificaDto[] = [];
+
+ protected readonly TipoEnum = TipoNotifica;
+  protected readonly PrioritaEnum = PrioritaNotifica;
 
   istoggleAddNotifica = signal(false);
 
