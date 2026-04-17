@@ -22,15 +22,25 @@
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
+    gap: 15px;
     box-shadow: 6px 6px 0px #000;
-    transition: transform 0.3s ease;
 }
 
-.action-bar:hover {
-    transform: scale(1.01);
+/* OVERLAY POPUP */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-/* CARDS E FORM */
+/* CARDS */
 .main-card {
     background: #8C7AA9;
     padding: 25px;
@@ -46,29 +56,24 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* INPUT ANIMATI (Senza Bianco) */
+/* INPUT */
 .form-input, .search-input {
-    background: #EDA2F2; /* Colore coordinato */
+    background: #EDA2F2; 
     border: 2px solid black;
     padding: 12px;
     color: #000;
     font-weight: bold;
     flex: 1;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     outline: none;
 }
 
 .form-input:focus, .search-input:focus {
-    background: #EFABFF; /* Si schiarisce leggermente al focus */
+    background: #EFABFF; 
     transform: translateY(-3px);
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
 }
 
-.form-input::placeholder, .search-input::placeholder {
-    color: #333333;
-}
-
-/* GRIGLIA E DRONE ITEM */
+/* RISULTATI */
 .results-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -84,18 +89,13 @@
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 5px 5px 0px #000;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s ease;
 }
 
-.drone-item:hover {
-    transform: translateY(-10px) rotate(0.5deg);
-    box-shadow: 15px 15px 0px #000;
-}
-
-/* BARRA BATTERIA */
+/* BATTERIA */
 .battery-container {
     width: 100%;
-    background-color: #8C7AA9; /* Sfondo barra coordinato */
+    background-color: #8C7AA9;
     border: 2px solid black;
     height: 22px;
     border-radius: 11px;
@@ -105,30 +105,26 @@
 
 .battery-fill {
     height: 100%;
-    transition: width 1.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    animation: batteryPulse 2s infinite alternate;
+    transition: width 1.2s ease;
 }
 
-@keyframes batteryPulse {
-    from { filter: brightness(1); }
-    to { filter: brightness(1.2) saturate(1.2); }
-}
-
-/* TUTTI I BOTTONI COORDINATI */
-.btn-primary, .btn-filter-toggle, .btn-apply, .btn-edit, .btn-delete {
+/* BOTTONI */
+.btn-primary, .btn-filter-toggle, .btn-apply, .btn-edit, .btn-delete, .btn-reset {
     background: #EFABFF;
     border: 2px solid black;
     padding: 10px 20px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 4px 4px 0px #000;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: 'Helvetica', sans-serif;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-secondary {
-    background: #7192BE;
-    color: white;
+    background: #7192BE !important; /* Colore blu coordinato */
+    color: #000;
     border: 2px solid black;
     padding: 10px 20px;
     font-weight: bold;
@@ -136,18 +132,16 @@
     box-shadow: 4px 4px 0px #000;
 }
 
-/* Animazioni al passaggio del mouse sui bottoni */
-.btn-primary:hover, .btn-filter-toggle:hover, .btn-apply:hover, .btn-edit:hover, .btn-delete:hover, .btn-secondary:hover {
+.btn-reset {
+    background: #DC6BAD; /* Colore rosa scuro */
+}
+
+.btn-primary:hover, .btn-filter-toggle:hover, .btn-reset:hover, .btn-secondary:hover {
     transform: translate(-3px, -3px);
     box-shadow: 7px 7px 0px #000;
 }
 
-.btn-primary:active, .btn-secondary:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
-}
-
-/* POPUP */
+/* POPUP CARD */
 .popup-card {
     background: #DC6BAD;
     padding: 40px;
@@ -155,10 +149,10 @@
     border-radius: 20px;
     text-align: center;
     box-shadow: 20px 20px 0px #000;
-    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: popIn 0.3s ease-out;
 }
 
 @keyframes popIn {
-    from { transform: scale(0.4); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
 }

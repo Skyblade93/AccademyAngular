@@ -1,13 +1,26 @@
 <div class="page-container">
+  
   <div class="action-bar">
-    <button (click)="togglePopup()" class="btn-filter-toggle">🔍 FILTRA DRONI</button>
+    <button (click)="togglePopup()" class="btn-filter-toggle">
+      🔍 FILTRA DRONI
+    </button>
+    
+    <button *ngIf="filtroMarca || listaFiltrata.length !== listaDroni.length" 
+            (click)="resetFiltro()" 
+            class="btn-reset">
+      🔄 MOSTRA TUTTI I DRONI
+    </button>
   </div>
 
   <div *ngIf="isPopupOpen" class="overlay">
     <div class="popup-card">
-      <h3>Ricerca Rapida</h3>
-      <input type="text" [(ngModel)]="filtroMarca" class="search-input" placeholder="Scrivi marca o modello...">
-      <div class="popup-buttons">
+      <h3 style="margin-bottom: 20px;">Ricerca Rapida</h3>
+      <input type="text" 
+             [(ngModel)]="filtroMarca" 
+             class="search-input" 
+             placeholder="Scrivi marca o modello...">
+      
+      <div class="popup-buttons" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center;">
         <button (click)="applicaFiltro()" class="btn-primary">APPLICA</button>
         <button (click)="togglePopup()" class="btn-secondary">CHIUDI</button>
       </div>
@@ -15,24 +28,42 @@
   </div>
 
   <div class="main-card">
-    <h3>Registra Nuovo Drone</h3>
-    <div class="horizontal-layout">
+    <h3 style="margin-bottom: 20px;">
+      {{ isModifica ? '✏️ Modifica Drone Selezionato' : '🚀 Registra Nuovo Drone' }}
+    </h3>
+    
+    <div class="horizontal-layout" style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
       <input type="text" [(ngModel)]="droneInModifica.marca" placeholder="Marca (es. DJI)" class="form-input">
-      <input type="text" [(ngModel)]="droneInModifica.modello" placeholder="Modello (es. Mavic)" class="form-input">
+      <input type="text" [(ngModel)]="droneInModifica.modello" placeholder="Modello" class="form-input">
       <input type="text" [(ngModel)]="droneInModifica.codiceSeriale" placeholder="Seriale SN" class="form-input">
-      <input type="number" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="Batteria %" class="form-input tiny">
-      <button (click)="salvaDrone()" class="btn-primary">SALVA DRONE</button>
+      <input type="number" [(ngModel)]="droneInModifica.livelloBatteria" placeholder="%" class="form-input" style="max-width: 90px;">
+      
+      <button (click)="salvaDrone()" class="btn-primary">
+        {{ isModifica ? 'AGGIORNA DATI' : 'SALVA DRONE' }}
+      </button>
+      
+      <button *ngIf="isModifica" (click)="annulla()" class="btn-secondary">
+        ANNULLA
+      </button>
     </div>
   </div>
 
   <div class="results-grid">
     <div *ngFor="let d of listaFiltrata" class="drone-item">
+      
       <div class="drone-info">
-        <div class="drone-title">{{ d.marca }} {{ d.modello }}</div>
-        <div class="drone-sn">SN: {{ d.codiceSeriale }}</div>
+        <div class="drone-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">
+          {{ d.marca }} {{ d.modello }}
+        </div>
+        <div class="drone-sn" style="font-family: monospace; color: #333; margin-bottom: 20px;">
+          ID SERVIZIO: {{ d.codiceSeriale }}
+        </div>
         
         <div class="battery-section">
-          <span>Stato Energia: {{ d.livelloBatteria }}%</span>
+          <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px;">
+            <span>Livello Energia</span>
+            <span>{{ d.livelloBatteria }}%</span>
+          </div>
           <div class="battery-container">
             <div class="battery-fill" 
                  [style.width.%]="d.livelloBatteria"
@@ -42,10 +73,20 @@
         </div>
       </div>
       
-      <div class="drone-actions">
-        <button (click)="selezionaPerModifica(d)" class="btn-edit">✏️ Modifica</button>
-        <button (click)="eliminaDrone(d.id)" class="btn-delete">❌ Elimina</button>
+      <div class="drone-actions" style="margin-top: 25px; display: flex; gap: 12px;">
+        <button (click)="selezionaPerModifica(d)" class="btn-edit" style="flex: 1;">
+          ✏️ MODIFICA
+        </button>
+        <button (click)="eliminaDrone(d.id)" class="btn-delete" style="flex: 1;">
+          ❌ ELIMINA
+        </button>
       </div>
+
     </div>
   </div>
+
+  <div *ngIf="listaFiltrata.length === 0" style="text-align: center; margin-top: 50px; font-weight: bold; font-size: 1.2rem;">
+    ⚠️ Nessun drone trovato con i criteri inseriti.
+  </div>
+
 </div>

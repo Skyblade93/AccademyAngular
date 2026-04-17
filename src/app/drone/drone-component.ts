@@ -12,13 +12,12 @@ import { DroneDto } from '../Dto/DroneDto';
   styleUrl: './drone-component.css'
 })
 export class DroneComponent implements OnInit {
-  listaDroni: DroneDto[] = [];      // Dati originali dal DB
-  listaFiltrata: DroneDto[] = [];   // Dati visualizzati dopo il filtro
-  filtroMarca: string = '';         // Testo inserito dall'utente nel popup
+  listaDroni: DroneDto[] = [];      
+  listaFiltrata: DroneDto[] = [];   
+  filtroMarca: string = '';         
   isPopupOpen: boolean = false; 
   isModifica: boolean = false;
 
-  // Corretto: aggiunto 'marca' per evitare errore TS2741
   droneInModifica: DroneDto = {
     id: undefined,
     modello: '', 
@@ -43,12 +42,10 @@ export class DroneComponent implements OnInit {
     });
   }
 
-  // --- LOGICA DEL FILTRO ---
+  // --- METODO PER FILTRARE ---
   applicaFiltro(): void {
     const termine = this.filtroMarca.toLowerCase().trim();
-    
     if (termine) {
-      // Filtriamo sulla proprietà 'modello' (dove nel DB hai i nomi come Sony/DJI)
       this.listaFiltrata = this.listaDroni.filter(d => 
         (d.modello && d.modello.toLowerCase().includes(termine)) || 
         (d.marca && d.marca.toLowerCase().includes(termine))
@@ -59,19 +56,34 @@ export class DroneComponent implements OnInit {
     this.isPopupOpen = false; 
   }
 
+  // --- NUOVO: METODO PER TORNARE A VEDERE TUTTI ---
+  resetFiltro(): void {
+    this.filtroMarca = ''; 
+    this.listaFiltrata = this.listaDroni;
+  }
+
   togglePopup() { 
     this.isPopupOpen = !this.isPopupOpen; 
   }
 
   salvaDrone(): void {
-    const operazione = this.isModifica 
-      ? this.droneService.update(this.droneInModifica)
-      : this.droneService.insert(this.droneInModifica);
-
-    operazione.subscribe(() => {
-      this.caricaDroni();
-      this.annulla();
-    });
+    if (this.isModifica && this.droneInModifica.id !== undefined && this.droneInModifica.id !== null) {
+      this.droneService.update(this.droneInModifica.id, this.droneInModifica).subscribe({
+        next: () => {
+          this.caricaDroni();
+          this.annulla();
+        },
+        error: (err) => console.error("Errore durante l'aggiornamento!", err)
+      });
+    } else {
+      this.droneService.insert(this.droneInModifica).subscribe({
+        next: () => {
+          this.caricaDroni();
+          this.annulla();
+        },
+        error: (err) => console.error("Errore durante l'inserimento!", err)
+      });
+    }
   }
 
   eliminaDrone(id?: number): void {
@@ -83,16 +95,13 @@ export class DroneComponent implements OnInit {
   selezionaPerModifica(d: DroneDto) {
     this.droneInModifica = { ...d };
     this.isModifica = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   annulla() {
     this.isModifica = false;
-    // Corretto: aggiunto 'marca' anche qui
     this.droneInModifica = { 
-      modello: '', 
-      marca: '', 
-      codiceSeriale: '', 
-      livelloBatteria: 0 
+      id: undefined, modello: '', marca: '', codiceSeriale: '', livelloBatteria: 0 
     };
   }
 }
