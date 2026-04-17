@@ -7,8 +7,9 @@ body {
 .controls {
     background-color: #8C7AA9;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 3px solid black;
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 black;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -57,11 +58,12 @@ button:hover, .btn-all:hover {
 
 .notifica-card {
     background-color: #EDA2F2;
+    border: 2px solid black;
     border-left: 5px solid #DC6BAD;
     margin-bottom: 15px;
     padding: 15px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 black;
     transition: transform 0.1s;
     color: #000000;
 }
