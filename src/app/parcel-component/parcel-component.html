@@ -1,52 +1,146 @@
-<div class="page">
-  <app-add-parcel-component (parcelAdded)="onParcelAdded($event)" />
-</div>
+<div class="container">
+  <h1>Gestione Spedizioni</h1>
 
-<div class="page">
+  <app-add-parcel-component (countValue)="onParcelAdded($event)"></app-add-parcel-component>
 
-  @if (isPopupVisible) {
-    <div class="overlay">
-      <div class="popup">
-        <h2>Spedizione non trovata</h2>
-        <button (click)="togglePopup()">Chiudi</button>
+  <div class="search-section">
+    <h3>Ricerca</h3>
+    <div class="search-row">
+      <div class="search-group">
+        <label>Cerca per ID:</label>
+        <input type="number" #searchId placeholder="Inserisci ID" />
+        <button (click)="haveParcel(+searchId.value)">Cerca</button>
       </div>
+      <div class="search-group">
+        <label>Cerca per Cognome Destinatario:</label>
+        <input type="text" #searchSurname placeholder="Inserisci cognome" />
+        <button (click)="findByReceiverSurname(searchSurname.value)">Cerca</button>
+      </div>
+    </div>
+    @if (isSearching()) {
+      <p class="loading">Ricerca in corso...</p>
+    }
+    @if (isError()) {
+      <p class="error">Nessun risultato trovato</p>
+    }
+    <button class="reset-btn" (click)="resetSearch()">Mostra tutti</button>
+  </div>
+
+  @if (searchResult()) {
+    <div class="result-section">
+      <h3>Risultato Ricerca</h3>
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome Destinatario</th>
+            <th>Cognome Destinatario</th>
+            <th>Nome Mittente</th>
+            <th>Cognome Mittente</th>
+            <th>Peso</th>
+            <th>Altezza</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
+            <th>Fragile</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ searchResult()?.id }}</td>
+            <td>{{ searchResult()?.receiverName }}</td>
+            <td>{{ searchResult()?.receiverSurname }}</td>
+            <td>{{ searchResult()?.senderName }}</td>
+            <td>{{ searchResult()?.senderSurname }}</td>
+            <td>{{ searchResult()?.weight }}</td>
+            <td>{{ searchResult()?.height }}</td>
+            <td>{{ searchResult()?.width }}</td>
+            <td>{{ searchResult()?.length }}</td>
+            <td>{{ searchResult()?.fragile ? 'Sì' : 'No' }}</td>
+            <td>
+              <button (click)="deleteParcel(searchResult()!.id)">Elimina</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   }
 
-  <div class="search-box">
-    <input type="text" placeholder="Inserisci Cognome Destinatario" #receiverSurname />
-    <button (click)="findByReceiverSurname(receiverSurname.value)">Cerca</button>
+  @if (searchResults().length > 0) {
+    <div class="result-section">
+      <h3>Risultati Ricerca ({{ searchResults().length }} trovati)</h3>
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome Destinatario</th>
+            <th>Cognome Destinatario</th>
+            <th>Nome Mittente</th>
+            <th>Cognome Mittente</th>
+            <th>Peso</th>
+            <th>Altezza</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
+            <th>Fragile</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (parcel of searchResults(); track parcel.id) {
+            <tr>
+              <td>{{ parcel.id }}</td>
+              <td>{{ parcel.receiverName }}</td>
+              <td>{{ parcel.receiverSurname }}</td>
+              <td>{{ parcel.senderName }}</td>
+              <td>{{ parcel.senderSurname }}</td>
+              <td>{{ parcel.weight }}</td>
+              <td>{{ parcel.height }}</td>
+              <td>{{ parcel.width }}</td>
+              <td>{{ parcel.length }}</td>
+              <td>{{ parcel.fragile ? 'Sì' : 'No' }}</td>
+              <td>
+                <button (click)="deleteParcel(parcel.id)">Elimina</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 
-    @if (isSearching) {
-      <button (click)="resetSearch()">Mostra Tutti</button>
+  <div class="list-section">
+    <h3>Tutte le spedizioni ({{ Parcels().length }})</h3>
+    @if (Parcels().length === 0) {
+      <p>Nessuna spedizione presente</p>
+    } @else {
+      <table class="parcel-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Destinatario</th>
+            <th>Mittente</th>
+            <th>Peso</th>
+            <th>Dimensioni</th>
+            <th>Fragile</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (parcel of Parcels(); track parcel.id) {
+            <tr>
+              <td>{{ parcel.id }}</td>
+              <td>{{ parcel.receiverName }} {{ parcel.receiverSurname }}</td>
+              <td>{{ parcel.senderName }} {{ parcel.senderSurname }}</td>
+              <td>{{ parcel.weight }} Kg</td>
+              <td>{{ parcel.height }}cm x {{ parcel.width }}cm x {{ parcel.length }}cm</td>
+              <td>{{ parcel.fragile ? 'Sì' : 'No' }}</td>
+              <td>
+                <button (click)="deleteParcel(parcel.id)">Elimina</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
     }
   </div>
-
-  <table class="item">
-    <tr>
-      <th>ID</th>
-      <th>Destinatario</th>
-      <th>Mittente</th>
-      <th>Peso</th>
-      <th>Misure</th>
-      <th>Fragile</th>
-      <th>Operazioni</th>
-    </tr>
-
-    @for (p of isSearching ? searchResults : ListParcel; track p.id) {
-      <tr>
-        <td>{{ p.id }}</td>
-        <td>{{ p.receiverName }} {{ p.receiverSurname }}</td>
-        <td>{{ p.senderName }} {{ p.senderSurname }}</td>
-        <td>{{ p.weight }} kg</td>
-        <td>{{ p.height }}cm x {{ p.width }}cm x {{ p.length }}cm</td>
-        <td>{{ p.fragile ? 'Si' : 'No' }}</td>
-        <td>
-          <button>Modifica</button> |
-          <button class="super-button" (click)="deleteParcel(p.id)">Elimina</button>
-        </td>
-      </tr>
-    }
-  </table>
-
 </div>
