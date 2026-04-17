@@ -1,33 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ElettricistaDto } from '../Dto/elettricistadto';
-//controllare bene il service
+import { ElettricistaDto } from '../Dto/ElettricistaDto';
+import { AbstractService } from './abstract-service';
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class ElettricistaService {
+export class ElettricistaService extends AbstractService<ElettricistaDto> {
 
-  private apiUrl = 'http://localhost:8080/elettricisti';
 
-  constructor(private http: HttpClient) {}
+  constructor( http: HttpClient) {
+    super(http);
+    this.type = 'elettricisti';
+  }
 
- getAll(): Observable<ElettricistaDto[]> {
-  return this.http.get<ElettricistaDto[]>(`${this.apiUrl}/all`);
-}
-//manc è can
-  getById(id: number): Observable<ElettricistaDto> {
-  return this.http.get<ElettricistaDto>(`${this.apiUrl}/${id}`);
- }
-
+/*
   //1nome
   getByNome(nome: string): Observable<ElettricistaDto[]> {
-    return this.http.get<ElettricistaDto[]>(`${this.apiUrl}/nome/${nome}`);
+    return this.http.get<ElettricistaDto[]>(`${this.type}/nome/${nome}`);
   }
 
   //2disponibili
   getDisponibili(): Observable<ElettricistaDto[]> {
-    return this.http.get<ElettricistaDto[]>(`${this.apiUrl}/disponibili`);
+    return this.http.get<ElettricistaDto[]>((this.baseUrl + '/' + this.type )+ '/disponibili');
   }
 
   //3cognome
@@ -69,4 +66,5 @@ export class ElettricistaService {
   getSpecNonDisponibili(spec: string): Observable<ElettricistaDto[]> {
     return this.http.get<ElettricistaDto[]>(`${this.apiUrl}/spec-non-disponibili/${spec}`);
   }
+    */
 }

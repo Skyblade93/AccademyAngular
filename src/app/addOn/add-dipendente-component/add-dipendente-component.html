@@ -17,4 +17,18 @@
 
   </form>
 
+  <!-- 🔥 POPUP SUCCESSO INSERIMENTO -->
+  @if (successMessage) {
+    <div class="popup-overlay">
+      <div class="popup">
+
+        <span class="close-btn" (click)="successMessage = null">✖</span>
+
+        <h3>Operazione completata</h3>
+        <p>{{ successMessage }}</p>
+
+      </div>
+    </div>
+  }
+
 </div>

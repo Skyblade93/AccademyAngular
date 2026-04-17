@@ -66,7 +66,6 @@ button:hover {
   background: #EDA2F2;
   padding: 20px;
   border-radius: 12px;
-  margin-top: 20px;
 }
 
 /* TABLE */
@@ -113,11 +112,52 @@ tr:hover {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.popup button {
-  margin-top: 15px;
-  padding: 10px;
-  border: none;
-  background: #EFABBF;
-  cursor: pointer;
+.popup .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  background: transparent; /* 👈 STOP ROSA */
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px; /* 👈 spazio tra i bottoni */
+}
+
+.actions button {
+  flex: none;      /* 👈 evita stretching brutto */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.form .buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  background: transparent; /* 👈 STOP ROSA */
+  padding: 5px;
   border-radius: 8px;
+}
+
+.popup-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+.popup {
+  position: relative; /* 👈 fondamentale per posizionare la X */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  color: white;
 }

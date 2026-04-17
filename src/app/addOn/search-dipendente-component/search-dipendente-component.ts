@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, FormsModule } from '@angular/forms';
 import { DipendenteService } from '../../Service/dipendenteService';
 import { DipendenteDto } from '../../Dto/DipendenteDto';
 
 @Component({
   selector: 'app-search-dipendente-component',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './search-dipendente-component.html',
   styleUrl: './search-dipendente-component.css',
 })
@@ -19,6 +19,9 @@ export class SearchDipendenteComponent {
 
   @Output() close = new EventEmitter<void>();
 
+  // =========================
+  // FORM FILTRI
+  // =========================
   dipendenteForm = new FormGroup({
     nome: new FormControl(''),
     cognome: new FormControl(''),
@@ -27,10 +30,19 @@ export class SearchDipendenteComponent {
     telefono: new FormControl<number | null>(null),
   });
 
+  // =========================
+  // DATI
+  // =========================
   baseList: DipendenteDto[] = [];
   risultati: DipendenteDto[] = [];
 
-  popup: DipendenteDto | null = null;
+  // =========================
+  // POPUP VARI
+  // =========================
+  popup: DipendenteDto | null = null;               // dettaglio filtro
+  confirmDelete: DipendenteDto | null = null;       // delete popup
+  editPopup: DipendenteDto | null = null;           // modifica popup
+  successMessage: string | null = null;             // messaggio successo
 
   // =========================
   // LOAD
@@ -43,7 +55,7 @@ export class SearchDipendenteComponent {
   }
 
   // =========================
-  // FILTRO → POPUP
+  // FILTRO
   // =========================
   filtra() {
     const v = this.dipendenteForm.value;
@@ -52,22 +64,16 @@ export class SearchDipendenteComponent {
 
     if (v.nome && v.cognome) {
       request$ = this.service.findByNomeDipendenteAndCognomeDipendente(v.nome, v.cognome);
-
     } else if (v.nome) {
       request$ = this.service.findByNomeDipendente(v.nome);
-
     } else if (v.cognome) {
       request$ = this.service.findByCognomeDipendente(v.cognome);
-
     } else if (v.email) {
       request$ = this.service.findByEmail(v.email);
-
     } else if (v.eta != null) {
       request$ = this.service.findByEta(v.eta);
-
     } else if (v.telefono != null) {
       request$ = this.service.findByNumeroTelefono(v.telefono);
-
     } else {
       return;
     }
@@ -75,22 +81,22 @@ export class SearchDipendenteComponent {
     request$.subscribe((res: DipendenteDto | DipendenteDto[]) => {
       const data = Array.isArray(res) ? res : [res];
 
-      // 👉 POPUP se 1 risultato
       if (data.length === 1) {
         this.popup = data[0];
       } else {
-        // 👉 più risultati → mostro lista
         this.risultati = data;
       }
     });
   }
 
   // =========================
-  // RESET COMPLETO
+  // RESET
   // =========================
   reset() {
-    this.dipendenteForm.reset();   // ✔ ora funziona davvero
+    this.dipendenteForm.reset();
     this.popup = null;
+    this.editPopup = null;
+    this.confirmDelete = null;
     this.risultati = this.baseList;
   }
 
@@ -98,25 +104,74 @@ export class SearchDipendenteComponent {
     this.popup = null;
   }
 
+  closeSuccess() {
+    this.successMessage = null;
+  }
+
   // =========================
   // DELETE
   // =========================
-  elimina(id: number) {
-    this.service.delete(id).subscribe(() => {
+  elimina(d: DipendenteDto) {
+    this.confirmDelete = d;
+  }
+
+  confirmNo() {
+    this.confirmDelete = null;
+  }
+
+  confirmYes() {
+      if (!this.confirmDelete) return;
+
+      const id = this.confirmDelete.id;
+
+      this.service.delete(id).subscribe(() => {
+      this.confirmDelete = null;
+
+      this.showSuccess('Dipendente eliminato con successo');
+
       this.loadAll();
     });
   }
 
   // =========================
-  // MODIFICA
+  // MODIFICA (OPEN POPUP)
   // =========================
+
   modifica(d: DipendenteDto) {
-    this.dipendenteForm.patchValue({
-      nome: d.nomeDipendente,
-      cognome: d.cognomeDipendente,
-      eta: d.eta,
-      email: d.email,
-      telefono: d.numeroTelefono
+    this.editPopup = { ...d }; // clone sicuro
+  }
+
+  // =========================
+  // SALVATAGGIO MODIFICA
+  // =========================
+  saveEdit() {
+    if (!this.editPopup) return;
+      this.service.update(this.editPopup).subscribe(() => {
+      this.editPopup = null;
+
+      this.showSuccess('Dipendente modificato con successo');
+
+      this.loadAll();
     });
   }
+
+  closeEdit() {
+    this.editPopup = null;
+  }
+
+  successTimeout: any;
+
+  showSuccess(msg: string) {
+    this.successMessage = msg;
+
+    // 🔥 evita sovrapposizione timeout
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+    }
+
+    this.successTimeout = setTimeout(() => {
+      this.successMessage = null;
+    }, 2000);
+  }
+
 }
