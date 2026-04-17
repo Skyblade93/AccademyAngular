@@ -1,28 +1,29 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { AbstractService } from "./abstract-service";
-import { DroneDto } from "../Dto/DroneDto";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { DroneDto } from '../Dto/DroneDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DroneService extends AbstractService<DroneDto> {
+export class DroneService {
+  private baseUrl = 'http://localhost:8080/Drone';
 
-  constructor(http: HttpClient) {
-    // Inizializziamo la classe padre AbstractService
-    super(http);
-    
-    /**
-     * controller Java ha @RequestMapping("Drone")
-     */
-    this.type = 'Drone'; 
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable<DroneDto[]> {
+    return this.http.get<DroneDto[]>(`${this.baseUrl}/getall`);
   }
 
-  /**
-   * Se vuoi usare i metodi specifici che hai nel controller Java .
-   * Ad esempio findByModello:
-   */
-  findByModello(modello: string) {
-    return this.http.get<DroneDto>(`${this.baseUrl}/${this.type}/findByModello?modello=${modello}`);
+  insert(dto: DroneDto): Observable<DroneDto> {
+    return this.http.post<DroneDto>(`${this.baseUrl}/insert`, dto);
+  }
+
+  update(dto: DroneDto): Observable<DroneDto> {
+    return this.http.put<DroneDto>(`${this.baseUrl}/update`, dto);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/delete?id=${id}`);
   }
 }
