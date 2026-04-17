@@ -33,9 +33,11 @@
       {{ item.description }}
       {{ item.id }}
 
-      <button (click)="deleteUser(item.id)">
-        Elimina
-      </button>
+      @if (item.id != null) {
+        <button (click)="deleteUser(item.id)">
+          Elimina
+        </button>
+      }
     </div>
   }
 </div>

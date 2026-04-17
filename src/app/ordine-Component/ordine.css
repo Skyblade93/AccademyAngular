@@ -1,7 +1,8 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f9;
+  font-family: Helvetica, Arial, sans-serif;
+  background: #7192BE;
   margin: 0;
+  color: #000;
 }
 
 .container {
@@ -14,7 +15,7 @@ body {
   text-align: center;
   font-size: 32px;
   margin-bottom: 20px;
-  color: #333;
+  color: #000;
 }
 
 /* SEARCH */
@@ -29,21 +30,25 @@ body {
   padding: 10px;
   width: 200px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #8C7AA9;
+  background: #EDA2F2;
+  color: #000;
 }
 
+/* BOTTONI */
 button {
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
-  background: #007bff;
-  color: white;
+  background: #EFABBF;
+  color: #000;
   cursor: pointer;
   transition: 0.2s;
 }
 
 button:hover {
-  background: #0056b3;
+  background: #DC6BAD;
+  color: #fff;
 }
 
 /* CARD ORDINI */
@@ -54,19 +59,21 @@ button:hover {
 }
 
 .card {
-  background: white;
+  background: #EDA2F2;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
   transition: 0.2s;
+  border: 1px solid #8C7AA9;
 }
 
 .card:hover {
   transform: scale(1.02);
 }
 
+/* evidenza */
 .highlight {
-  border-left: 6px solid #28a745;
+  border-left: 6px solid #DC6BAD;
 }
 
 /* FILTRI */
@@ -79,7 +86,7 @@ button:hover {
 
 .filter {
   display: flex;
-  flex-wrap: wrap;   
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }
@@ -87,14 +94,30 @@ button:hover {
 .filter input {
   flex: 1;
   min-width: 120px;
-  max-width: 160px;   
+  max-width: 160px;
   padding: 8px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #8C7AA9;
+  background: #EDA2F2;
+  color: #000;
 }
 
 /* SORT */
 .sort {
   margin-top: 20px;
   text-align: center;
+}
+
+/* POPUP */
+.popup {
+  background: #DC6BAD;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #8C7AA9;
+}
+
+/* elementi generici */
+.generic {
+  color: #8C7AA9;
 }

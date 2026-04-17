@@ -1,16 +1,64 @@
-<div>
-  <div>Inserisci una nuova spedizione</div>
+<div class="form-section">
+  <h3>Inserisci una nuova spedizione</h3>
 
   <form [formGroup]="parcelForm" (ngSubmit)="onSubmit()">
-    <input placeholder="Nome Destinatario" type="text" formControlName="receiverName" />
-    <input placeholder="Cognome Destinatario" type="text" formControlName="receiverSurname" />
-    <input placeholder="Nome Mittente" type="text" formControlName="senderName" />
-    <input placeholder="Cognome Mittente" type="text" formControlName="senderSurname" />
-    <input placeholder="Peso" type="number" formControlName="weight" />
-    <input placeholder="Altezza" type="number" formControlName="height" />
-    <input placeholder="Larghezza" type="number" formControlName="width" />
-    <input placeholder="Lunghezza" type="number" formControlName="length" />
-    <label><input type="checkbox" formControlName="fragile" /> Fragile</label>
-    <button type="submit">Salva Spedizione</button>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome Destinatario:</label>
+        <input placeholder="Nome destinatario" type="text" formControlName="receiverName" />
+      </div>
+
+      <div class="form-group">
+        <label>Cognome Destinatario:</label>
+        <input placeholder="Cognome destinatario" type="text" formControlName="receiverSurname" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome Mittente:</label>
+        <input placeholder="Nome mittente" type="text" formControlName="senderName" />
+      </div>
+
+      <div class="form-group">
+        <label>Cognome Mittente:</label>
+        <input placeholder="Cognome mittente" type="text" formControlName="senderSurname" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Peso (Kg):</label>
+        <input placeholder="Peso" type="number" formControlName="weight" min="0" step="0.1" />
+      </div>
+
+      <div class="form-group">
+        <label>Altezza (cm):</label>
+        <input placeholder="Altezza" type="number" formControlName="height" min="0" />
+      </div>
+
+      <div class="form-group">
+        <label>Larghezza (cm):</label>
+        <input placeholder="Larghezza" type="number" formControlName="width" min="0" />
+      </div>
+
+      <div class="form-group">
+        <label>Lunghezza (cm):</label>
+        <input placeholder="Lunghezza" type="number" formControlName="length" min="0" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="fragile" />
+          <span>Fragile</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-btn">Salva Spedizione</button>
+    </div>
   </form>
 </div>

@@ -4,6 +4,10 @@ import { userService } from '../Service/userService';
 import { UserDto } from '../Dto/UserDto';
 import { AddUserComponent } from '../addOn/add-user-component/add-user-component';
 
+function hasNumericId(user: UserDto): user is UserDto & { id: number } {
+  return typeof user.id === 'number';
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -26,13 +30,16 @@ export class UserComponent implements OnInit {
 
   /* 🔥 COMPUTED */
   sortedUsers = computed(() =>
-    [...this.users()].sort((a, b) => a.id - b.id)
+    [...this.users()].sort((a, b) => (a.id ?? Number.MAX_SAFE_INTEGER) - (b.id ?? Number.MAX_SAFE_INTEGER))
   );
 
   count = computed(() => {
-    const list = this.users();
-    return list.length
-      ? Math.max(...list.map(u => u.id))
+    const ids = this.users()
+      .filter(hasNumericId)
+      .map(user => user.id);
+
+    return ids.length
+      ? Math.max(...ids)
       : 0;
   });
 

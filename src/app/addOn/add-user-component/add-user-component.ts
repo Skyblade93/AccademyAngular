@@ -45,7 +45,7 @@ export class AddUserComponent {
     const newUser = new UserDto(
       nome,
       descrizione,
-      undefined as unknown as number
+      null
     );
 
 
@@ -54,6 +54,8 @@ export class AddUserComponent {
       error: (err: any) => console.error(err),
     });
     newUser.id = this.count().valueOf()+ 1
+    newUser.name = newUser.name[0].toUpperCase()+ newUser.name.slice(1);
+    newUser.description = newUser.description[0].toUpperCase() + newUser.description.slice(1);
     this.sendCount(newUser);
 
   }
