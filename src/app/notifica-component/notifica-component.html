@@ -5,7 +5,7 @@
 
   <div class="search-group">
     <input type="text" #inputTitolo placeholder="Cerca per titolo..." (keyup.enter)="cercaPerTitolo(inputTitolo.value)" />
-    <button (click)="cercaPerTitolo(inputTitolo.value)">Cerca</button>
+    <button (click)="cercaPerTitolo(inputTitolo.value)">Cerca per titolo</button>
   </div>
 
   <div class="search-group">
@@ -14,7 +14,7 @@
       <option value="false">Non Lette</option>
     </select>
     <button (click)="cercaPerStato(selectLetta.value === 'true')">
-      Cerca
+      Cerca per stato
     </button>
   </div>
 
@@ -31,7 +31,7 @@
       <option [value]="PrioritaEnum.BASSA">Bassa</option>
     </select>
     <button (click)="cercaPerTipoEPriorita(inputTipo.value, inputPriorita.value)">
-      Cerca
+      Cerca per tipo e priorità
     </button>
   </div>
 
