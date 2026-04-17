@@ -21,6 +21,10 @@ export class ordineService extends AbstractService<OrdineDto>{
         return this.http.get<OrdineDto>(this.baseUrl + '/' + this.type + '/findById?id='+ id);
     }
 
+    deleteById(id: number): Observable<OrdineDto> {
+        return this.http.delete<OrdineDto>(this.baseUrl + '/' + this.type + '/delete?id='+ id);
+    }
+
     trovaConCostoUguale(costo: number): Observable<OrdineDto[]> {
         return this.http.get<OrdineDto[]>(this.baseUrl + '/' + this.type + '/trovaConCostoUguale?costo='+ costo);
     }

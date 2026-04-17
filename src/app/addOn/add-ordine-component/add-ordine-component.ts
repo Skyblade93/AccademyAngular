@@ -13,7 +13,8 @@ import { ordineService } from '../../Service/ordineService';
 })
 export class AddOrdineComponent {
 
-  constructor(private service: ordineService) {} // sostituisci con il tuo UserService
+
+  constructor(private service: ordineService) {} 
   
     ordineForm = new FormGroup({
       costo_totale: new FormControl('', {
@@ -30,22 +31,15 @@ export class AddOrdineComponent {
       }),
     })
   
-    // esempio: sostituisci con logica reale (backend o array)
-     count = input<number>(0);
-  
    @Output() countValue = new EventEmitter<OrdineDto>();
   
     sendCount(ordineDto: OrdineDto) {
       this.countValue.emit(ordineDto);
     }
-  
-    // countValue : Output<number> = new Output<number>( this.count().valueOf()+1);
-  
+    
     onSubmit(): void {
-        console.log("SUBMIT INIZIATO");
 
       if (this.ordineForm.invalid) return;
-  console.log("SUBMIT PARTITO");
   
       const costo_totale = Number(this.ordineForm.get('costo_totale')!.value);
       const indirizzo_spedizione = this.ordineForm.get('indirizzo_spedizione')?.value ?? '';
@@ -59,10 +53,11 @@ export class AddOrdineComponent {
       );
   
       this.service.insert(newOrdine).subscribe({
-        next: () => this.ordineForm.reset(),
-        error: (err: any) => console.error(err),
+        next: (ordineCreato) => {
+        this.countValue.emit(ordineCreato);
+        this.ordineForm.reset();
+      },
+      error: (err: any) => console.error(err),
       });
-      newOrdine.id = this.count().valueOf()+ 1
-      this.sendCount(newOrdine);
     }
 }

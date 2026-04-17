@@ -16,17 +16,16 @@ export class OrdineComponent implements OnInit{
   service: ordineService; 
   ListOrdini= signal<OrdineDto[]>([]);
   ordine: OrdineDto | null = null;;
-  ordini = signal<OrdineDto[]>([]);
 
   isPopupVisible = signal(false);
   istoggleAddOrdine = signal(false);
 
   sortedOrdini = computed(() =>
-    [...this.ordini()].sort((a, b) => a.id - b.id)
+    [...this.ListOrdini()].sort((a, b) => a.id - b.id)
   );
 
   count = computed(() => {
-    const list = this.ordini();
+    const list = this.ListOrdini();
     return list.length
       ? Math.max(...list.map(u => u.id))
       : 0;
@@ -50,6 +49,13 @@ export class OrdineComponent implements OnInit{
   findById(id: number) {
   this.service.findById(id).subscribe(ordine => {
   this.ordine = ordine;
+  })
+  }
+
+  deleteById(id: number) {
+  this.service.deleteById(id).subscribe(ordine => {
+  this.ordine = null;
+  this.getAll();
   })
   }
 
@@ -115,8 +121,7 @@ this.ListOrdini.set(ordini);
 }
 
   onOrdineCreated(ordine: OrdineDto): void {
-    this.ordini.update(list => [...list, ordine]);
-    console.log('Ordine aggiunto:', ordine);
+    this.getAll();
   }
 
   togglePopup(): void {
