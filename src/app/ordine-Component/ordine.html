@@ -28,6 +28,11 @@
         <p><strong>Costo:</strong> €{{ordine.costo_totale}}</p>
         <p><strong>Prodotti:</strong> {{ordine.numero_prodotti}}</p>
         <p><strong>Indirizzo:</strong> {{ordine.indirizzo_spedizione}}</p>
+
+        <button class="delete-btn"
+                (click)="deleteById(ordine.id)">
+                🗑 Elimina
+        </button>
       </div>
     }
   </div>
@@ -86,7 +91,19 @@
   </div>
     <div>
     <button (click)="getAll()">Mostra tutti gli ordini</button>
+  <div class="actions">
+  <button (click)="toggleAddOrdine()">Aggiungi ordine</button>
+  <button (click)="ordinaPerCostoDecrescente()">⬇ Ordina per costo tutti gli ordini</button>
+  <button (click)="getAll()">Mostra tutti gli ordini</button>
   </div>
+
+  @if (istoggleAddOrdine()) {
+  <div class="add-ordine-wrapper">
+    <app-add-ordine-component
+      (countValue)="onOrdineCreated($event)">
+    </app-add-ordine-component>
+  </div>
+  }
 
 </div>
 

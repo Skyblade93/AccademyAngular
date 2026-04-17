@@ -1,258 +1,259 @@
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { AziendaDto } from '../Dto/AziendaDto';
-import { Component, OnInit } from '@angular/core';
 import { aziendaService } from '../Service/aziendaService';
 import { UserDto } from '../Dto/UserDto';
+import { AutoDto } from '../Dto/AutoDto';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AutoDto } from '../Dto/AutoDto';
+import { AddAziendaComponent } from '../addOn/add-azienda-component/add-azienda-component';
 
 @Component({
   selector: 'app-azienda',
-    standalone: true,
-  imports: [FormsModule, CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, AddAziendaComponent],
   templateUrl: './azienda-component.html',
   styleUrl: './azienda-component.css',
 })
 export class AziendaComponent implements OnInit {
+  /* 🔥 SERVICE */
+  private service = inject(aziendaService);
 
-  showErrorPopup: boolean = false;
-  showEditPopup: boolean = false;
+  /* 🔥 STATE (SIGNALS) */
 
-  service: aziendaService;
-  ListAzienda: AziendaDto[] = []
+  aziende = signal<AziendaDto[]>([]);
 
-  azienda: AziendaDto =  new AziendaDto('', '', 0, new UserDto('','',0), new AutoDto('','','','',null, null));
+  azienda = signal<AziendaDto>(
+    new AziendaDto('', '', 0, new UserDto('', '', 0), new AutoDto('', '', '', '', null, null)),
+  );
+
+  showErrorPopup = signal(false);
+  showEditPopup = signal(false);
+  showAddAzienda = signal(false);
+  showResultPopup = signal(false);
+  showDeletePopup = signal(false);
+
+  page = signal(0);
+  size = signal(5);
+  totalPages = signal(0);
+
+  /* 🔥 COMPUTED */
+
+  sortedAziende = computed(() => [...this.aziende()].sort((a, b) => a.id - b.id));
+
+  count = computed(() => {
+    const list = this.aziende();
+    return list.length ? Math.max(...list.map((a) => a.id)) : 0;
+  });
+
+  /* 🔥 FORM */
 
   aziendaForm = new FormGroup({
     id: new FormControl(''),
     nomeAzienda: new FormControl(''),
     descrizione: new FormControl(''),
-    titolareId: new FormControl('')
-  })
+    titolareId: new FormControl(''),
+  });
 
-  ngOnInit(){
+  /* ================= INIT ================= */
 
+  ngOnInit() {
+    this.loadPage();
   }
 
-  prendilistAzienda() {
-        this.service.getAll().subscribe(azienda => {
-        this.ListAzienda = azienda;
-      });
-    }
+  /* ================= LOAD ================= */
 
+  loadPage() {
+    this.service.getPage(this.page(), this.size()).subscribe((res) => {
+      this.aziende.set(res.content);
 
-  constructor(service: aziendaService) {
-    this.service = service;
+      this.totalPages.set(res.totalPages);
+    });
+  }
+
+  canGoNext = computed(() => this.page() < this.totalPages() - 1);
+
+  canGoPrev = computed(() => this.page() > 0);
+
+  next() {
+    if (!this.canGoNext()) return;
+    this.page.update((p) => p + 1);
     this.loadPage();
+  }
 
+  prev() {
+    if (!this.canGoPrev()) return;
+    this.page.update((p) => p - 1);
+    this.loadPage();
+  }
+
+  /* ================= CRUD ================= */
+
+  ottieniAzienda(id: number) {
+    this.service.read(id).subscribe({
+      next: (azienda) => {
+        this.azienda.set(azienda);
+        this.showResultPopup.set(true);
+      },
+      error: () => {
+        this.showErrorPopup.set(true);
+      },
+    });
   }
 
   salvaModifica() {
+    this.service.update(this.azienda()).subscribe({
+      next: () => {
+        this.closeEditPopup();
+        this.loadPage();
+      },
+    });
+  }
 
-  this.service.update(this.azienda).subscribe({
+deleteAzienda(id: number) {
+  this.service.delete(id).subscribe({
+    next: () => {
+      this.showDeletePopup.set(false);
+      this.closeResultPopup();
+      this.loadPage();
+    },
+    error: (err) => {
+      console.error(err);
+      this.showErrorPopup.set(true);
+    },
+  });
+}
 
-    next: res => {
+  /* ================= SEARCH ================= */
 
-      this.closeEditPopup();
+  cerca() {
+    const id = this.aziendaForm.get('id')?.value;
+    const nomeAzienda = this.aziendaForm.get('nomeAzienda')?.value?.trim();
 
-      this.service.getAll().subscribe(lista => {
-        this.ListAzienda = lista;
+    const descrizione = this.aziendaForm.get('descrizione')?.value?.trim();
+
+    const titolareId = this.aziendaForm.get('titolareId')?.value;
+
+    if (id) {
+      this.service.read(Number(id)).subscribe({
+        next: (azienda) => {
+          let risultato: AziendaDto[] = [azienda];
+
+          if (nomeAzienda) {
+            risultato = risultato.filter((a) =>
+              a.nomeAzienda.toLowerCase().includes(nomeAzienda.toLowerCase()),
+            );
+          }
+
+          if (descrizione) {
+            risultato = risultato.filter((a) =>
+              a.descrizioneAzienda.toLowerCase().includes(descrizione.toLowerCase()),
+            );
+          }
+
+          if (titolareId) {
+            risultato = risultato.filter((a) => a.titolare.id === Number(titolareId));
+          }
+
+          if (risultato.length === 0) {
+            this.aziende.set([]);
+            this.showErrorPopup.set(true);
+            return;
+          }
+
+          this.aziende.set(risultato);
+        },
+
+        error: () => {
+          this.aziende.set([]);
+          this.showErrorPopup.set(true);
+        },
       });
 
+      return;
     }
 
-  });
+    this.service.getAll().subscribe((lista) => {
+      let risultato = lista;
 
-}
-
-  ottieniAzienda(id: number) {
-
-  this.service.read(id).subscribe({
-
-    next: azienda => {
-      this.azienda = azienda;
-    },
-
-    error: err => {
-      this.showErrorPopup = true;
-    }
-
-  });
-}
-
-cerca(){
-
-  const id = this.aziendaForm.get('id')?.value;
-  const nomeAzienda = this.aziendaForm.get('nomeAzienda')?.value?.trim();
-  const descrizione = this.aziendaForm.get('descrizione')?.value?.trim();
-  const titolareId = this.aziendaForm.get('titolareId')?.value;
-
-  // 1️⃣ PRIORITÀ ID (ricerca singola)
-
-  if (id) {
-
-    this.service.read(Number(id)).subscribe({
-
-      next: azienda => {
-
-        let risultato: AziendaDto[] = [azienda];
-
-        // filtro aggiuntivo se presenti altri parametri
-
-        if (nomeAzienda) {
-          risultato = risultato.filter(a =>
-            a.nomeAzienda
-              .toLowerCase()
-              .includes(nomeAzienda.toLowerCase())
-          );
-        }
-
-        if (descrizione) {
-          risultato = risultato.filter(a =>
-            a.descrizioneAzienda
-              .toLowerCase()
-              .includes(descrizione.toLowerCase())
-          );
-        }
-
-        if (titolareId) {
-          risultato = risultato.filter(a =>
-            a.titolare.id === Number(titolareId)
-          );
-        }
-
-        if (risultato.length === 0) {
-
-          this.ListAzienda = [];
-          this.showErrorPopup = true;
-          return;
-
-        }
-
-        this.ListAzienda = risultato;
-
-      },
-
-      error: err => {
-
-        this.ListAzienda = [];
-        this.showErrorPopup = true;
-
+      if (nomeAzienda) {
+        risultato = risultato.filter((a) =>
+          a.nomeAzienda.toLowerCase().includes(nomeAzienda.toLowerCase()),
+        );
       }
 
+      if (descrizione) {
+        risultato = risultato.filter((a) =>
+          a.descrizioneAzienda.toLowerCase().includes(descrizione.toLowerCase()),
+        );
+      }
+
+      if (titolareId) {
+        risultato = risultato.filter((a) => a.titolare.id === Number(titolareId));
+      }
+
+      if (risultato.length === 0) {
+        this.aziende.set([]);
+        this.showErrorPopup.set(true);
+        return;
+      }
+
+      this.aziende.set(risultato);
     });
-
-    return;
-
   }
 
-  // 2️⃣ RICERCA COMBINATA SENZA ID
-
-  this.service.getAll().subscribe(lista => {
-
-    let risultato = lista;
-
-    if (nomeAzienda) {
-
-      risultato = risultato.filter(a =>
-        a.nomeAzienda
-          .toLowerCase()
-          .includes(nomeAzienda.toLowerCase())
-      );
-
-    }
-
-    if (descrizione) {
-
-      risultato = risultato.filter(a =>
-        a.descrizioneAzienda
-          .toLowerCase()
-          .includes(descrizione.toLowerCase())
-      );
-
-    }
-
-    if (titolareId) {
-
-      risultato = risultato.filter(a =>
-        a.titolare.id === Number(titolareId)
-      );
-
-    }
-
-    if (risultato.length === 0) {
-
-      this.ListAzienda = [];
-      this.showErrorPopup = true;
-      return;
-
-    }
-
-    this.ListAzienda = risultato;
-
-  });
-
-}
-
-resetRicerca() {
-
-  this.aziendaForm.reset();
-
-  this.service.getAll().subscribe(lista => {
-    this.ListAzienda = lista;
-  });
-
-}
-
-closeErrorPopup() {
-  this.showErrorPopup = false;
-}
-
-openEditPopup() {
-  this.showEditPopup = true;
-}
-
-closeEditPopup() {
-  this.showEditPopup = false;
-}
-
-ordinaPerId() {
-  this.ListAzienda = [...this.ListAzienda].sort((a, b) => a.id - b.id);
-}
-
-ordinaPerIniziale() {
-  this.ListAzienda = [...this.ListAzienda].sort((a, b) =>
-    a.nomeAzienda.charAt(0).toLowerCase()
-      .localeCompare(b.nomeAzienda.charAt(0).toLowerCase())
-  );
-}
-
-page = 0;
-size = 5;
-
-loadPage() {
-  this.service.getPage(this.page, this.size).subscribe(res => {
-    this.ListAzienda = res.content;
-  });
-}
-
-next() {
-  this.page++;
-  this.loadPage();
-}
-
-prev() {
-  if (this.page > 0) {
-    this.page--;
+  resetRicerca() {
+    this.aziendaForm.reset();
+    this.page.set(0);
     this.loadPage();
   }
-}
 
-  cercaPerTitolare(id: number) {
-    this.service.findByTitolareId(id).subscribe(res => {
-      this.azienda = res;
-    });
+  /* ================= SORT ================= */
+
+  ordinaPerId() {
+    this.aziende.update((list) => [...list].sort((a, b) => a.id - b.id));
   }
 
+  ordinaPerIniziale() {
+    this.aziende.update((list) =>
+      [...list].sort((a, b) =>
+        a.nomeAzienda.charAt(0).toLowerCase().localeCompare(b.nomeAzienda.charAt(0).toLowerCase()),
+      ),
+    );
+  }
 
+  /* ================= UI ================= */
+
+  closeErrorPopup() {
+    this.showErrorPopup.set(false);
+  }
+
+  openEditPopup() {
+    this.showEditPopup.set(true);
+  }
+
+  closeEditPopup() {
+    this.showEditPopup.set(false);
+  }
+
+  toggleAddAzienda() {
+    this.showAddAzienda.update((v) => !v);
+  }
+
+  closeResultPopup() {
+    this.showResultPopup.set(false);
+  }
+
+  onAziendaCreated(azienda: AziendaDto) {
+    this.page.set(0);
+
+    this.loadPage();
+  }
+
+  openDeletePopup() {
+    this.showDeletePopup.set(true);
+  }
+
+  closeDeletePopup() {
+    this.showDeletePopup.set(false);
+  }
 }

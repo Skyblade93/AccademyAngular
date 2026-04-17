@@ -1,0 +1,99 @@
+/* CONTENITORE GENERALE */
+
+.add-azienda {
+
+  margin-top: 15px;
+
+  background: #EDA2F2;
+
+  padding: 18px;
+
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  animation: slideDown 0.25s ease;
+
+}
+
+/* FORM */
+
+.add-azienda form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+}
+
+/* INPUT */
+
+.add-azienda input {
+
+  padding: 10px;
+
+  border-radius: 6px;
+
+  border: 1px solid #8C7AA9;
+
+  font-size: 14px;
+
+  color: black;
+
+}
+
+.add-azienda input:focus {
+
+  outline: none;
+
+  border-color: #DC6BAD;
+
+}
+
+/* BOTTONE AGGIUNGI */
+
+.add-azienda button {
+
+  margin-top: 10px;
+
+  background: #8C7AA9;
+
+  color: black;
+
+  border: none;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  transition: 0.2s;
+
+}
+
+.add-azienda button:hover {
+
+  background: #DC6BAD;
+
+}
+
+/* ANIMAZIONE COMPARSA */
+
+@keyframes slideDown {
+
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}

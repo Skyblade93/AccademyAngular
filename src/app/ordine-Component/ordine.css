@@ -121,3 +121,39 @@ button:hover {
 .generic {
   color: #8C7AA9;
 }
+
+
+/* POPUP */
+.popup {
+  background: #DC6BAD;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #8C7AA9;
+}
+
+/* elementi generici */
+.generic {
+  color: #8C7AA9;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* spazio tra i bottoni */
+  margin: 20px 0;
+  flex-wrap: wrap; /* utile su schermi piccoli */
+}
+
+.actions button {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.add-ordine-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  padding: 20px;
+}
