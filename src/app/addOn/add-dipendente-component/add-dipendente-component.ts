@@ -30,7 +30,7 @@ export class AddDipendenteComponent {
     if (this.dipendenteForm.invalid) return;
 
     const dto: DipendenteDto = {
-      id: 0, // backend la sovrascrive
+      id: undefined as any,
       nomeDipendente: this.dipendenteForm.value.nome!,
       cognomeDipendente: this.dipendenteForm.value.cognome!,
       eta: this.dipendenteForm.value.eta!,
@@ -40,11 +40,23 @@ export class AddDipendenteComponent {
 
     this.service.insert(dto).subscribe({
       next: (res: DipendenteDto) => {
+
         this.dipendenteCreated.emit(res);
         this.dipendenteForm.reset();
-        this.close.emit();
+
+        // 🔥 popup successo
+        this.successMessage = 'Dipendente inserito con successo';
+
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 2000);
+
       },
       error: err => console.error(err)
     });
   }
+
+  successMessage: string | null = null;
+
+
 }

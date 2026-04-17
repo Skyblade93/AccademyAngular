@@ -58,16 +58,41 @@
     </div>
   </div>
 }
-<!-- 🔥 POPUP SUCCESSO ELIMINAZIONE -->
+<!-- 🔥 POPUP SUCCESSO -->
 @if (successMessage) {
   <div class="popup-overlay">
     <div class="popup">
 
-      <h3>Operazione completata</h3>
+      <!-- ❌ BOTTONE CHIUSURA -->
+      <span class="close-btn" (click)="closeSuccess()">✖</span>
 
+      <h3>Operazione completata</h3>
       <p>{{ successMessage }}</p>
 
     </div>
+  </div>
+}
+<!-- 🔥 POPUP MODIFICA -->
+@if (editPopup) {
+  <div class="popup-overlay">
+
+    <div class="popup">
+
+      <h3>Modifica Dipendente</h3>
+
+      <input [(ngModel)]="editPopup.nomeDipendente" placeholder="Nome">
+      <input [(ngModel)]="editPopup.cognomeDipendente" placeholder="Cognome">
+      <input [(ngModel)]="editPopup.email" placeholder="Email">
+      <input [(ngModel)]="editPopup.eta" type="number" placeholder="Età">
+      <input [(ngModel)]="editPopup.numeroTelefono" type="number" placeholder="Telefono">
+
+      <div class="buttons" style="margin-top: 15px;">
+        <button (click)="saveEdit()">✏️ Modifica</button>
+        <button (click)="closeEdit()">❌ Annulla</button>
+      </div>
+
+    </div>
+
   </div>
 }
 <!-- 📊 TABELLA SEMPRE VISIBILE SOTTO -->

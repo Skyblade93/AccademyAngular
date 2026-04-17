@@ -57,9 +57,9 @@ input:focus {
   grid-column: 1 / -1;
   display: flex;
   gap: 10px;
-  background: #EFABBF;
   padding: 5px;
   border-radius: 8px;
+  background: transparent; /* 👈 QUESTO RISOLVE */
 }
 
 button {
@@ -76,4 +76,39 @@ button {
 button:hover {
   transform: scale(1.03);
   background: #dc6bad;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  position: relative;
+  background: #DC6BAD;
+  padding: 25px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  color: white;
 }
