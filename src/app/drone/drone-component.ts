@@ -34,7 +34,7 @@ export class DroneComponent implements OnInit {
 
   caricaDroni(): void {
     this.droneService.getAll().subscribe({
-      next: (data) => { 
+      next: (data: DroneDto[]) => { 
         this.listaDroni = data; 
         this.listaFiltrata = data; 
       },
@@ -42,7 +42,6 @@ export class DroneComponent implements OnInit {
     });
   }
 
-  // --- METODO PER FILTRARE ---
   applicaFiltro(): void {
     const termine = this.filtroMarca.toLowerCase().trim();
     if (termine) {
@@ -56,7 +55,6 @@ export class DroneComponent implements OnInit {
     this.isPopupOpen = false; 
   }
 
-  // --- NUOVO: METODO PER TORNARE A VEDERE TUTTI ---
   resetFiltro(): void {
     this.filtroMarca = ''; 
     this.listaFiltrata = this.listaDroni;
@@ -67,15 +65,19 @@ export class DroneComponent implements OnInit {
   }
 
   salvaDrone(): void {
+    // Caso MODIFICA
     if (this.isModifica && this.droneInModifica.id !== undefined && this.droneInModifica.id !== null) {
-      this.droneService.update(this.droneInModifica.id, this.droneInModifica).subscribe({
+      // CORREZIONE: Passiamo solo l'oggetto come richiesto dall'AbstractService
+      this.droneService.update(this.droneInModifica).subscribe({
         next: () => {
           this.caricaDroni();
           this.annulla();
         },
         error: (err) => console.error("Errore durante l'aggiornamento!", err)
       });
-    } else {
+    } 
+    // Caso INSERIMENTO
+    else {
       this.droneService.insert(this.droneInModifica).subscribe({
         next: () => {
           this.caricaDroni();
@@ -88,7 +90,10 @@ export class DroneComponent implements OnInit {
 
   eliminaDrone(id?: number): void {
     if (id && confirm("Sei sicuro di voler eliminare questo drone?")) {
-      this.droneService.delete(id).subscribe(() => this.caricaDroni());
+      this.droneService.delete(id).subscribe({
+        next: () => this.caricaDroni(),
+        error: (err) => console.error("Errore durante l'eliminazione!", err)
+      });
     }
   }
 
