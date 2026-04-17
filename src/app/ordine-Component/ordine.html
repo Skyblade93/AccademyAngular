@@ -22,7 +22,7 @@
 
   <!-- LISTA ORDINI -->
   <div class="grid">
-    @for (ordine of ListOrdini ?? []; track ordine.id) {
+    @for (ordine of ListOrdini(); track ordine.id) {
       <div class="card">
         <p><strong>ID:</strong> {{ordine.id}}</p>
         <p><strong>Costo:</strong> €{{ordine.costo_totale}}</p>
@@ -81,8 +81,18 @@
 
   </div>
 
-  <div class="sort">
-    <button (click)="ordinaPerCostoDecrescente()">⬇ Ordina per costo</button>
+  <div>
+    <button (click)="ordinaPerCostoDecrescente()">⬇ Ordina per costo tutti gli ordini</button>
+  </div>
+    <div>
+    <button (click)="getAll()">Mostra tutti gli ordini</button>
   </div>
 
 </div>
+
+<button (click)="toggleAddOrdine()">Aggiungi ordine</button>
+@if (istoggleAddOrdine()) {
+  <div>
+   <app-add-ordine-component [count] = "count()"  (countValue)="onOrdineCreated($event)"></app-add-ordine-component>
+  </div>
+}
