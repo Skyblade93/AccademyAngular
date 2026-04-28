@@ -1,83 +1,79 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoDto } from '../Dto/AutoDto';
+import { AddAutoComponent } from '../addOn/add-auto-component/add-auto-component';
+import { SearchAutoComponent } from '../addOn/search-auto-component/search-auto-component';
 import { autoService } from '../Service/autoService';
 import { userService } from '../Service/userService';
 import { UserDto } from '../Dto/UserDto';
+import { AziendaDto } from '../Dto/AziendaDto';
+import { DipendenteDto } from '../Dto/DipendenteDto';
+import { aziendaService } from '../Service/aziendaService';
+import { DipendenteService } from '../Service/dipendenteService';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+
+type SearchAutoFilters = {
+  id: number | null;
+  targa: string;
+  marca: string;
+  modello: string;
+  carburante: string;
+  searchType: 'exact' | 'containing' | 'starting' | 'ending';
+};
 
 @Component({
   selector: 'app-auto-component',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AddAutoComponent, SearchAutoComponent],
   templateUrl: './auto-component.html',
   styleUrls: ['./auto-component.css'],
 })
-export class AutoComponent implements OnInit {
+export class AutoComponent implements OnInit, OnDestroy {
   service: autoService;
   userSrv: userService;
-
+  aziendaSrv: aziendaService;
+  dipendenteSrv: DipendenteService;
   listAuto: AutoDto[] = [];
   userList: UserDto[] = [];
-  searchResults: AutoDto[] = [];
-  carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'ELETTRICA', 'IBRIDA'];
+  aziendaList: AziendaDto[] = [];
+  dipendenteList: DipendenteDto[] = [];
+  carburanteOptions = ['BENZINA', 'DIESEL', 'GPL', 'METANO', 'ELETTRICA', 'IBRIDA'];
+  isToggleAddAuto = false;
+  isToggleSearchAuto = false;
+  selectedAutoForEdit: AutoDto | null = null;
+  showAutoList = false;
 
-  auto: AutoDto = new AutoDto('', '', '', 'BENZINA', null);
-
-  autoForm = new FormGroup({
-    modello: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    marca: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    targa: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    carburante: new FormControl('BENZINA', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    userId: new FormControl<number | null>(null),
-  });
-
-  searchForm = new FormGroup({
-    targa: new FormControl(''),
-    marca: new FormControl(''),
-    modello: new FormControl(''),
-    carburante: new FormControl(''),
-  });
-
-filterForm!: FormGroup;
+confirmDeleteId: number | null = null;
+popupVisible: boolean = false;
+popupType: 'create' | 'update' | 'delete' = 'create';
+popupMessage = '';
+private popupTimer: ReturnType<typeof setTimeout> | null = null;
 
 
-  constructor(service: autoService, userSrv: userService) {
+  constructor(service: autoService, userSrv: userService, aziendaSrv: aziendaService, dipendenteSrv: DipendenteService) {
     this.service = service;
     this.userSrv = userSrv;
+    this.aziendaSrv = aziendaSrv;
+    this.dipendenteSrv = dipendenteSrv;
   }
 
   ngOnInit() {
-      this.filterForm = new FormGroup({
-    id: new FormControl<number | null>(null),
-    targa: new FormControl(''),
-    marca: new FormControl(''),
-    modello: new FormControl(''),
-    carburante: new FormControl(''),
-    searchType: new FormControl('exact'),
-  });
-    this.loadAll();
     this.loadUsers();
+    this.loadAziende();
+    this.loadDipendenti();
   }
 
   loadAll() {
     this.service.getAll().subscribe((autos) => {
       this.listAuto = Array.isArray(autos) ? autos : [autos];
+      this.showAutoList = true;
     });
+  }
+
+  mostraTutti() {
+    this.loadAll();
   }
 
   loadUsers() {
@@ -86,86 +82,74 @@ filterForm!: FormGroup;
     });
   }
 
-  ottieniElemento(id: number) {
-    if (!id) {
-      return;
-    }
-
-    this.service.read(id).subscribe((auto) => {
-      this.auto = auto;
-      this.autoForm.patchValue({
-        modello: auto.modello,
-        marca: auto.marca,
-        targa: auto.targa,
-        carburante: auto.carburante,
-        userId: auto.user?.id ?? null,
-      });
+  loadAziende() {
+    this.aziendaSrv.getAll().subscribe((aziende) => {
+      this.aziendaList = aziende;
     });
   }
 
-  save() {
-    if (this.autoForm.invalid) {
-      return;
+  loadDipendenti() {
+    this.dipendenteSrv.getAll().subscribe((dipendenti) => {
+      this.dipendenteList = dipendenti;
+    });
+  }
+
+  toggleAddAuto() {
+    this.isToggleAddAuto = !this.isToggleAddAuto;
+    if (!this.isToggleAddAuto) {
+      this.selectedAutoForEdit = null;
     }
+  }
 
-    const formValue = this.autoForm.value as {
-      modello: string;
-      marca: string;
-      targa: string;
-      carburante: string;
-      userId: number | null;
-    };
-
-    const selectedUser = this.userList.find((u) => u.id === formValue.userId) ?? null;
-
-    // Aggiorna l'oggetto auto esistente con i valori del form
-    this.auto.modello = formValue.modello;
-    this.auto.marca = formValue.marca;
-    this.auto.targa = formValue.targa;
-    this.auto.carburante = formValue.carburante;
-    this.auto.user = selectedUser;
-
-    const request = this.auto.id
-      ? this.service.update(this.auto)
-      : this.service.insert(this.auto);
+  onSaveAuto(auto: AutoDto) {
+    const isEditMode = !!auto.id;
+    const request = isEditMode ? this.service.update(auto) : this.service.insert(auto);
 
     request.subscribe(() => {
       this.loadAll();
-      this.resetForm();
+      this.showPopup(
+        isEditMode ? 'update' : 'create',
+        isEditMode ? 'Modifica auto completata con successo.' : 'Creazione auto completata con successo.'
+      );
+      this.selectedAutoForEdit = null;
+      this.isToggleAddAuto = false;
     });
   }
 
-  resetForm() {
-    this.auto = new AutoDto('', '', '', 'BENZINA', null);
-    this.autoForm.reset({
-      modello: '',
-      marca: '',
-      targa: '',
-      carburante: 'BENZINA',
-      userId: null,
-    });
+  onCancelAutoForm() {
+    this.selectedAutoForEdit = null;
+    this.isToggleAddAuto = false;
+  }
+
+  toggleSearchAuto() {
+    this.isToggleSearchAuto = !this.isToggleSearchAuto;
+  }
+
+  onSearchFilters(filters: SearchAutoFilters) {
+    this.showAutoList = true;
+    this.applyFilters(filters);
+  }
+
+  onClearSearchFilters() {
+    this.clearFilters();
   }
 
   editAuto(auto: AutoDto) {
-    this.auto = auto;
-    this.autoForm.patchValue({
-      modello: auto.modello,
-      marca: auto.marca,
-      targa: auto.targa,
-      carburante: auto.carburante,
-      userId: auto.user?.id ?? null,
-    });
+    this.selectedAutoForEdit = auto;
+    this.isToggleAddAuto = true;
     // Scroll to top to show the form
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  applyFilters() {
-    if (!this.filterForm) {
-      console.error('filterForm non inizializzato');
-      return;
+  getDipendenteLabel(dipendente: DipendenteDto | null | undefined) {
+    if (!dipendente) {
+      return 'Nessuno';
     }
 
-const filters = this.filterForm.value;
+    return `${dipendente.nomeDipendente} ${dipendente.cognomeDipendente}`.trim();
+  }
+
+  applyFilters(filters: SearchAutoFilters) {
 
 const id = filters.id ?? null;
 const targa = (filters.targa || '').trim();
@@ -317,24 +301,54 @@ const searchType = filters.searchType || 'exact';
     }
   }
 
-  deleteAuto(id: number) {
-    if (confirm('Sei sicuro di voler eliminare questa auto?')) {
-      this.service.delete(id).subscribe(() => {
-        this.listAuto = this.listAuto.filter(a => a.id !== id);
-      });
-    }
-  }
+requestDeleteAuto(id: number) {
+  this.confirmDeleteId = id;
+}
+
+confirmDelete() {
+  if (this.confirmDeleteId === null) return;
+  const id = this.confirmDeleteId;
+  this.confirmDeleteId = null;
+  this.service.delete(id).subscribe(() => {
+    this.listAuto = this.listAuto.filter(a => a.id !== id);
+    this.showPopup('delete', 'Eliminazione auto completata con successo.');
+  });
+}
+
+cancelDelete() {
+  this.confirmDeleteId = null;
+}
 
   clearFilters() {
-    this.filterForm.reset({
-      id: null,
-      targa: '',
-      marca: '',
-      modello: '',
-      carburante: '',
-      searchType: 'exact',
-    });
-    this.loadAll();
+    this.listAuto = [];
+    this.showAutoList = false;
+  }
+
+  ngOnDestroy() {
+    this.clearPopupTimer();
+  }
+
+  closePopup() {
+    this.popupVisible = false;
+    this.clearPopupTimer();
+  }
+
+  private showPopup(type: 'create' | 'update' | 'delete', message: string) {
+    this.popupType = type;
+    this.popupMessage = message;
+    this.popupVisible = true;
+    this.clearPopupTimer();
+
+    this.popupTimer = setTimeout(() => {
+      this.popupVisible = false;
+    }, 2800);
+  }
+
+  private clearPopupTimer() {
+    if (this.popupTimer) {
+      clearTimeout(this.popupTimer);
+      this.popupTimer = null;
+    }
   }
 }
 

@@ -1,0 +1,29 @@
+<div class="add-azienda">
+
+  <form [formGroup]="aziendaForm" (ngSubmit)="onSubmit()">
+
+    <input
+      type="text"
+      placeholder="Nome Azienda"
+      formControlName="nomeAzienda"
+    />
+
+    <input
+      type="text"
+      placeholder="Descrizione"
+      formControlName="descrizione"
+    />
+
+    <input
+      type="number"
+      placeholder="ID Titolare"
+      formControlName="titolareId"
+    />
+
+    <button type="submit">
+      Aggiungi Azienda
+    </button>
+
+  </form>
+
+</div>

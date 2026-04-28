@@ -1,0 +1,213 @@
+/* FORM SECTION */
+.form-section {
+  background: #EDA2F2;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* TITOLO */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* FORM */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px;
+  gap: 15px 40px;
+}
+
+/* INPUT GENERICI (NON SERVE POSIZIONE COMPLESSA QUI) */
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #f9f9f9;
+}
+
+input:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 2px #8C7AA9;
+}
+
+/* BUTTONS */
+.buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  background: #EFABBF;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background: #EFABBF;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.03);
+  background: #dc6bad;
+}
+
+/* LISTA */
+.list-section {
+  background: #EDA2F2;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background: #f4f4f4;
+}
+
+tr:hover {
+  background: #dc6bad;
+  color: white;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: #DC6BAD;
+  padding: 25px;
+  border-radius: 12px;
+  width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.popup .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  background: transparent; /* 👈 STOP ROSA */
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px; /* 👈 spazio tra i bottoni */
+}
+
+.actions button {
+  flex: none;      /* 👈 evita stretching brutto */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.form .buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  background: transparent; /* 👈 STOP ROSA */
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.popup-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+.popup {
+  position: relative; /* 👈 fondamentale per posizionare la X */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  color: white;
+}
+
+/* POPUP EDIT SPECIFICO */
+.edit-popup {
+  width: 600px;
+  max-width: 90vw;
+  padding: 30px;
+}
+
+/* GRID FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px; /* 👈 più spazio tra i form-group */
+  margin-top: 15px;
+  margin-right: 15px;
+}
+
+/* INPUT GROUP */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* 👈 spazio tra label e input */
+}
+
+.form-group input {
+  padding: 14px; /* 👈 leggermente più grande */
+}
+
+/* LABEL */
+.form-group label {
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* FULL WIDTH (telefono) */
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+/* BOTTONI POPUP */
+.popup-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  background: transparent;
+}
+
+.popup-buttons button {
+  flex: 1;
+}

@@ -1,0 +1,148 @@
+.container {
+  max-width: 1000px;
+  margin: 50px auto;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #7192be;
+  padding: 30px;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titolo-finestra {
+  cursor: pointer;
+  background-color: #8c7aa9;
+  padding: 15px 30px;
+  border-radius: 8px;
+  border: 2px solid #eda2f2;
+  transition: all 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  min-width: 350px;
+}
+
+.titolo-finestra:hover {
+  background-color: #efabff;
+  border-color: #dc6bad;
+}
+
+.titolo-finestra h2 {
+  margin: 0;
+  color: #ffffff;
+  border-bottom: none;
+  padding-bottom: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.contenuto-finestra {
+  width: 100%;
+  animation: fadeIn 0.4s ease;
+  margin-top: 30px;
+}
+
+.card {
+  background: #8c7aa9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #eda2f2;
+  padding: 20px;
+  color: white;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #efabff;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #eda2f2;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #efabff;
+  outline: none;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: #333;
+  transition:
+    opacity 0.2s,
+    transform 0.1s;
+}
+
+.btn-primary,
+.btn-success,
+.btn-secondary {
+  background-color: #efabff;
+  color: #4a148c;
+}
+
+.btn-danger {
+  background-color: #dc6bad;
+  color: white;
+}
+
+/* Tabella */
+.table-responsive {
+  margin-top: 20px;
+  background: #8c7aa9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.table-dark {
+  background-color: #eda2f2;
+  color: #4a148c;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(237, 162, 242, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .titolo-finestra {
+    min-width: 90%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+  /**/
+}

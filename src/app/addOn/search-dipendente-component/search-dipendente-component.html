@@ -1,0 +1,168 @@
+<div class="form-section">
+
+  <h2>Ricerca Dipendenti</h2>
+
+  <!-- 🔍 FILTRO SEMPRE VISIBILE -->
+  <form [formGroup]="dipendenteForm" class="form">
+
+    <input formControlName="nome" placeholder="Nome">
+    <input formControlName="cognome" placeholder="Cognome">
+    <input formControlName="eta" type="number" placeholder="Età">
+    <input formControlName="email" placeholder="Email">
+    <input formControlName="telefono" type="number" placeholder="Telefono">
+
+    <div class="buttons">
+      <button type="button" (click)="filtra()">Filtra</button>
+      <button type="button" (click)="reset()">Reset</button>
+      <button type="button" (click)="close.emit()">Torna Indietro</button>
+    </div>
+
+  </form>
+
+</div>
+<!-- 🔥 POPUP RISULTATO FILTRO -->
+@if (popup) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3 style="text-align:center">Risultato ricerca</h3>
+
+      <p><b>Nome:</b> {{ popup.nomeDipendente }}</p>
+      <p><b>Cognome:</b> {{ popup.cognomeDipendente }}</p>
+      <p><b>Email:</b> {{ popup.email }}</p>
+      <p><b>Età:</b> {{ popup.eta }}</p>
+      <p><b>Telefono:</b> {{ popup.numeroTelefono }}</p>
+
+      <button (click)="closePopup()">Chiudi</button>
+
+    </div>
+  </div>
+}
+<!-- 🔥 POPUP CONFERMA ELIMINAZIONE -->
+@if (confirmDelete) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <h3 style="text-align:center">Conferma eliminazione</h3>
+
+      <p style="text-align:center">
+        Sei sicuro di eliminare
+        <b>{{ confirmDelete.nomeDipendente }} {{ confirmDelete.cognomeDipendente }}</b> ?
+      </p>
+
+      <div class="buttons">
+        <button (click)="confirmYes()">Sì</button>
+        <button (click)="confirmNo()">No</button>
+      </div>
+
+    </div>
+  </div>
+}
+<!-- 🔥 POPUP SUCCESSO -->
+@if (successMessage) {
+  <div class="popup-overlay">
+    <div class="popup">
+
+      <!-- ❌ BOTTONE CHIUSURA -->
+      <span class="close-btn" (click)="closeSuccess()">✖</span>
+
+      <h3>Operazione completata</h3>
+      <p>{{ successMessage }}</p>
+
+    </div>
+  </div>
+}
+<!-- 🔥 POPUP MODIFICA -->
+@if (editPopup) {
+  <div class="popup-overlay">
+
+    <div class="popup edit-popup">
+
+      <span class="close-btn" (click)="closeEdit()">✖</span>
+
+      <h3 style="text-align: center;">Modifica {{ editPopup.nomeDipendente }} {{ editPopup.cognomeDipendente }}</h3>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Nome</label>
+          <input [(ngModel)]="editPopup.nomeDipendente">
+        </div>
+
+        <div class="form-group">
+          <label>Cognome</label>
+          <input [(ngModel)]="editPopup.cognomeDipendente">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input [(ngModel)]="editPopup.email">
+        </div>
+
+        <div class="form-group">
+          <label>Età</label>
+          <input [(ngModel)]="editPopup.eta" type="number">
+        </div>
+
+        <div class="form-group full">
+          <label>Telefono</label>
+          <input [(ngModel)]="editPopup.numeroTelefono" type="number">
+        </div>
+
+      </div>
+
+      <div class="buttons popup-buttons">
+        <button (click)="saveEdit()">✏️ Modifica</button>
+        <button (click)="closeEdit()">❌ Annulla</button>
+      </div>
+
+    </div>
+
+  </div>
+}
+<!-- 📊 TABELLA SEMPRE VISIBILE SOTTO -->
+ @if (popup) {
+  <!-- niente tabella quando c'è un risultato singolo -->
+} @else {
+<div class="list-section">
+
+  <h3 style="text-align:center">Dipendenti (Totale: {{ risultati().length }})</h3>
+
+  <table *ngIf="risultati().length > 0; else empty">
+
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+        <th>Età</th>
+        <th>Telefono</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let d of baseList()">
+
+        <td>{{ d.nomeDipendente }}</td>
+        <td>{{ d.cognomeDipendente }}</td>
+        <td>{{ d.email }}</td>
+        <td>{{ d.eta }}</td>
+        <td>{{ d.numeroTelefono }}</td>
+
+        <td class="actions">
+          <button (click)="modifica(d)">✏️</button>
+          <button (click)="elimina(d)">🗑️</button>
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+  <ng-template #empty>
+    <p>Nessun dipendente trovato (premi "Reset" per visualizzare tutti i dipendenti)</p>
+  </ng-template>
+
+</div>
+}

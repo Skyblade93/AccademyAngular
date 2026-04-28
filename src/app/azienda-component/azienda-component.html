@@ -1,0 +1,291 @@
+<div class="container">
+
+  <!-- COLONNA SINISTRA -->
+  <div class="left-panel">
+
+    <h2>Ricerca Azienda</h2>
+
+    <form [formGroup]="aziendaForm">
+
+      <div class="card">
+
+        <input type="number" placeholder="ID azienda" formControlName="id" />
+
+        <input type="text" placeholder="Nome azienda" formControlName="nomeAzienda" />
+
+        <input type="text" placeholder="Descrizione" formControlName="descrizione" />
+
+        <input type="number" placeholder="ID Titolare" formControlName="titolareId" />
+
+        <div class="result-actions">
+
+          <button type="button" class="btn-secondary" (click)="cerca()">
+            Cerca
+          </button>
+
+          <button type="button" class="btn-danger" (click)="resetRicerca()">
+            Reset
+          </button>
+
+        </div>
+
+      </div>
+
+    </form>
+
+    <div class="result-actions">
+
+      <button type="button" class="btn-primary" (click)="toggleAddAzienda()">
+        + Aggiungi Azienda
+      </button>
+
+    </div>
+
+    <!-- FORM AGGIUNTA -->
+    @if (showAddAzienda()) {
+    <div class="add-wrapper">
+      <app-add-azienda-component (aziendaCreated)="onAziendaCreated($event)">
+      </app-add-azienda-component>
+    </div>
+    }
+
+    <!-- RISULTATO SINGOLO -->
+    @if (azienda() && showResultPopup()) {
+    <div class="popup-overlay">
+      <div class="popup result-popup">
+
+        <div class="result-header">
+
+          <span class="badge id-badge">
+            ID {{ azienda().id }}
+          </span>
+
+          <h3 class="azienda-title">
+            {{ azienda().nomeAzienda }}
+          </h3>
+
+        </div>
+
+        <div class="result-body">
+
+          <div class="info-row">
+            <span class="label">Descrizione</span>
+            <span class="value">
+              {{ azienda().descrizioneAzienda || '—' }}
+            </span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Titolare</span>
+            <span class="value">
+              {{ azienda().titolare.name || '—' }}
+            </span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Auto</span>
+            <span class="value">
+              {{ azienda().auto.modello || '—' }}
+            </span>
+          </div>
+
+        </div>
+
+        <div class="result-actions result-footer">
+
+          <button class="btn-secondary" (click)="openEditPopup()">
+            ✏️ Modifica
+          </button>
+
+          <button class="btn-danger" (click)="openDeletePopup()">
+            🗑 Elimina
+          </button>
+
+          <button class="btn-secondary" (click)="closeResultPopup()">
+            Chiudi
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- COLONNA DESTRA -->
+  <div class="right-panel">
+
+    <h2>Lista Aziende</h2>
+
+    <div class="result-actions">
+
+      <button type="button" class="btn-secondary" (click)="ordinaPerId()">
+        Ordina per ID
+      </button>
+
+      <button type="button" class="btn-secondary" (click)="ordinaPerIniziale()">
+        Ordina per Nome
+      </button>
+
+    </div>
+
+    <!-- TABELLA -->
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome Azienda</th>
+            <th>Descrizione</th>
+            <th>Titolare</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @if (aziende().length === 0) {
+          <tr>
+            <td colspan="4">Nessuna azienda trovata</td>
+          </tr>
+          }
+
+          @for (item of aziende(); track item.id) {
+          <tr (click)="ottieniAzienda(item.id)" style="cursor:pointer">
+
+            <td>
+              <span class="badge">{{ item.id }}</span>
+            </td>
+
+            <td>{{ item.nomeAzienda }}</td>
+
+            <td>{{ item.descrizioneAzienda }}</td>
+
+            <td>{{ item.titolare.name }}</td>
+
+          </tr>
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- PAGINAZIONE -->
+    <div class="result-actions">
+
+      <button type="button" (click)="prev()" [disabled]="!canGoPrev()">
+        Prev
+      </button>
+
+      <span> Pagina {{ page() + 1 }} / {{ totalPages() }} </span>
+
+      <button type="button" (click)="next()" [disabled]="!canGoNext()">
+        Next
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- POPUP ERRORE -->
+@if (showErrorPopup()) {
+<div class="popup-overlay">
+  <div class="popup">
+
+    <h3>Azienda non trovata</h3>
+    <p>L'azienda con questo ID non esiste.</p>
+
+    <button class="btn-secondary" (click)="closeErrorPopup()">
+      Chiudi
+    </button>
+
+  </div>
+</div>
+}
+
+<!-- POPUP MODIFICA -->
+@if (showEditPopup()) {
+<div class="popup-overlay">
+  <div class="popup edit-popup">
+
+    <h3>Modifica Azienda</h3>
+
+    <div class="form-grid">
+
+      <div class="form-field">
+        <label>Nome azienda</label>
+        <input type="text" placeholder="Inserisci nome" [(ngModel)]="azienda().nomeAzienda" />
+      </div>
+
+      <div class="form-field">
+        <label>Descrizione</label>
+        <input type="text" placeholder="Inserisci descrizione" [(ngModel)]="azienda().descrizioneAzienda" />
+      </div>
+
+      <div class="form-field">
+        <label>Titolare</label>
+        <input type="text" placeholder="Nome titolare" [(ngModel)]="azienda().titolare.name" />
+      </div>
+
+      <div class="form-field">
+        <label>Auto</label>
+        <input type="text" placeholder="Modello auto" [(ngModel)]="azienda().auto.modello" />
+      </div>
+
+    </div>
+
+    <div class="result-actions edit-actions">
+
+      <button class="btn-secondary" (click)="salvaModifica()">
+        💾 Salva
+      </button>
+
+      <button class="btn-danger" (click)="closeEditPopup()">
+        Annulla
+      </button>
+
+    </div>
+
+  </div>
+</div>
+}
+
+@if (showDeletePopup()) {
+<div class="popup-overlay">
+  <div class="popup delete-popup">
+
+    <div class="delete-header">
+      <h3>Conferma eliminazione</h3>
+      <p>Sei sicuro di voler eliminare questa azienda?</p>
+    </div>
+
+    <div class="delete-preview">
+      <span class="badge id-badge">
+        ID {{ azienda().id }}
+      </span>
+
+      <h4 class="azienda-title">
+        {{ azienda().nomeAzienda }}
+      </h4>
+    </div>
+
+    <div class="result-actions delete-actions">
+
+      <button class="btn-danger" (click)="deleteAzienda(azienda().id)">
+        🗑 Sì, elimina
+      </button>
+
+      <button class="btn-secondary" (click)="closeDeletePopup()">
+        Annulla
+      </button>
+
+    </div>
+
+  </div>
+</div>
+}

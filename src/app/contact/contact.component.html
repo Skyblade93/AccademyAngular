@@ -1,0 +1,95 @@
+<div class="contact-container">
+  <div class="header-section">
+    <h2>📇 Gestione Contatti</h2>
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Cerca per nome..."
+        #searchInput
+        (keyup.enter)="search(searchInput.value)"
+      />
+      <button class="btn-search" (click)="search(searchInput.value)">🔍 Cerca</button>
+      <button class="btn-reset" (click)="caricaContatti(); searchInput.value = ''">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-header">
+      <h3>{{ editMode() ? '📝 Modifica Contatto' : '➕ Nuovo Contatto' }}</h3>
+      <button class="btn-clear" (click)="annullaEdit()">Nuovo/Pulisci</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Nome</label>
+        <input
+          [ngModel]="selectedContact().firstName"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, firstName: $event }))"
+          placeholder="Inserisci nome"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Cognome</label>
+        <input
+          [ngModel]="selectedContact().lastName"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, lastName: $event }))"
+          placeholder="Inserisci cognome"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input
+          [ngModel]="selectedContact().email"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, email: $event }))"
+          placeholder="esempio@mail.com"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Telefono</label>
+        <input
+          [ngModel]="selectedContact().phoneNumber"
+          (ngModelChange)="selectedContact.update((c) => ({ ...c, phoneNumber: $event }))"
+          placeholder="+39..."
+        />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-save" (click)="salva()" [disabled]="!selectedContact().firstName">
+        {{ editMode() ? '💾 Aggiorna' : '🚀 Salva Contatto' }}
+      </button>
+      <button *ngIf="editMode()" class="btn-cancel" (click)="annullaEdit()">❌ Annulla</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th class="text-center">Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of contatti()" [class.editing]="selectedContact().id === c.id">
+          <td>{{ c.firstName }}</td>
+          <td>{{ c.lastName }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.phoneNumber }}</td>
+          <td class="actions-cell">
+            <button class="btn-edit" (click)="preparaModifica(c)" title="Modifica">✏️</button>
+            <button class="btn-delete" (click)="elimina(c.id)" title="Elimina">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="empty-msg" *ngIf="contatti().length === 0">Nessun contatto trovato nel database.</p>
+</div>

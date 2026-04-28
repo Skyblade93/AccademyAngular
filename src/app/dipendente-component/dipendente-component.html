@@ -1,0 +1,35 @@
+<div class="dipendente-container">
+
+  <!-- MENU INIZIALE -->
+  @if (view === 'menu') {
+    <div class="form-section">
+
+      <h2 style="text-align:center">Gestione Dipendenti</h2>
+
+      <div class="buttons buttons-top">
+        <button (click)="openAdd()">➕ Aggiungi Dipendente</button>
+        <button (click)="openSearch()">🔍 Ricerca Dipendente</button>
+      </div>
+
+      <div class="buttons buttons-bottom">
+        <button (click)="goHome()">🏠 Home</button>
+      </div>
+
+    </div>
+  }
+<!-- kqsncsnc-->
+  <!-- FIGLIO ADD -->
+  @if (view === 'add') {
+    <app-add-dipendente-component
+      (close)="backToMenu()">
+    </app-add-dipendente-component>
+  }
+
+  <!-- FIGLIO SEARCH -->
+  @if (view === 'search') {
+    <app-search-dipendente-component
+      (close)="backToMenu()">
+    </app-search-dipendente-component>
+  }
+
+</div>

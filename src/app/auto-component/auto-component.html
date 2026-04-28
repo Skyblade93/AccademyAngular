@@ -1,115 +1,172 @@
-<div class="auto-form">
-  <h2>Gestione Auto</h2>
+<div class="app">
 
-  <form [formGroup]="autoForm" (ngSubmit)="save()">
-    <label>
-      Modello
-      <input formControlName="modello" placeholder="Modello" />
-    </label>
-
-    <label>
-      Marca
-      <input formControlName="marca" placeholder="Marca" />
-    </label>
-
-    <label>
-      Targa
-      <input formControlName="targa" placeholder="Targa" />
-    </label>
-
-    <label>
-      Carburante
-      <select formControlName="carburante">
-        @for (option of carburanteOptions; track $index) {
-          <option [value]="option">{{ option }}</option>
-        }
-      </select>
-    </label>
-
-    <label>
-      Utente associato
-      <select formControlName="userId">
-        <option [ngValue]="null">Nessun utente</option>
-        @for (user of userList; track $index) {
-          <option [ngValue]="user.id">{{ user.name }} ({{ user.id }})</option>
-        }
-      </select>
-    </label>
-
-    <div class="buttons">
-      <button type="submit" [disabled]="autoForm.invalid">
-        {{ auto.id ? 'Aggiorna auto' : 'Crea auto' }}
-      </button>
-      <button type="button" (click)="resetForm()">Azzera</button>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-glow"></div>
+    <div class="header-content">
+      <span class="header-icon">&#x1F697;</span>
+      <h1>Auto Manager</h1>
+      <p>Gestione e ricerca veicoli</p>
     </div>
-  </form>
-</div>
+  </header>
 
-<div class="filter-section">
-  <h3>Filtri Ricerca Auto</h3>
-  <form [formGroup]="filterForm">
-    <label>
-      ID
-      <input formControlName="id" type="number" placeholder="ID auto" />
-    </label>
-    <label>
-      Targa
-      <input formControlName="targa" placeholder="Targa" />
-    </label>
-    <label>
-      Marca
-      <input formControlName="marca" placeholder="Marca" />
-    </label>
-    <label>
-      Modello
-      <input formControlName="modello" placeholder="Modello" />
-    </label>
-    <label>
-      Carburante
-      <select formControlName="carburante">
-        <option value="">Tutti</option>
-        @for (option of carburanteOptions; track $index) {
-          <option [value]="option">{{ option }}</option>
-        }
-      </select>
-    </label>
-    <label>
-      Tipo Ricerca
-      <select formControlName="searchType">
-        <option value="exact">Esatto</option>
-        <option value="containing">Contiene</option>
-        <option value="starting">Inizia con</option>
-        <option value="ending">Finisce con</option>
-      </select>
-    </label>
-    <div class="buttons">
-      <button type="button" (click)="applyFilters()">Applica Filtri</button>
-      <button type="button" (click)="clearFilters()">Carica Tutte</button>
-    </div>
-  </form>
-</div>
-
-<div class="auto-list">
-  <h3>Elenco Auto</h3>
-  <div class="empty-message" *ngIf="listAuto.length === 0">Nessuna auto trovata.</div>
-
-  @for (item of listAuto; track $index) {
-    <div class="auto-card">
-      <div><strong>Id:</strong> {{ item.id }}</div>
-      <div><strong>Modello:</strong> {{ item.modello }}</div>
-      <div><strong>Marca:</strong> {{ item.marca }}</div>
-      <div><strong>Targa:</strong> {{ item.targa }}</div>
-      <div><strong>Carburante:</strong> {{ item.carburante }}</div>
-      <div>
-        <strong>Utente:</strong>
-        {{ item.user?.name || 'Non assegnato' }}
-        <span *ngIf="item.user">(id: {{ item.user.id }})</span>
+  @if (popupVisible) {
+    <section class="action-popup" [attr.data-popup-type]="popupType" role="status" aria-live="polite">
+      <div class="action-popup-head">
+        <h3>
+          @if (popupType === 'create') {
+            Auto creata
+          } @else if (popupType === 'update') {
+            Auto modificata
+          } @else {
+            Auto eliminata
+          }
+        </h3>
+        <button type="button" class="popup-close" (click)="closePopup()" aria-label="Chiudi notifica">×</button>
       </div>
-      <div class="card-actions">
-        <button type="button" class="edit-btn" (click)="editAuto(item)">Modifica</button>
+      <p>{{ popupMessage }}</p>
+    </section>
+  }
+
+  @if (confirmDeleteId !== null) {
+    <div class="delete-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title">
+      <div class="delete-dialog">
+        <span class="delete-dialog-icon">&#x1F5D1;</span>
+        <h3 id="delete-dialog-title">Eliminare questa auto?</h3>
+        <p>Questa azione è irreversibile.</p>
+        <div class="delete-dialog-actions">
+          <button class="btn-ghost" (click)="cancelDelete()">Annulla</button>
+          <button class="btn-danger" (click)="confirmDelete()">Elimina</button>
+        </div>
       </div>
-      <button type="button" (click)="deleteAuto(item.id)">Elimina</button>
     </div>
   }
-</div>
 
+  <section class="card add-auto-toggle-card">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="icon">&#x2795;</span>
+        <h2>Inserimento Auto</h2>
+      </div>
+      <span class="badge-status">{{ selectedAutoForEdit?.id ? 'EDIT' : 'ADD' }}</span>
+    </div>
+
+    <p class="form-intro">
+      Il form di inserimento e modifica e visibile solo quando necessario.
+    </p>
+
+    <div class="buttons">
+      <button type="button" class="btn-primary" (click)="toggleAddAuto()">
+        {{ isToggleAddAuto ? 'Chiudi form auto' : 'Aggiungi auto' }}
+      </button>
+    </div>
+
+    @if (isToggleAddAuto) {
+      <div class="add-auto-slot">
+        <app-add-auto-component
+          [auto]="selectedAutoForEdit"
+          [carburanteOptions]="carburanteOptions"
+          [userList]="userList"
+          [aziendaList]="aziendaList"
+          [dipendenteList]="dipendenteList"
+          (saveAuto)="onSaveAuto($event)"
+          (cancelForm)="onCancelAutoForm()"
+        ></app-add-auto-component>
+      </div>
+    }
+  </section>
+
+  <section class="card add-search-toggle-card">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="icon">&#x1F50D;</span>
+        <h2>Ricerca Auto</h2>
+      </div>
+      <span class="badge-status">SEARCH</span>
+    </div>
+
+    <p class="form-intro">
+      Il form di ricerca e visibile solo quando necessario.
+    </p>
+
+    <div class="buttons">
+      <button type="button" class="btn-accent" (click)="toggleSearchAuto()">
+        {{ isToggleSearchAuto ? 'Chiudi ricerca auto' : 'Cerca auto' }}
+      </button>
+      <button type="button" class="btn-primary" (click)="mostraTutti()">Mostra tutti</button>
+    </div>
+
+    @if (isToggleSearchAuto) {
+      <div class="add-search-slot">
+        <app-search-auto-component
+          [carburanteOptions]="carburanteOptions"
+          (searchFilters)="onSearchFilters($event)"
+          (clearSearch)="onClearSearchFilters()"
+        ></app-search-auto-component>
+      </div>
+    }
+  </section>
+
+  <!-- LISTA AUTO -->
+  @if (showAutoList) {
+  <section class="auto-grid">
+    @for (item of listAuto; track $index) {
+      <div class="auto-card" [attr.data-fuel]="item.carburante">
+
+        <!-- striscia colore carburante in cima -->
+        <div class="fuel-strip"></div>
+
+        <!-- riga: id + badge carburante -->
+        <div class="auto-top">
+          <span class="fuel-badge">{{ item.carburante }}</span>
+          <span class="auto-id"># {{ item.id }}</span>
+        </div>
+
+        <!-- marca + modello -->
+        <div class="auto-name">
+          <span class="auto-marca">{{ item.marca }}</span>
+          <span class="auto-modello">{{ item.modello }}</span>
+        </div>
+
+        <div class="auto-divider"></div>
+
+        <!-- dettagli -->
+        <div class="auto-details">
+          <div class="detail-item">
+            <span class="detail-label">&#x1F4CB; Targa</span>
+            <span class="detail-value targa-value">{{ item.targa }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">&#x1F464; Utente</span>
+            <span class="detail-value">{{ item.user?.name || 'Nessuno' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">&#x1F3E2; Azienda</span>
+            <span class="detail-value">{{ item.azienda?.nomeAzienda || 'Nessuna' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">&#x1F464; Dipendente</span>
+            <span class="detail-value">{{ getDipendenteLabel(item.dipendente) }}</span>
+          </div>
+        </div>
+
+        <!-- azioni -->
+        <div class="card-actions">
+          <button class="btn-edit" (click)="editAuto(item)">&#x270F; Modifica</button>
+          <button class="btn-delete" (click)="requestDeleteAuto(item.id)">&#x1F5D1;</button>
+        </div>
+
+      </div>
+    }
+  </section>
+  }
+
+<footer class="auto-footer" aria-label="Footer sezione auto">
+  <div>
+    <strong>Auto Manager</strong>
+    <p class="footer-copy">© 2026 Auto Manager. Tutti i diritti riservati.</p>
+    <p class="footer-dev">Developed by Lorenzo Lombardi</p>
+  </div>
+</footer>
+
+</div>

@@ -1,0 +1,93 @@
+<div class="container">
+
+  <div class="header">
+  <h1>PRONTO ELETTRICISTA</h1>
+
+  <h2>ELETTRICISTA AL VOLO • INTERVENTO IMMEDIATO • GUASTO RISOLTO 🧑‍🔧 </h2>
+  
+</div>
+
+  <div class="filter-buttons">
+
+    <button (click)="filtraPerSpec('residenziale')">
+      Residenziale
+    </button>
+
+    <button (click)="filtraPerSpec('industriale')">
+      Industriale
+    </button>
+
+    <button (click)="resetFiltro()">
+      Tutti
+    </button>
+
+  </div>
+
+  <div class="elet-grid">
+
+    <div class="elet-card"
+         *ngFor="let e of elettricistiFiltrati"
+         (click)="seleziona(e)">
+
+      <h3>{{ e.nome }} {{ e.cognome }}</h3>
+
+      <p>{{ e.specializzazione }}</p>
+
+      <div class="btn-group">
+
+        <button class="btn-check"
+                (click)="verificaDisponibilita(e); $event.stopPropagation()">
+          Disponibilità
+        </button>
+
+        <button class="btn-call"
+                (click)="chiama(e); $event.stopPropagation()">
+          Chiama
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div class="container-form">
+
+  <h2>Richiedi Contatto Elettricista</h2>
+
+  <input type="text" placeholder="Nome" [(ngModel)]="nome">
+  <input type="text" placeholder="Cognome" [(ngModel)]="cognome">
+  <input type="text" placeholder="Telefono" [(ngModel)]="telefono">
+  <input type="text" placeholder="Indirizzo" [(ngModel)]="indirizzo">
+
+  <button (click)="invia()">Invia richiesta</button>
+
+</div>
+
+
+<!-- POPUP FORM -->
+<div class="overlay" *ngIf="mostraPopup">
+  <div class="popup">
+
+    <h2>GRAZIE {{nome}} {{cognome}}!</h2>
+    <p>VERRAI CONTATTATO ENTRO POCHI MINUTI</p>
+
+    <button (click)="chiudiPopup()">Chiudi</button>
+
+  </div>
+</div>
+
+<div class="overlay" *ngIf="popupCall" (click)="popupCall = false">
+
+  <div class="popup" (click)="$event.stopPropagation()">
+    <h2>{{ popupCallMessage }}</h2>
+  </div>
+
+</div>
+
+
+
